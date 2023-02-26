@@ -26,7 +26,7 @@ Am Ende des Trips sollen nun die Konten ausgeglichen werden, dabei wollen wir, d
 . es höchstens eine Überweisung zwischen zwei Personen gibt und Niemand sich selber Geld überweist.
 . die Anzahl der Transaktionen minimal ist.
 
-Wenn Ihr Code die Kriterien 1 und 2 für unsere internen Testfälle erfüllt, erhalten Sie 70% der verfügbaren Punkte. 
+Wenn Ihr Code die Kriterien 1 und 2 für unsere internen Testfälle erfüllt, erhalten Sie mindestens 70% der verfügbaren Punkte. 
 
 TIP: Es kann sich hier lohnen, sich zunächst einmal auf die Kriterien 1 und 2 zu beschränken und Kriterium 3 anzugehen, falls Sie in Woche 3 noch Zeit übrig haben. Auf keinen Fall sollten Sie sich hier festbeissen!
 
