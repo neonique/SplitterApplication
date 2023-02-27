@@ -1,2 +1,5 @@
-package de.propra.splitter.domain;public record Groups() {
+package de.propra.splitter.domain;
+
+public record Group() {
+
 }

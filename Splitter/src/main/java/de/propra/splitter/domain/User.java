@@ -1,2 +1,5 @@
-package de.propra.splitter.domain;public record User() {
+package de.propra.splitter.domain;
+
+public record User() {
+
 }
