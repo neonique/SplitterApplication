@@ -1,5 +1,5 @@
 package de.propra.splitter.domain;
 
-public record User() {
+public record User(String name) {
 
 }

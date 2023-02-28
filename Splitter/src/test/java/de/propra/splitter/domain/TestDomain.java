@@ -1,18 +1,27 @@
 package de.propra.splitter.domain;
 
+import java.util.HashSet;
 import java.util.Set;
+import org.javamoney.moneta.Money;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
 public class TestDomain {
+  private User user ;
+  @BeforeEach
+  private void resetUser(){
+    user =new User("Moaz");
+  }
+
+
 
   @Test()
   @DisplayName("create group and add participants")
   void test_01(){
-    User user = new User();
-    User participant = new User();
+    User participant = new User("Nick");
 
     Group group = new Group(user);
     group.addUser(participant);
@@ -20,8 +29,18 @@ public class TestDomain {
     assertThat(group.getUsers()).contains(participant, user);
   }
   @Test()
-  @DisplayName("Create Transaction using Users")
+  @DisplayName("add Transaction  to group")
   void test_02(){
+    //arrange
+    Group group = new Group(user);
+    Set<User> participants =Set.of(new User("A"),new User("b"));
+    participants.forEach(group::addUser);
+    Money amount= Money.of(20.50 ,"EUR");
+    Transaction transaction=new Transaction(user,participants,amount);
+    //act
+    group.addTransaction(transaction);
+    //assert
+    assertThat(group.getTransactions()).contains(transaction);
 
   }
 
