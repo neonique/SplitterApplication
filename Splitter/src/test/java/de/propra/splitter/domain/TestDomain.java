@@ -105,4 +105,40 @@ public class TestDomain {
 
   }
 
+  @Test()
+  @DisplayName("Transactions can't be negative")
+  void test_06(){
+    //arrange
+    Group group = new Group(user);
+    Set<User> participants =Set.of(new User("A"),new User("b"));
+    participants.forEach(group::addUser);
+    Money amount= Money.of(-20.50 ,"EUR");
+    Transaction transaction=new Transaction(user,participants,amount);
+    //act
+    RuntimeException thrown = assertThrows(RuntimeException.class, () -> {
+      group.addTransaction(transaction);
+    });
+    //assert
+    assertThat("Transactions have to be positive").isEqualTo(thrown.getMessage());
+
+  }
+
+  @Test()
+  @DisplayName("Transactions can't be zero")
+  void test_07(){
+    //arrange
+    Group group = new Group(user);
+    Set<User> participants =Set.of(new User("A"),new User("b"));
+    participants.forEach(group::addUser);
+    Money amount= Money.of(0 ,"EUR");
+    Transaction transaction=new Transaction(user,participants,amount);
+    //act
+    RuntimeException thrown = assertThrows(RuntimeException.class, () -> {
+      group.addTransaction(transaction);
+    });
+    //assert
+    assertThat("Transactions have to be positive").isEqualTo(thrown.getMessage());
+
+  }
+
 }

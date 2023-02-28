@@ -29,6 +29,10 @@ public class Group {
     if(!participants.containsAll(transaction.Participants())){
       throw new RuntimeException("Invalid user contained in transaction");
     }
+    if(transaction.money().isNegativeOrZero()){
+      throw new RuntimeException("Transactions have to be positive");
+    }
+
     transactions.add(transaction);
   }
   public Set<Transaction> getTransactions(){
