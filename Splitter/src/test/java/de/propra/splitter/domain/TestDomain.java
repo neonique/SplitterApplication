@@ -44,4 +44,22 @@ public class TestDomain {
 
   }
 
+  @Test()
+  @DisplayName("add Transaction  to group")
+  void test_03(){
+    //arrange
+    Group group = new Group(user);
+    Set<User> participants = new HashSet<> ();
+    participants.addAll(Set.of(new User("A"),new User("b")));
+    participants.forEach(group::addUser);
+    Money amount= Money.of(20.50 ,"EUR");
+    participants.add(new User("Jeremy"));
+    Transaction transaction=new Transaction(user,participants,amount);
+    //act
+    group.addTransaction(transaction);
+    //assert
+    assertThat(group.getTransactions()).isEmpty();
+
+  }
+
 }

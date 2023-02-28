@@ -23,6 +23,9 @@ public class Group {
   }
 
   public void addTransaction(Transaction transaction) {
+    if(!participants.containsAll(transaction.Participants())){
+      return;
+    }
     transactions.add(transaction);
   }
   public Set<Transaction> getTransactions(){
