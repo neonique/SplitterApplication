@@ -38,5 +38,8 @@ public class Group {
   public Set<Transaction> getTransactions(){
     return transactions;
   }
+  public boolean containsUser(User user) {
+    return participants.contains(user);
+  }
 }
 

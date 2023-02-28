@@ -1,5 +1,7 @@
-package de.propra.splitter.domain;
+package de.propra.splitter.services;
 
+import de.propra.splitter.domain.Group;
+import de.propra.splitter.domain.User;
 import java.util.HashMap;
 import org.javamoney.moneta.Money;
 
