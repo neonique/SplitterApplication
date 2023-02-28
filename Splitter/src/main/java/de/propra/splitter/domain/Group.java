@@ -27,10 +27,10 @@ public class Group {
 
   public void addTransaction(Transaction transaction) {
     if(!participants.containsAll(transaction.Participants())){
-      throw new RuntimeException("Invalid user contained in transaction");
+      throw new IllegalArgumentException("Invalid user contained in transaction");
     }
     if(transaction.money().isNegativeOrZero()){
-      throw new RuntimeException("Transactions have to be positive");
+      throw new IllegalArgumentException("Transactions have to be positive");
     }
 
     transactions.add(transaction);

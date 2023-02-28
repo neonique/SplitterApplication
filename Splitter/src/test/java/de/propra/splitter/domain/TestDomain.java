@@ -59,7 +59,7 @@ public class TestDomain {
     participants.add(new User("Jeremy"));
     Transaction transaction=new Transaction(user,participants,amount);
     //act
-    RuntimeException thrown = assertThrows(RuntimeException.class, () -> {
+    IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
       group.addTransaction(transaction);
     });
     //assert
@@ -115,7 +115,7 @@ public class TestDomain {
     Money amount= Money.of(-20.50 ,"EUR");
     Transaction transaction=new Transaction(user,participants,amount);
     //act
-    RuntimeException thrown = assertThrows(RuntimeException.class, () -> {
+    IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
       group.addTransaction(transaction);
     });
     //assert
@@ -133,7 +133,7 @@ public class TestDomain {
     Money amount= Money.of(0 ,"EUR");
     Transaction transaction=new Transaction(user,participants,amount);
     //act
-    RuntimeException thrown = assertThrows(RuntimeException.class, () -> {
+    IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
       group.addTransaction(transaction);
     });
     //assert
@@ -141,4 +141,33 @@ public class TestDomain {
 
   }
 
+  @Test
+  @DisplayName("Username has to follow Github convention")
+  void test_08(){
+
+    User user5 = new User("p3t-er");
+
+    IllegalArgumentException thrown0 = assertThrows(IllegalArgumentException.class, () -> {
+      User user0 = new User("");
+    });
+    IllegalArgumentException thrown1 = assertThrows(IllegalArgumentException.class, () -> {
+      User user1 = new User("-peter");
+    });
+    IllegalArgumentException thrown2 = assertThrows(IllegalArgumentException.class, () -> {
+      User user2 = new User("peter-");
+    });
+    IllegalArgumentException thrown3 = assertThrows(IllegalArgumentException.class, () -> {
+      User user3 = new User("pet--er");
+    });
+    IllegalArgumentException thrown4 = assertThrows(IllegalArgumentException.class, () -> {
+      User user4 = new User("pet*er");
+    });
+
+    assertThat("Username is not conform with Github convention").isEqualTo(thrown0.getMessage());
+    assertThat("Username is not conform with Github convention").isEqualTo(thrown1.getMessage());
+    assertThat("Username is not conform with Github convention").isEqualTo(thrown2.getMessage());
+    assertThat("Username is not conform with Github convention").isEqualTo(thrown3.getMessage());
+    assertThat("Username is not conform with Github convention").isEqualTo(thrown4.getMessage());
+    assertThat(user5.name()).isEqualTo("p3t-er");
+  }
 }
