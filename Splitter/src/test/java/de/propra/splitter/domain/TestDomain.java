@@ -66,4 +66,43 @@ public class TestDomain {
     assertThat("Invalid user contained in transaction").isEqualTo(thrown.getMessage());
   }
 
+  @Test
+  @DisplayName("Transactions work even though not ever group member participates")
+  void test_04(){
+    //arrange
+    Group group = new Group(user);
+    Set<User> participants = new HashSet<> ();
+    User b = new User("B");
+    participants.addAll(Set.of(new User("A"),b));
+    participants.forEach(group::addUser);
+    Money amount= Money.of(20.50 ,"EUR");
+    participants.remove(b);
+    Transaction transaction=new Transaction(user,participants,amount);
+    //act
+    group.addTransaction(transaction);
+    //assert
+    assertThat(group.getTransactions()).contains(transaction);
+  }
+
+  @Test()
+  @DisplayName("User can't be added after first transaction")
+  void test_05(){
+    //arrange
+    Group group = new Group(user);
+    Set<User> participants =Set.of(new User("A"),new User("b"));
+    participants.forEach(group::addUser);
+    Money amount= Money.of(20.50 ,"EUR");
+    Transaction transaction=new Transaction(user,participants,amount);
+
+    //act
+    group.addTransaction(transaction);
+
+    RuntimeException thrown = assertThrows(RuntimeException.class, () -> {
+      group.addUser(new User("Ellis"));
+    });
+    //assert
+    assertThat("Users can't be added to group after first transaction").isEqualTo(thrown.getMessage());
+
+  }
+
 }

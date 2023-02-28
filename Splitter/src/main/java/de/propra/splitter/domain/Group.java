@@ -15,6 +15,9 @@ public class Group {
 
 
   public void addUser(User participant) {
+    if(!transactions.isEmpty()){
+      throw new RuntimeException("Users can't be added to group after first transaction");
+    }
     participants.add(participant);
   }
 
