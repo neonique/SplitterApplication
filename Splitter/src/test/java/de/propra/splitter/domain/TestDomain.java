@@ -7,6 +7,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 
 
 public class TestDomain {
@@ -44,8 +47,8 @@ public class TestDomain {
 
   }
 
-  @Test()
-  @DisplayName("add Transaction  to group")
+  @Test
+  @DisplayName("Participants of transactions have to be part of the group")
   void test_03(){
     //arrange
     Group group = new Group(user);
@@ -56,10 +59,11 @@ public class TestDomain {
     participants.add(new User("Jeremy"));
     Transaction transaction=new Transaction(user,participants,amount);
     //act
-    group.addTransaction(transaction);
+    RuntimeException thrown = assertThrows(RuntimeException.class, () -> {
+      group.addTransaction(transaction);
+    });
     //assert
-    assertThat(group.getTransactions()).isEmpty();
-
+    assertThat("Invalid user contained in transaction").isEqualTo(thrown.getMessage());
   }
 
 }

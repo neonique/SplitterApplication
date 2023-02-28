@@ -24,7 +24,7 @@ public class Group {
 
   public void addTransaction(Transaction transaction) {
     if(!participants.containsAll(transaction.Participants())){
-      return;
+      throw new RuntimeException("Invalid user contained in transaction");
     }
     transactions.add(transaction);
   }
