@@ -5,6 +5,7 @@ import java.util.Objects;
 import java.util.Set;
 
 public class Group {
+  private boolean closed=false;
 
   private HashSet<User> participants = new HashSet<>();
   private HashSet<Transaction> transactions =new HashSet<>();
@@ -41,5 +42,13 @@ public class Group {
   public boolean containsUser(User user) {
     return participants.contains(user);
   }
+
+  public boolean isClosed(){
+    return closed;
+  }
+  public void closeGroup(){
+   closed=true;
+  }
 }
+
 

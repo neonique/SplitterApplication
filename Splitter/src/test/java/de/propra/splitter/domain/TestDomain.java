@@ -170,4 +170,6 @@ public class TestDomain {
     assertThat("Username is not conform with Github convention").isEqualTo(thrown4.getMessage());
     assertThat(user5.name()).isEqualTo("p3t-er");
   }
+
+
 }

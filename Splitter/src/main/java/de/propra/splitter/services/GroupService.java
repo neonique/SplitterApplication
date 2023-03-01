@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 public class GroupService {
 
-  public HashSet<Group> userGroups(Set<Group> groups, User user){
+  public static HashSet<Group> userGroups(Set<Group> groups, User user){
    return new HashSet<Group>(groups.stream().filter(group -> group.containsUser(user)).collect(Collectors.toSet()));
   }
 
