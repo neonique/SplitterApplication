@@ -213,8 +213,53 @@ public class TestDomain {
     });
 
     assertThat("Users cannot be added to closed groups").isEqualTo(thrown.getMessage());
+  }
+  @Test()
+  @DisplayName("count transaction  participants correctly")
+  void test_12(){
+    Set<User> participants =Set.of(new User("A"),new User("b"));
+    Transaction transaction=new Transaction(user,participants,Money.of(90,"EUR"));
 
+   assertThat(transaction.countParticipants()).isEqualTo(3);
 
+  }
+  @Test()
+  @DisplayName("check if user is participant of the transaction")
+  void test_13(){
+    User user2=new User("c");
+    User user3=new User("a");
+    Set<User> participants =Set.of(new User("b"),user3);
+    Transaction transaction=new Transaction(user,participants,Money.of(90,"EUR"));
+
+    assertThat(transaction.isParticipant(user));
+    assertThat(transaction.isParticipant(user3));
+    assertThat(transaction.isParticipant(user2)).isFalse();
+
+  }
+  @Test()
+  @DisplayName("check if user is sponsor of the transaction")
+  void test_14(){
+    User user2=new User("c");
+    User user3=new User("a");
+    Set<User> participants =Set.of(new User("b"),user3);
+    Transaction transaction=new Transaction(user,participants,Money.of(90,"EUR"));
+
+    assertThat(transaction.isSponsor(user));
+    assertThat(transaction.isSponsor(user3)).isFalse();
+    assertThat(transaction.isSponsor(user2)).isFalse();
+
+  }
+  @Test()
+  @DisplayName("check if user is beggar of the transaction")
+  void test_15(){
+    User user2=new User("c");
+    User user3=new User("a");
+    Set<User> participants =Set.of(new User("b"),user3);
+    Transaction transaction=new Transaction(user,participants,Money.of(90,"EUR"));
+
+    assertThat(transaction.isBeggar(user)).isFalse();
+    assertThat(transaction.isBeggar(user3));
+    assertThat(transaction.isBeggar(user2)).isFalse();
 
   }
 

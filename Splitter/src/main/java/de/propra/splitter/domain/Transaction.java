@@ -1,14 +1,13 @@
 package de.propra.splitter.domain;
 
 import java.util.Set;
-import javax.money.MonetaryAmount;
 import org.javamoney.moneta.Money;
 import org.springframework.lang.NonNull;
 
-public record Transaction(@NonNull User sponsor,@NonNull Set<User> beggers, @NonNull Money money) {
+public record Transaction(@NonNull User sponsor,@NonNull Set<User> beggars, @NonNull Money money) {
 
-  public boolean isBegger(User user) {
-    return beggers.contains(user);
+  public boolean isBeggar(User user) {
+    return beggars.contains(user);
   }
 
   public boolean isSponsor(User user) {
@@ -16,7 +15,9 @@ public record Transaction(@NonNull User sponsor,@NonNull Set<User> beggers, @Non
   }
 
   public boolean isParticipant (User user) {
-    return isSponsor(user)||isBegger(user);
+    return isSponsor(user)|| isBeggar(user);
   }
-
+  public int countParticipants (){
+    return beggars.size()+1;
+  }
 }

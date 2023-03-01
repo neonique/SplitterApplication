@@ -29,7 +29,7 @@ public class Group {
   }
 
   public void addTransaction(Transaction transaction) {
-    if(!participants.containsAll(transaction.Participants())){
+    if(!participants.containsAll(transaction.beggars())){
       throw new IllegalArgumentException("Invalid user contained in transaction");
     }
     if(transaction.money().isNegativeOrZero()){
