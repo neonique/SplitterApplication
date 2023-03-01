@@ -19,6 +19,9 @@ public class Group {
     if(!transactions.isEmpty()){
       throw new RuntimeException("Users can't be added to group after first transaction");
     }
+    if(this.isClosed()){
+      throw new RuntimeException("Users cannot be added to closed groups");
+    }
     participants.add(participant);
   }
 
@@ -32,6 +35,9 @@ public class Group {
     }
     if(transaction.money().isNegativeOrZero()){
       throw new IllegalArgumentException("Transactions have to be positive");
+    }
+    if(this.isClosed()){
+      throw new RuntimeException("Transactions cannot be added to closed groups");
     }
 
     transactions.add(transaction);

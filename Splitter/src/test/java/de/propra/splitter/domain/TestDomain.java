@@ -171,5 +171,54 @@ public class TestDomain {
     assertThat(user5.name()).isEqualTo("p3t-er");
   }
 
+  @Test()
+  @DisplayName("Groups can be closed")
+  void test_09(){
+    Group g = new Group(user);
+
+    g.closeGroup();
+
+    assertThat(g.isClosed());
+  }
+
+  @Test()
+  @DisplayName("Transactions cannot be added to closed groups")
+  void test_10(){
+    Group group = new Group(user);
+    Money amount= Money.of(20 ,"EUR");
+    Set<User> participants =Set.of(new User("A"),new User("b"));
+    participants.forEach(group::addUser);
+    Transaction transaction = new Transaction(user, participants, amount);
+
+    group.closeGroup();
+    RuntimeException thrown = assertThrows(RuntimeException.class, () -> {
+      group.addTransaction(transaction);
+    });
+
+    assertThat("Transactions cannot be added to closed groups").isEqualTo(thrown.getMessage());
+
+
+
+  }
+
+  @Test()
+  @DisplayName("Users cannot be added to closed groups")
+  void test_11(){
+    Group group = new Group(user);
+    User user2 = new User("Jeremy");
+
+    group.closeGroup();
+    RuntimeException thrown = assertThrows(RuntimeException.class, () -> {
+      group.addUser(user2);
+    });
+
+    assertThat("Users cannot be added to closed groups").isEqualTo(thrown.getMessage());
+
+
+
+  }
+
+
+
 
 }
