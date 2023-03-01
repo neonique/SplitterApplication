@@ -1,7 +1,6 @@
 package de.propra.splitter.domain;
 
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 public class Group {
@@ -52,7 +51,7 @@ public class Group {
   public boolean isClosed(){
     return closed;
   }
-  public void closeGroup(){
+  public void close(){
    closed=true;
   }
 }

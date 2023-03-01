@@ -176,7 +176,7 @@ public class TestDomain {
   void test_09(){
     Group g = new Group(user);
 
-    g.closeGroup();
+    g.close();
 
     assertThat(g.isClosed());
   }
@@ -190,7 +190,7 @@ public class TestDomain {
     participants.forEach(group::addUser);
     Transaction transaction = new Transaction(user, participants, amount);
 
-    group.closeGroup();
+    group.close();
     RuntimeException thrown = assertThrows(RuntimeException.class, () -> {
       group.addTransaction(transaction);
     });
@@ -207,7 +207,7 @@ public class TestDomain {
     Group group = new Group(user);
     User user2 = new User("Jeremy");
 
-    group.closeGroup();
+    group.close();
     RuntimeException thrown = assertThrows(RuntimeException.class, () -> {
       group.addUser(user2);
     });

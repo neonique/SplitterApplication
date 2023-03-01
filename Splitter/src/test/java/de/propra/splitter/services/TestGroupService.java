@@ -35,10 +35,31 @@ public class TestGroupService {
 
   }
   @Test
-  @DisplayName("")
+  @DisplayName("Accessing only closed groups")
   void test_1(){
+    User user1=new User("moaz");
+    Group group1 = new Group(user1);
+    Group group2 = new Group(user1);
 
+    group2.close();
+    HashSet<Group> groups = new HashSet<>(Set.of(group1, group2));
+
+    HashSet<Group> closed = GroupService.closedUserGroups(groups, user1);
+    assertThat(closed).containsExactly(group2);
   }
 
+  @Test
+  @DisplayName("Accessing only open groups")
+  void test_2(){
+    User user1=new User("moaz");
+    Group group1 = new Group(user1);
+    Group group2 = new Group(user1);
+
+    group2.close();
+    HashSet<Group> groups = new HashSet<>(Set.of(group1, group2));
+
+    HashSet<Group> open = GroupService.openUserGroups(groups, user1);
+    assertThat(open).containsExactly(group1);
+  }
 
 }
