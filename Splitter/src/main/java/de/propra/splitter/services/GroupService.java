@@ -13,4 +13,13 @@ public class GroupService {
       return new HashSet<Group>(groups.stream().filter(group -> group.containsUser(user)).collect(Collectors.toSet()));
   }
 
+
+  public static HashSet<Group> openUserGroups(Set<Group> groups, User user){
+      return new HashSet<Group>(groups.stream().filter(group -> group.containsUser(user)).filter(Predicate.not(Group::isClosed)).collect(Collectors.toSet()));
+  }
+
+   public static HashSet<Group> closedUserGroups(Set<Group> groups, User user){
+      return new HashSet<Group>(groups.stream().filter(group -> group.containsUser(user)).filter(Group::isClosed).collect(Collectors.toSet()));
+  }
+
 }
