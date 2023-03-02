@@ -272,7 +272,30 @@ public class TestDomain {
 
   }
 
+  @Test()
+  @DisplayName("no transactions to only yourself")
+  void test_16(){
 
+    Set<User> participants =Set.of(user);
 
+    IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
+      Transaction transaction=new Transaction(user,participants,Money.of(90,"EUR"));;
+    });
+
+    assertThat("transactions need more than one participant").isEqualTo(thrown.getMessage());
+  }
+
+  @Test()
+  @DisplayName("transactions must have beggars")
+  void test_17(){
+
+    Set<User> participants = new HashSet<>();
+
+    IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
+      Transaction transaction=new Transaction(user,participants,Money.of(90,"EUR"));;
+    });
+
+    assertThat("transactions must have beggars").isEqualTo(thrown.getMessage());
+  }
 
 }
