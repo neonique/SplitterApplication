@@ -39,7 +39,7 @@ public class TestDomain {
     Set<User> participants =Set.of(new User("A"),new User("b"));
     participants.forEach(group::addUser);
     Money amount= Money.of(20.50 ,"EUR");
-    Transaction transaction=new Transaction(user,participants,amount);
+    Transaction transaction=new Transaction(user,participants,amount, "");
     //act
     group.addTransaction(transaction);
     //assert
@@ -57,7 +57,7 @@ public class TestDomain {
     participants.forEach(group::addUser);
     Money amount= Money.of(20.50 ,"EUR");
     participants.add(new User("Jeremy"));
-    Transaction transaction=new Transaction(user,participants,amount);
+    Transaction transaction=new Transaction(user,participants,amount, "" );
     //act
     IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
       group.addTransaction(transaction);
@@ -77,7 +77,7 @@ public class TestDomain {
     participants.forEach(group::addUser);
     Money amount= Money.of(20.50 ,"EUR");
     participants.remove(b);
-    Transaction transaction=new Transaction(user,participants,amount);
+    Transaction transaction=new Transaction(user,participants,amount, "");
     //act
     group.addTransaction(transaction);
     //assert
@@ -92,7 +92,7 @@ public class TestDomain {
     Set<User> participants =Set.of(new User("A"),new User("b"));
     participants.forEach(group::addUser);
     Money amount= Money.of(20.50 ,"EUR");
-    Transaction transaction=new Transaction(user,participants,amount);
+    Transaction transaction=new Transaction(user,participants,amount, "");
 
     //act
     group.addTransaction(transaction);
@@ -113,7 +113,7 @@ public class TestDomain {
     Set<User> participants =Set.of(new User("A"),new User("b"));
     participants.forEach(group::addUser);
     Money amount= Money.of(-20.50 ,"EUR");
-    Transaction transaction=new Transaction(user,participants,amount);
+    Transaction transaction=new Transaction(user,participants,amount, "");
     //act
     IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
       group.addTransaction(transaction);
@@ -131,7 +131,7 @@ public class TestDomain {
     Set<User> participants =Set.of(new User("A"),new User("b"));
     participants.forEach(group::addUser);
     Money amount= Money.of(0 ,"EUR");
-    Transaction transaction=new Transaction(user,participants,amount);
+    Transaction transaction=new Transaction(user,participants,amount, "");
     //act
     IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
       group.addTransaction(transaction);
@@ -188,7 +188,7 @@ public class TestDomain {
     Money amount= Money.of(20 ,"EUR");
     Set<User> participants =Set.of(new User("A"),new User("b"));
     participants.forEach(group::addUser);
-    Transaction transaction = new Transaction(user, participants, amount);
+    Transaction transaction = new Transaction(user, participants, amount, "");
 
     group.close();
     RuntimeException thrown = assertThrows(RuntimeException.class, () -> {
@@ -218,7 +218,7 @@ public class TestDomain {
   @DisplayName("count transaction beggars correctly, sponsor is no beggar")
   void test_12(){
     Set<User> participants =Set.of(new User("A"),new User("b"));
-    Transaction transaction=new Transaction(user,participants,Money.of(90,"EUR"));
+    Transaction transaction=new Transaction(user,participants,Money.of(90,"EUR"), "");
 
    assertThat(transaction.countBeggars()).isEqualTo(2);
 
@@ -228,7 +228,7 @@ public class TestDomain {
   @DisplayName("count transaction beggars correctly, sponsor is beggar")
   void test_12b(){
     Set<User> participants =Set.of(new User("A"),new User("b"), user);
-    Transaction transaction=new Transaction(user,participants,Money.of(90,"EUR"));
+    Transaction transaction=new Transaction(user,participants,Money.of(90,"EUR"), "");
 
     assertThat(transaction.countBeggars()).isEqualTo(3);
   }
@@ -238,7 +238,7 @@ public class TestDomain {
     User user2=new User("c");
     User user3=new User("a");
     Set<User> participants =Set.of(new User("b"),user3);
-    Transaction transaction=new Transaction(user,participants,Money.of(90,"EUR"));
+    Transaction transaction=new Transaction(user,participants,Money.of(90,"EUR"), "");
 
     assertThat(transaction.isParticipant(user));
     assertThat(transaction.isParticipant(user3));
@@ -251,7 +251,7 @@ public class TestDomain {
     User user2=new User("c");
     User user3=new User("a");
     Set<User> participants =Set.of(new User("b"),user3);
-    Transaction transaction=new Transaction(user,participants,Money.of(90,"EUR"));
+    Transaction transaction=new Transaction(user,participants,Money.of(90,"EUR"), "");
 
     assertThat(transaction.isSponsor(user));
     assertThat(transaction.isSponsor(user3)).isFalse();
@@ -264,7 +264,7 @@ public class TestDomain {
     User user2=new User("c");
     User user3=new User("a");
     Set<User> participants =Set.of(new User("b"),user3);
-    Transaction transaction=new Transaction(user,participants,Money.of(90,"EUR"));
+    Transaction transaction=new Transaction(user,participants,Money.of(90,"EUR"), "");
 
     assertThat(transaction.isBeggar(user)).isFalse();
     assertThat(transaction.isBeggar(user3));
@@ -279,7 +279,7 @@ public class TestDomain {
     Set<User> participants =Set.of(user);
 
     IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
-      Transaction transaction=new Transaction(user,participants,Money.of(90,"EUR"));;
+      Transaction transaction=new Transaction(user,participants,Money.of(90,"EUR"), "");;
     });
 
     assertThat("transactions need more than one participant").isEqualTo(thrown.getMessage());
@@ -292,7 +292,7 @@ public class TestDomain {
     Set<User> participants = new HashSet<>();
 
     IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
-      Transaction transaction=new Transaction(user,participants,Money.of(90,"EUR"));;
+      Transaction transaction=new Transaction(user,participants,Money.of(90,"EUR"), "");;
     });
 
     assertThat("transactions must have beggars").isEqualTo(thrown.getMessage());

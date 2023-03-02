@@ -13,8 +13,11 @@ public final class Transaction {
   private final Set<User> beggars;
   @NonNull
   private final Money money;
+  @NonNull
+  private final String description;
 
-  public Transaction(@NonNull User sponsor, @NonNull Set<User> beggars, @NonNull Money money) {
+  public Transaction(@NonNull User sponsor, @NonNull Set<User> beggars, @NonNull Money money,
+      @NonNull String description) {
     if(beggars.isEmpty()) {
       throw new IllegalArgumentException("transactions must have beggars");
     }
@@ -24,6 +27,7 @@ public final class Transaction {
     this.sponsor = sponsor;
     this.beggars = beggars;
     this.money = money;
+    this.description = description;
   }
 
   public boolean isBeggar(User user) {
