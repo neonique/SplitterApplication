@@ -11,4 +11,9 @@ public class MinimalTransactionService implements TransactionService{
   public HashMap<User, HashMap<User, Money>> calculateTransactions(Group group) {
     return null;
   }
+
+  @Override
+  public Money calculateUserSaldo(User user, Group group) {
+    return null;
+  }
 }

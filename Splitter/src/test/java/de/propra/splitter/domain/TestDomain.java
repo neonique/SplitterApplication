@@ -67,7 +67,7 @@ public class TestDomain {
   }
 
   @Test
-  @DisplayName("Transactions work even though not ever group member participates")
+  @DisplayName("Transactions work even though not every group member participates")
   void test_04(){
     //arrange
     Group group = new Group(user);

@@ -16,17 +16,16 @@ public class EasyTransactionService implements TransactionService {
   public HashMap<User, HashMap<User, Money>> calculateTransactions(Group group) {
     return null;
   }
-
-  private Money calculateUserSaldo(User user, Group group){
+@Override
+  public Money calculateUserSaldo(User user, Group group){
     Set<Transaction> userTransactions= group.getTransactions().stream().filter(a -> a.isParticipant(user)).collect(Collectors.toSet());
     Set<Transaction> userBeggarTransactions = userTransactions.stream().filter(a -> a.isBeggar(user)).collect(Collectors.toSet());
     Set<Transaction> userSponsorTransactions = userTransactions.stream().filter(a -> a.isSponsor(user)).collect(Collectors.toSet());
 
-    Map<Money, Integer> beggarMoneyUnweighted= userBeggarTransactions.stream().collect(Collectors.toMap(a -> a.money(), a-> a.countBeggars()));
-    Map<Money, Integer> sponsorMoneyUnweighted= userSponsorTransactions.stream().collect(Collectors.toMap(a -> a.money(), a-> a.countBeggars()));
+    Money beggarMoney= userBeggarTransactions.stream().map(a -> a.money().divide(a.countBeggars())).reduce(Money.of(0, "EUR"), (a,b) -> a.add(b));
+    Money sponsorMoney= userSponsorTransactions.stream().map(a -> a.money()).reduce(Money.of(0, "EUR"), (a,b) -> a.add(b));
 
-    Money saldo = Money.of(0, "EUR");
-
+    Money saldo = sponsorMoney.subtract(beggarMoney);
 
     return saldo;
   }
