@@ -8,7 +8,7 @@ import org.javamoney.moneta.Money;
 public class MinimalTransactionService implements TransactionService{
 
   @Override
-  public HashMap<User, HashMap<User, Money>> calculateTransactions(Group group) {
+  public HashMap<User, HashMap<User, Money>> calculateNecessaryTransactions(Group group) {
     return null;
   }
 

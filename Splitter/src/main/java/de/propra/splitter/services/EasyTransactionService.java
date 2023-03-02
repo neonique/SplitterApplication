@@ -13,7 +13,8 @@ import org.javamoney.moneta.Money;
 public class EasyTransactionService implements TransactionService {
 
   @Override
-  public HashMap<User, HashMap<User, Money>> calculateTransactions(Group group) {
+  public HashMap<User, HashMap<User, Money>> calculateNecessaryTransactions(Group group) {
+
     return null;
   }
 @Override
