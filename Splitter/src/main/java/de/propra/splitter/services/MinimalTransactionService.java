@@ -13,7 +13,7 @@ public class MinimalTransactionService implements TransactionService{
   }
 
   @Override
-  public Money calculateUserSaldo(User user, Group group) {
+  public Money calculateUserBalance(User user, Group group) {
     return null;
   }
 }

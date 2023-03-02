@@ -26,8 +26,8 @@ public class TestTransactionService {
     Transaction transaction = new Transaction(user1, Set.of(user2), m1, "");
     group.addTransaction(transaction);
 
-    Money u1Saldo = transactionService.calculateUserSaldo(user1, group);
-    Money u2Saldo = transactionService.calculateUserSaldo(user2, group);
+    Money u1Saldo = transactionService.calculateUserBalance(user1, group);
+    Money u2Saldo = transactionService.calculateUserBalance(user2, group);
 
     assertThat(u1Saldo).isEqualTo(Money.of(20, "EUR"));
     assertThat(u2Saldo).isEqualTo(Money.of(-20, "EUR"));
@@ -44,8 +44,8 @@ public class TestTransactionService {
     Transaction transaction = new Transaction(user1, Set.of(user2, user1), m1, "");
     group.addTransaction(transaction);
 
-    Money u1Saldo = transactionService.calculateUserSaldo(user1, group);
-    Money u2Saldo = transactionService.calculateUserSaldo(user2, group);
+    Money u1Saldo = transactionService.calculateUserBalance(user1, group);
+    Money u2Saldo = transactionService.calculateUserBalance(user2, group);
 
     assertThat(u1Saldo).isEqualTo(Money.of(10, "EUR"));
     assertThat(u2Saldo).isEqualTo(Money.of(-10, "EUR"));
@@ -71,5 +71,9 @@ public class TestTransactionService {
     Entry<User, Money> entry = Map.entry(user1, Money.of(-15, "EUR"));
     assertThat(balance.get(user2)).containsExactly(entry);
   }
+  @DisplayName("jens test 2")
+  @Test
+  void test_03(){
 
+  }
 }
