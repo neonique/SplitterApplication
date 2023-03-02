@@ -22,8 +22,8 @@ public class EasyTransactionService implements TransactionService {
     Set<Transaction> userBeggarTransactions = userTransactions.stream().filter(a -> a.isBeggar(user)).collect(Collectors.toSet());
     Set<Transaction> userSponsorTransactions = userTransactions.stream().filter(a -> a.isSponsor(user)).collect(Collectors.toSet());
 
-    Map<Money, Integer> beggarMoneyUnweighted= userBeggarTransactions.stream().collect(Collectors.toMap(a -> a.money(), a-> a.countParticipants()));
-    Map<Money, Integer> sponsorMoneyUnweighted= userSponsorTransactions.stream().collect(Collectors.toMap(a -> a.money(), a-> a.countParticipants()));
+    Map<Money, Integer> beggarMoneyUnweighted= userBeggarTransactions.stream().collect(Collectors.toMap(a -> a.money(), a-> a.countBeggars()));
+    Map<Money, Integer> sponsorMoneyUnweighted= userSponsorTransactions.stream().collect(Collectors.toMap(a -> a.money(), a-> a.countBeggars()));
 
     Money saldo = Money.of(0, "EUR");
 
