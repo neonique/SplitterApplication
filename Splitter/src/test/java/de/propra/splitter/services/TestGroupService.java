@@ -4,12 +4,17 @@ import de.propra.splitter.domain.Group;
 import de.propra.splitter.domain.User;
 import java.util.HashSet;
 import java.util.Set;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
-
 public class TestGroupService {
+
+  GroupService groupService = new GroupService();
 
   @Test
   @DisplayName("users group are found correct to user")
@@ -27,7 +32,7 @@ public class TestGroupService {
     }
       groups.add(new Group(user2));
 
-    Set<Group> foundGroups=GroupService.userGroups(groups,user1);
+    Set<Group> foundGroups=groupService.userGroups(groups,user1);
 
     assertThat(userOneGroups).containsExactlyElementsOf(foundGroups);
 
@@ -44,7 +49,7 @@ public class TestGroupService {
     group2.close();
     HashSet<Group> groups = new HashSet<>(Set.of(group1, group2));
 
-    HashSet<Group> closed = GroupService.closedUserGroups(groups, user1);
+    HashSet<Group> closed = groupService.closedUserGroups(groups, user1);
     assertThat(closed).containsExactly(group2);
   }
 
@@ -58,7 +63,7 @@ public class TestGroupService {
     group2.close();
     HashSet<Group> groups = new HashSet<>(Set.of(group1, group2));
 
-    HashSet<Group> open = GroupService.openUserGroups(groups, user1);
+    HashSet<Group> open = groupService.openUserGroups(groups, user1);
     assertThat(open).containsExactly(group1);
   }
 

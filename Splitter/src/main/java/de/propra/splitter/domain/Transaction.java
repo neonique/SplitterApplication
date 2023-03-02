@@ -17,7 +17,7 @@ public record Transaction(@NonNull User sponsor,@NonNull Set<User> beggars, @Non
   public boolean isParticipant (User user) {
     return isSponsor(user)|| isBeggar(user);
   }
-  public int countParticipants (){
-    return beggars.size()+1;
+  public int countBeggars(){
+    return beggars.size();
   }
 }

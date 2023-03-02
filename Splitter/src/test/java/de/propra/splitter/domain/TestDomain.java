@@ -215,13 +215,22 @@ public class TestDomain {
     assertThat("Users cannot be added to closed groups").isEqualTo(thrown.getMessage());
   }
   @Test()
-  @DisplayName("count transaction  participants correctly")
+  @DisplayName("count transaction beggars correctly, sponsor is no beggar")
   void test_12(){
     Set<User> participants =Set.of(new User("A"),new User("b"));
     Transaction transaction=new Transaction(user,participants,Money.of(90,"EUR"));
 
-   assertThat(transaction.countParticipants()).isEqualTo(3);
+   assertThat(transaction.countBeggars()).isEqualTo(2);
 
+  }
+
+  @Test()
+  @DisplayName("count transaction beggars correctly, sponsor is beggar")
+  void test_12b(){
+    Set<User> participants =Set.of(new User("A"),new User("b"), user);
+    Transaction transaction=new Transaction(user,participants,Money.of(90,"EUR"));
+
+    assertThat(transaction.countBeggars()).isEqualTo(3);
   }
   @Test()
   @DisplayName("check if user is participant of the transaction")
