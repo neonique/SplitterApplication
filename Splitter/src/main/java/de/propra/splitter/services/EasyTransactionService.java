@@ -29,48 +29,56 @@ public class EasyTransactionService implements TransactionService {
                 negativeBalance.put(user, balance);
             }
         }
-
         //Endergebnis Hashmap
         HashMap<User, HashMap<User, Money>> necessaryTransactions = new HashMap<>();
-
         /* Code smells: long comments
-        *  Sortiert Geld aus negative Balance zu Positive Balance
-        *  und speichert dies als transactions ab
-        */
+         *  Sortiert Geld aus negative Balance zu Positive Balance
+         *  und speichert dies als transactions ab
+         */
+
         for (Map.Entry<User, Money> positiveEntry : positiveBalance.entrySet()) {
             for (Map.Entry<User, Money> negativeEntry : negativeBalance.entrySet()) {
-                if (positiveEntry.getValue().isNegativeOrZero()) {
-                    positiveBalance.remove(positiveEntry.getKey());
-                    break;
+                if(negativeEntry.getValue().isZero()){
+                    continue;
                 }
                 /*Code smells: long comments
-                * Indikator für 3 faelle: A,B: Users 1. |Guthaben(A)|>|Schulden(B)| -> Schulden B = 0(wird entfernt), Guthaben A = balance
-                * repeat with A und Schuldner C (innere loop)
-                * 2. Fall: |Guthaben(A)|<|Schulden(B)| -> Schulden B = Balance, Guthaben A = 0 (wird entfernt)
-                * repeat mit Guthaben D und B break
-                * 3.Fall |Guthaben(A)| = |Schulden(B)| -> Schulden B = Guthaben A = 0 (werden entfernt)
-                * repeat mit Guthaben D und schulden D
-                * */
+                 * Indikator für 3 faelle: A,B: Users 1. |Guthaben(A)|>|Schulden(B)| -> Schulden B = 0(wird geskipppt), Guthaben A = balance
+                 * repeat with A und Schuldner C (innere loop)
+                 * 2. Fall: |Guthaben(A)|<|Schulden(B)| -> Schulden B = Balance, Guthaben A = 0 (wird geskipt)
+                 * repeat mit Guthaben D und B break
+                 * 3.Fall |Guthaben(A)| = |Schulden(B)| -> Schulden B = Guthaben A = 0 (werden geskippt)
+                 * repeat mit Guthaben D und schulden D
+                 * */
                 Money balance = positiveEntry.getValue().add(negativeEntry.getValue());
-                Map.Entry<User, Money> singleTransaction = Map.entry(positiveEntry.getKey(), negativeEntry.getValue().add(balance));
-                negativeEntry.setValue(negativeEntry.getValue().subtract(balance));
+                HashMap<User,Money> necessaryTransaction = new HashMap<>();
 
-                necessaryTransactions.put(negativeEntry.getKey(), Map.of(singleTransaction));
+                if(balance.isPositive()){ //pos > neg
+                    //HIER TRANSAKTION HINZUFÜGEN
+                    necessaryTransactions.putIfAbsent(negativeEntry.getKey(), necessaryTransaction);
+                    necessaryTransactions.get(negativeEntry.getKey()).put(positiveEntry.getKey(), negativeEntry.getValue());
 
+                    positiveEntry.setValue(balance);
+                    positiveBalance.put(positiveEntry.getKey(), positiveEntry.getValue());
+                    negativeBalance.put(negativeEntry.getKey(), Money.of(0,"EUR"));
 
+                }else if(balance.isNegative()){ //neg > pos
+                    //HIER TRANSAKTION HINZUFÜGEN
+                    necessaryTransactions.putIfAbsent(negativeEntry.getKey(), necessaryTransaction);
+                    necessaryTransactions.get(negativeEntry.getKey()).put(positiveEntry.getKey(), positiveEntry.getValue().negate());
 
-                if(balance.isPositiveOrZero()) {
-                  positiveEntry.setValue(balance);
-                  negativeBalance.remove(negativeEntry.getKey());
-                  //continue automatisch?
+                    negativeEntry.setValue(balance);
+                    negativeBalance.put(negativeEntry.getKey(), negativeEntry.getValue());
+                    break;
+                }else{ //neg == pos
+                    //HIER TRANSAKTION HINZUFÜGEN
+                    necessaryTransactions.putIfAbsent(negativeEntry.getKey(), necessaryTransaction);
+                    necessaryTransactions.get(negativeEntry.getKey()).put(positiveEntry.getKey(), negativeEntry.getValue());
+
+                    negativeEntry.setValue(balance);
+                    negativeBalance.put(negativeEntry.getKey(), negativeEntry.getValue());
+                    break;
                 }
-              if(balance.isNegativeOrZero()) {
-                negativeEntry.setValue(balance);
-                positiveBalance.remove(positiveEntry.getKey());
-                //continue automatisch?
-              }
             }
-            // positiveBalance.remove(positiveEntry.getKey());
         }
         return necessaryTransactions;
     }
