@@ -67,7 +67,7 @@ public class TestTransactionService {
 
     HashMap<User, HashMap<User, Money>> balance =  transactionService.calculateNecessaryTransactions(group);
 
-    assertThat(balance.get(user1)).isEmpty();
+    assertThat(balance.get(user1)).isNull();
     Entry<User, Money> entry = Map.entry(user1, Money.of(-15, "EUR"));
     assertThat(balance.get(user2)).containsExactly(entry);
   }
