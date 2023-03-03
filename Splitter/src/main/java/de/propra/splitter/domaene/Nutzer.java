@@ -1,21 +1,21 @@
-package de.propra.splitter.domain;
+package de.propra.splitter.domaene;
 
 import java.util.Objects;
 
 //GitHub: Username may only contain alphanumeric characters or single hyphens, and cannot begin or end with a hyphen.
-public final class User {
+public final class Nutzer {
 
   private final String name;
 
-  public User(String name) {
-    if(!validateUsername(name)){
-      throw new IllegalArgumentException("Username is not conform with Github convention");
+  public Nutzer(String name) {
+    if(!ueberpruefeName(name)){
+      throw new IllegalArgumentException("Nutzername ist nicht konform mit GitHub-Namenskonvention");
     }
 
     this.name = name;
   }
 
-  private boolean validateUsername(String name) {
+  private boolean ueberpruefeName(String name) {
 
 
 
@@ -41,7 +41,7 @@ public final class User {
       return true;
     if (obj == null || obj.getClass() != this.getClass())
       return false;
-    var that = (User) obj;
+    var that = (Nutzer) obj;
     return Objects.equals(this.name, that.name);
   }
 

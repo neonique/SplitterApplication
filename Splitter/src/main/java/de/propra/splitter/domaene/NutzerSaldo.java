@@ -1,19 +1,19 @@
-package de.propra.splitter.domain;
+package de.propra.splitter.domaene;
 
 import org.javamoney.moneta.Money;
 
 import java.util.Objects;
 
 public final class NutzerSaldo {
-    private final User nutzer;
+    private final Nutzer nutzer;
     private Money saldo;
 
-    public NutzerSaldo(User nutzer, Money saldo) {
+    public NutzerSaldo(Nutzer nutzer, Money saldo) {
         this.nutzer = nutzer;
         this.saldo = saldo;
     }
 
-    public User nutzer() {
+    public Nutzer nutzer() {
         return nutzer;
     }
 
@@ -21,7 +21,7 @@ public final class NutzerSaldo {
         return saldo;
     }
 
-    public void setSaldo(Money saldo){
+    public void saldoSetzen(Money saldo){
         this.saldo = saldo;
     }
 
