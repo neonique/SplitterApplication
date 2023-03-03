@@ -1,11 +1,13 @@
-package de.propra.splitter.services;
+package de.propra.splitter.domain;
 
-import de.propra.splitter.domaene.Gruppe;
-import de.propra.splitter.domaene.Nutzer;
+import de.propra.splitter.domain.Gruppe;
+import de.propra.splitter.domain.Nutzer;
 import java.util.HashMap;
+
+import de.propra.splitter.domain.TransaktionsService;
 import org.javamoney.moneta.Money;
 
-public class MinimalerTransaktionsService implements TransaktionsService {
+class MinimalerTransaktionsService implements TransaktionsService {
 
   @Override
   public HashMap<Nutzer, HashMap<Nutzer, Money>> berechneNotwendigeTransaktionen(Gruppe gruppe) {

@@ -1,4 +1,6 @@
-package de.propra.splitter.domaene;
+package de.propra.splitter.domain;
+
+import org.javamoney.moneta.Money;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -24,24 +26,24 @@ public class Gruppe {
     this.teilnehmer.add(teilnehmer);
   }
 
-  public Set<Nutzer> teilnehmer() {
+  private Set<Nutzer> teilnehmer() {
     return teilnehmer;
   }
 
-  public void addTransaktion(Transaktion transaktion) {
-    if(!teilnehmer.containsAll(transaktion.bettler())){
+  public void addTransaktion(Nutzer sponsor,Set<Nutzer> bettler, Money betrag, String beschreibung) {
+    if(!teilnehmer.containsAll(bettler)||!teilnehmer.contains(sponsor)){
       throw new IllegalArgumentException("invalider nutzer in transaktion");
     }
-    if(transaktion.betrag().isNegativeOrZero()){
+    if(betrag.isNegativeOrZero()){
       throw new IllegalArgumentException("Transaktionsbetraege muessen positiv sein.");
     }
     if(this.isclosed()){
       throw new RuntimeException("Transaktionen koennen nicht zu geschlossenen Gruppen hinzugefuegt werden");
     }
 
-    transaktionen.add(transaktion);
+    transaktionen.add(new Transaktion(sponsor, bettler, betrag, beschreibung));
   }
-  public Set<Transaktion> transaktionen(){
+  Set<Transaktion> transaktionen(){
     return transaktionen;
   }
   public boolean containsNutzer(Nutzer nutzer) {

@@ -1,10 +1,10 @@
-package de.propra.splitter.domaene;
+package de.propra.splitter.domain;
 
 import org.javamoney.moneta.Money;
 
 import java.util.Objects;
 
-public final class NutzerSaldo {
+final class NutzerSaldo {
     private final Nutzer nutzer;
     private Money saldo;
 

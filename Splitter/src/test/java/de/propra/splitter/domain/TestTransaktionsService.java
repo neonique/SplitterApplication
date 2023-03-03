@@ -1,8 +1,7 @@
-package de.propra.splitter.services;
+package de.propra.splitter.domain;
 
-import de.propra.splitter.domaene.Gruppe;
-import de.propra.splitter.domaene.Transaktion;
-import de.propra.splitter.domaene.Nutzer;
+import de.propra.splitter.domain.*;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;

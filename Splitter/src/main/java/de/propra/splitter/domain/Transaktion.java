@@ -1,11 +1,11 @@
-package de.propra.splitter.domaene;
+package de.propra.splitter.domain;
 
 import java.util.Objects;
 import java.util.Set;
 import org.javamoney.moneta.Money;
 import org.springframework.lang.NonNull;
 
-public final class Transaktion {
+final class Transaktion {
 
   @NonNull
   private final Nutzer sponsor;
@@ -16,7 +16,7 @@ public final class Transaktion {
   @NonNull
   private final String beschreibung;
 
-  public Transaktion(@NonNull Nutzer sponsor, @NonNull Set<Nutzer> bettler, @NonNull Money betrag,
+  Transaktion(@NonNull Nutzer sponsor, @NonNull Set<Nutzer> bettler, @NonNull Money betrag,
       @NonNull String beschreibung) {
     if(bettler.isEmpty()) {
       throw new IllegalArgumentException("Transaktionen muessen Bettler haben");
@@ -30,34 +30,34 @@ public final class Transaktion {
     this.beschreibung = beschreibung;
   }
 
-  public boolean isBettler(Nutzer nutzer) {
+  boolean isBettler(Nutzer nutzer) {
     return bettler.contains(nutzer);
   }
 
-  public boolean isSponsor(Nutzer nutzer) {
+  boolean isSponsor(Nutzer nutzer) {
     return nutzer.equals(sponsor);
   }
 
-  public boolean isTeilnehmer(Nutzer nutzer) {
+  boolean isTeilnehmer(Nutzer nutzer) {
     return isSponsor(nutzer) || isBettler(nutzer);
   }
 
-  public int countBettler() {
+  int countBettler() {
     return bettler.size();
   }
 
   @NonNull
-  public Nutzer sponsor() {
+  Nutzer sponsor() {
     return sponsor;
   }
 
   @NonNull
-  public Set<Nutzer> bettler() {
+  Set<Nutzer> bettler() {
     return bettler;
   }
 
   @NonNull
-  public Money betrag() {
+  Money betrag() {
     return betrag;
   }
 
