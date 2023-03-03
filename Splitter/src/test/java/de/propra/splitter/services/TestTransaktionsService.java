@@ -21,10 +21,10 @@ public class TestTransaktionsService {
     Nutzer nutzer1 = new Nutzer("Josch");
     Nutzer nutzer2 = new Nutzer("ellis");
     Gruppe gruppe = new Gruppe(nutzer1);
-    gruppe.nutzerHinzufuegen(nutzer2);
+    gruppe.addNutzer(nutzer2);
     Money m1 = Money.of(20, "EUR");
     Transaktion transaktion = new Transaktion(nutzer1, Set.of(nutzer2), m1, "");
-    gruppe.transaktionHinzufuegen(transaktion);
+    gruppe.addTransaktion(transaktion);
 
     Money u1Saldo = transaktionsService.berechneNutzerSaldo(nutzer1, gruppe);
     Money u2Saldo = transaktionsService.berechneNutzerSaldo(nutzer2, gruppe);
@@ -39,10 +39,10 @@ public class TestTransaktionsService {
     Nutzer nutzer1 = new Nutzer("Josch");
     Nutzer nutzer2 = new Nutzer("ellis");
     Gruppe gruppe = new Gruppe(nutzer1);
-    gruppe.nutzerHinzufuegen(nutzer2);
+    gruppe.addNutzer(nutzer2);
     Money m1 = Money.of(20, "EUR");
     Transaktion transaktion = new Transaktion(nutzer1, Set.of(nutzer2, nutzer1), m1, "");
-    gruppe.transaktionHinzufuegen(transaktion);
+    gruppe.addTransaktion(transaktion);
 
     Money u1Saldo = transaktionsService.berechneNutzerSaldo(nutzer1, gruppe);
     Money u2Saldo = transaktionsService.berechneNutzerSaldo(nutzer2, gruppe);
@@ -57,13 +57,13 @@ public class TestTransaktionsService {
     Nutzer nutzer1 = new Nutzer("a");
     Nutzer nutzer2 = new Nutzer("b");
     Gruppe gruppe = new Gruppe(nutzer1);
-    gruppe.nutzerHinzufuegen(nutzer2);
+    gruppe.addNutzer(nutzer2);
     Money m1 = Money.of(10, "EUR");
     Money m2 = Money.of(20, "EUR");
     Transaktion transaktion1 = new Transaktion(nutzer1, Set.of(nutzer2, nutzer1), m1, "");
     Transaktion transaktion2 = new Transaktion(nutzer1, Set.of(nutzer2, nutzer1), m2, "");
-    gruppe.transaktionHinzufuegen(transaktion1);
-    gruppe.transaktionHinzufuegen(transaktion2);
+    gruppe.addTransaktion(transaktion1);
+    gruppe.addTransaktion(transaktion2);
 
     HashMap<Nutzer, HashMap<Nutzer, Money>> balance =  transaktionsService.berechneNotwendigeTransaktionen(
         gruppe);
@@ -78,13 +78,13 @@ public class TestTransaktionsService {
     Nutzer nutzer1 = new Nutzer("a");
     Nutzer nutzer2 = new Nutzer("b");
     Gruppe gruppe = new Gruppe(nutzer1);
-    gruppe.nutzerHinzufuegen(nutzer2);
+    gruppe.addNutzer(nutzer2);
     Money m1 = Money.of(10, "EUR");
     Money m2 = Money.of(20, "EUR");
     Transaktion transaktion1 = new Transaktion(nutzer1, Set.of(nutzer2, nutzer1), m1, "");
     Transaktion transaktion2 = new Transaktion(nutzer2, Set.of(nutzer2, nutzer1), m2, "");
-    gruppe.transaktionHinzufuegen(transaktion1);
-    gruppe.transaktionHinzufuegen(transaktion2);
+    gruppe.addTransaktion(transaktion1);
+    gruppe.addTransaktion(transaktion2);
 
     HashMap<Nutzer, HashMap<Nutzer, Money>> balance =  transaktionsService.berechneNotwendigeTransaktionen(
         gruppe);
@@ -100,13 +100,13 @@ public class TestTransaktionsService {
     Nutzer nutzer1 = new Nutzer("a");
     Nutzer nutzer2 = new Nutzer("b");
     Gruppe gruppe = new Gruppe(nutzer1);
-    gruppe.nutzerHinzufuegen(nutzer2);
+    gruppe.addNutzer(nutzer2);
     Money m1 = Money.of(10, "EUR");
     Money m2 = Money.of(20, "EUR");
     Transaktion transaktion1 = new Transaktion(nutzer1, Set.of(nutzer2), m1, "");
     Transaktion transaktion2 = new Transaktion(nutzer1, Set.of(nutzer2, nutzer1), m2, "");
-    gruppe.transaktionHinzufuegen(transaktion1);
-    gruppe.transaktionHinzufuegen(transaktion2);
+    gruppe.addTransaktion(transaktion1);
+    gruppe.addTransaktion(transaktion2);
 
     HashMap<Nutzer, HashMap<Nutzer, Money>> balance =  transaktionsService.berechneNotwendigeTransaktionen(
         gruppe);
@@ -123,17 +123,17 @@ public class TestTransaktionsService {
     Nutzer nutzer2 = new Nutzer("b");
     Nutzer nutzer3 = new Nutzer("c");
     Gruppe gruppe = new Gruppe(nutzer1);
-    gruppe.nutzerHinzufuegen(nutzer2);
-    gruppe.nutzerHinzufuegen(nutzer3);
+    gruppe.addNutzer(nutzer2);
+    gruppe.addNutzer(nutzer3);
     Money m1 = Money.of(10, "EUR");
     Money m2 = Money.of(10, "EUR");
     Money m3 = Money.of(10, "EUR");
     Transaktion transaktion1 = new Transaktion(nutzer1, Set.of(nutzer2, nutzer1), m1, "");
     Transaktion transaktion2 = new Transaktion(nutzer2, Set.of(nutzer2, nutzer3), m2, "");
     Transaktion transaktion3 = new Transaktion(nutzer3, Set.of(nutzer3, nutzer1), m3, "");
-    gruppe.transaktionHinzufuegen(transaktion1);
-    gruppe.transaktionHinzufuegen(transaktion2);
-    gruppe.transaktionHinzufuegen(transaktion3);
+    gruppe.addTransaktion(transaktion1);
+    gruppe.addTransaktion(transaktion2);
+    gruppe.addTransaktion(transaktion3);
 
     HashMap<Nutzer, HashMap<Nutzer, Money>> balance =  transaktionsService.berechneNotwendigeTransaktionen(
         gruppe);
@@ -150,17 +150,17 @@ public class TestTransaktionsService {
     Nutzer nutzer2 = new Nutzer("b");
     Nutzer nutzer3 = new Nutzer("c");
     Gruppe gruppe = new Gruppe(nutzer1);
-    gruppe.nutzerHinzufuegen(nutzer2);
-    gruppe.nutzerHinzufuegen(nutzer3);
+    gruppe.addNutzer(nutzer2);
+    gruppe.addNutzer(nutzer3);
     Money m1 = Money.of(60, "EUR");
     Money m2 = Money.of(30, "EUR");
     Money m3 = Money.of(100, "EUR");
     Transaktion transaktion1 = new Transaktion(nutzer1, Set.of(nutzer1, nutzer2, nutzer3), m1, "");
     Transaktion transaktion2 = new Transaktion(nutzer2, Set.of(nutzer1, nutzer2, nutzer3), m2, "");
     Transaktion transaktion3 = new Transaktion(nutzer3, Set.of(nutzer2, nutzer3), m3, "");
-    gruppe.transaktionHinzufuegen(transaktion1);
-    gruppe.transaktionHinzufuegen(transaktion2);
-    gruppe.transaktionHinzufuegen(transaktion3);
+    gruppe.addTransaktion(transaktion1);
+    gruppe.addTransaktion(transaktion2);
+    gruppe.addTransaktion(transaktion3);
 
     HashMap<Nutzer, HashMap<Nutzer, Money>> balance = transaktionsService.berechneNotwendigeTransaktionen(
         gruppe);
@@ -183,11 +183,11 @@ public class TestTransaktionsService {
     Nutzer nutzer5 = new Nutzer("e");
     Nutzer nutzer6 = new Nutzer("f");
     Gruppe gruppe = new Gruppe(nutzer1);
-    gruppe.nutzerHinzufuegen(nutzer2);
-    gruppe.nutzerHinzufuegen(nutzer3);
-    gruppe.nutzerHinzufuegen(nutzer4);
-    gruppe.nutzerHinzufuegen(nutzer5);
-    gruppe.nutzerHinzufuegen(nutzer6);
+    gruppe.addNutzer(nutzer2);
+    gruppe.addNutzer(nutzer3);
+    gruppe.addNutzer(nutzer4);
+    gruppe.addNutzer(nutzer5);
+    gruppe.addNutzer(nutzer6);
     Money m1 = Money.of(564, "EUR");
     Money m2 = Money.of(38.58, "EUR");
     Money m3 = Money.of(38.58, "EUR");
@@ -202,12 +202,12 @@ public class TestTransaktionsService {
     Transaktion transaktion5 = new Transaktion(
         nutzer4, Set.of(nutzer1, nutzer2, nutzer3, nutzer4, nutzer5, nutzer6), m5, "Städtetour");
     Transaktion transaktion6 = new Transaktion(nutzer6, Set.of(nutzer2, nutzer5, nutzer6), m6, "Theatervorstellung");
-    gruppe.transaktionHinzufuegen(transaktion1);
-    gruppe.transaktionHinzufuegen(transaktion2);
-    gruppe.transaktionHinzufuegen(transaktion3);
-    gruppe.transaktionHinzufuegen(transaktion4);
-    gruppe.transaktionHinzufuegen(transaktion5);
-    gruppe.transaktionHinzufuegen(transaktion6);
+    gruppe.addTransaktion(transaktion1);
+    gruppe.addTransaktion(transaktion2);
+    gruppe.addTransaktion(transaktion3);
+    gruppe.addTransaktion(transaktion4);
+    gruppe.addTransaktion(transaktion5);
+    gruppe.addTransaktion(transaktion6);
 
     HashMap<Nutzer, HashMap<Nutzer, Money>> balance = transaktionsService.berechneNotwendigeTransaktionen(
         gruppe);

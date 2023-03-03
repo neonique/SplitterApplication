@@ -42,7 +42,7 @@ public class EinfacherTransaktionsService implements TransaktionsService {
                 necessaryTransactions.putIfAbsent(beggar.nutzer(), necessaryTransaction);
                 necessaryTransactions.get(beggar.nutzer()).put(sponsor.nutzer(), beggar.saldo());
 
-                sponsor.saldoSetzen(balance);
+                sponsor.setSaldo(balance);
                 beggar = negativeBalance.poll();
 
             } else if (balance.isNegative()) {
@@ -50,7 +50,7 @@ public class EinfacherTransaktionsService implements TransaktionsService {
                 necessaryTransactions.putIfAbsent(beggar.nutzer(), necessaryTransaction);;
                 necessaryTransactions.get(beggar.nutzer()).put(sponsor.nutzer(), sponsor.saldo().negate());
 
-                beggar.saldoSetzen(balance);
+                beggar.setSaldo(balance);
                 sponsor = positiveBalance.poll();
             } else {
 
@@ -68,19 +68,19 @@ public class EinfacherTransaktionsService implements TransaktionsService {
     public Money berechneNutzerSaldo(Nutzer nutzer, Gruppe gruppe) {
         Set<Transaktion> userTransaktions = gruppe.transaktionen()
                 .stream()
-                .filter(a -> a.istTeilnehmer(nutzer))
+                .filter(a -> a.isTeilnehmer(nutzer))
                 .collect(Collectors.toSet());
         Set<Transaktion> userBeggarTransaktions = userTransaktions
                 .stream()
-                .filter(a -> a.istBettler(nutzer))
+                .filter(a -> a.isBettler(nutzer))
                 .collect(Collectors.toSet());
         Set<Transaktion> userSponsorTransaktions = userTransaktions
                 .stream()
-                .filter(a -> a.istSponsor(nutzer))
+                .filter(a -> a.isSponsor(nutzer))
                 .collect(Collectors.toSet());
 
         Money beggarMoney = userBeggarTransaktions
-                .stream().map(a -> a.betrag().divide(a.zaehleBettler()))
+                .stream().map(a -> a.betrag().divide(a.countBettler()))
                 .reduce(Money.of(0, "EUR"), (a, b) -> a.add(b));
         Money sponsorMoney = userSponsorTransaktions
                 .stream().map(a -> a.betrag())

@@ -21,7 +21,7 @@ public final class NutzerSaldo {
         return saldo;
     }
 
-    public void saldoSetzen(Money saldo){
+    public void setSaldo(Money saldo){
         this.saldo = saldo;
     }
 

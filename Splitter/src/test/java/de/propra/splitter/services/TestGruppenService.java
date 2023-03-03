@@ -43,7 +43,7 @@ public class TestGruppenService {
     Gruppe gruppe1 = new Gruppe(nutzer1);
     Gruppe gruppe2 = new Gruppe(nutzer1);
 
-    gruppe2.schliessen();
+    gruppe2.close();
     HashSet<Gruppe> gruppen = new HashSet<>(Set.of(gruppe1, gruppe2));
 
     HashSet<Gruppe> closed = gruppenService.geschlosseneNutzerGruppen(gruppen, nutzer1);
@@ -57,7 +57,7 @@ public class TestGruppenService {
     Gruppe gruppe1 = new Gruppe(nutzer1);
     Gruppe gruppe2 = new Gruppe(nutzer1);
 
-    gruppe2.schliessen();
+    gruppe2.close();
     HashSet<Gruppe> gruppen = new HashSet<>(Set.of(gruppe1, gruppe2));
 
     HashSet<Gruppe> open = gruppenService.offeneNutzerGruppen(gruppen, nutzer1);

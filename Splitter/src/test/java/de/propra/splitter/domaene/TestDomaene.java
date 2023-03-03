@@ -27,7 +27,7 @@ public class TestDomaene {
     Nutzer participant = new Nutzer("Nick");
 
     Gruppe gruppe = new Gruppe(nutzer);
-    gruppe.nutzerHinzufuegen(participant);
+    gruppe.addNutzer(participant);
 
     assertThat(gruppe.teilnehmer()).contains(participant, nutzer);
   }
@@ -37,11 +37,11 @@ public class TestDomaene {
     //arrange
     Gruppe gruppe = new Gruppe(nutzer);
     Set<Nutzer> participants =Set.of(new Nutzer("A"),new Nutzer("b"));
-    participants.forEach(gruppe::nutzerHinzufuegen);
+    participants.forEach(gruppe::addNutzer);
     Money amount= Money.of(20.50 ,"EUR");
     Transaktion transaktion =new Transaktion(nutzer,participants,amount, "");
     //act
-    gruppe.transaktionHinzufuegen(transaktion);
+    gruppe.addTransaktion(transaktion);
     //assert
     assertThat(gruppe.transaktionen()).contains(transaktion);
 
@@ -54,13 +54,13 @@ public class TestDomaene {
     Gruppe gruppe = new Gruppe(nutzer);
     Set<Nutzer> participants = new HashSet<> ();
     participants.addAll(Set.of(new Nutzer("A"),new Nutzer("b")));
-    participants.forEach(gruppe::nutzerHinzufuegen);
+    participants.forEach(gruppe::addNutzer);
     Money amount= Money.of(20.50 ,"EUR");
     participants.add(new Nutzer("Jeremy"));
     Transaktion transaktion =new Transaktion(nutzer,participants,amount, "" );
     //act
     IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
-      gruppe.transaktionHinzufuegen(transaktion);
+      gruppe.addTransaktion(transaktion);
     });
     //assert
     assertThat("invalider nutzer in transaktion").isEqualTo(thrown.getMessage());
@@ -74,12 +74,12 @@ public class TestDomaene {
     Set<Nutzer> participants = new HashSet<> ();
     Nutzer b = new Nutzer("B");
     participants.addAll(Set.of(new Nutzer("A"),b));
-    participants.forEach(gruppe::nutzerHinzufuegen);
+    participants.forEach(gruppe::addNutzer);
     Money amount= Money.of(20.50 ,"EUR");
     participants.remove(b);
     Transaktion transaktion =new Transaktion(nutzer,participants,amount, "");
     //act
-    gruppe.transaktionHinzufuegen(transaktion);
+    gruppe.addTransaktion(transaktion);
     //assert
     assertThat(gruppe.transaktionen()).contains(transaktion);
   }
@@ -90,15 +90,15 @@ public class TestDomaene {
     //arrange
     Gruppe gruppe = new Gruppe(nutzer);
     Set<Nutzer> participants =Set.of(new Nutzer("A"),new Nutzer("b"));
-    participants.forEach(gruppe::nutzerHinzufuegen);
+    participants.forEach(gruppe::addNutzer);
     Money amount= Money.of(20.50 ,"EUR");
     Transaktion transaktion =new Transaktion(nutzer,participants,amount, "");
 
     //act
-    gruppe.transaktionHinzufuegen(transaktion);
+    gruppe.addTransaktion(transaktion);
 
     RuntimeException thrown = assertThrows(RuntimeException.class, () -> {
-      gruppe.nutzerHinzufuegen(new Nutzer("Ellis"));
+      gruppe.addNutzer(new Nutzer("Ellis"));
     });
     //assert
     assertThat("Nutzer koennen nach der ersten Transaktion nicht mehr zur Gruppe hinzugefuegt werden.").isEqualTo(thrown.getMessage());
@@ -111,12 +111,12 @@ public class TestDomaene {
     //arrange
     Gruppe gruppe = new Gruppe(nutzer);
     Set<Nutzer> participants =Set.of(new Nutzer("A"),new Nutzer("b"));
-    participants.forEach(gruppe::nutzerHinzufuegen);
+    participants.forEach(gruppe::addNutzer);
     Money amount= Money.of(-20.50 ,"EUR");
     Transaktion transaktion =new Transaktion(nutzer,participants,amount, "");
     //act
     IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
-      gruppe.transaktionHinzufuegen(transaktion);
+      gruppe.addTransaktion(transaktion);
     });
     //assert
     assertThat("Transaktionsbetraege muessen positiv sein.").isEqualTo(thrown.getMessage());
@@ -129,12 +129,12 @@ public class TestDomaene {
     //arrange
     Gruppe gruppe = new Gruppe(nutzer);
     Set<Nutzer> participants =Set.of(new Nutzer("A"),new Nutzer("b"));
-    participants.forEach(gruppe::nutzerHinzufuegen);
+    participants.forEach(gruppe::addNutzer);
     Money amount= Money.of(0 ,"EUR");
     Transaktion transaktion =new Transaktion(nutzer,participants,amount, "");
     //act
     IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
-      gruppe.transaktionHinzufuegen(transaktion);
+      gruppe.addTransaktion(transaktion);
     });
     //assert
     assertThat("Transaktionsbetraege muessen positiv sein.").isEqualTo(thrown.getMessage());
@@ -176,9 +176,9 @@ public class TestDomaene {
   void test_09(){
     Gruppe g = new Gruppe(nutzer);
 
-    g.schliessen();
+    g.close();
 
-    assertThat(g.istGeschlossen());
+    assertThat(g.isclosed());
   }
 
   @Test()
@@ -187,12 +187,12 @@ public class TestDomaene {
     Gruppe gruppe = new Gruppe(nutzer);
     Money amount= Money.of(20 ,"EUR");
     Set<Nutzer> participants =Set.of(new Nutzer("A"),new Nutzer("b"));
-    participants.forEach(gruppe::nutzerHinzufuegen);
+    participants.forEach(gruppe::addNutzer);
     Transaktion transaktion = new Transaktion(nutzer, participants, amount, "");
 
-    gruppe.schliessen();
+    gruppe.close();
     RuntimeException thrown = assertThrows(RuntimeException.class, () -> {
-      gruppe.transaktionHinzufuegen(transaktion);
+      gruppe.addTransaktion(transaktion);
     });
 
     assertThat("Transaktionen koennen nicht zu geschlossenen Gruppen hinzugefuegt werden").isEqualTo(thrown.getMessage());
@@ -207,9 +207,9 @@ public class TestDomaene {
     Gruppe gruppe = new Gruppe(nutzer);
     Nutzer nutzer2 = new Nutzer("Jeremy");
 
-    gruppe.schliessen();
+    gruppe.close();
     RuntimeException thrown = assertThrows(RuntimeException.class, () -> {
-      gruppe.nutzerHinzufuegen(nutzer2);
+      gruppe.addNutzer(nutzer2);
     });
 
     assertThat("Nutzer koennen nicht zu geschlossenen Gruppen hinzugefuegt werden").isEqualTo(thrown.getMessage());
@@ -220,7 +220,7 @@ public class TestDomaene {
     Set<Nutzer> participants =Set.of(new Nutzer("A"),new Nutzer("b"));
     Transaktion transaktion =new Transaktion(nutzer,participants,Money.of(90,"EUR"), "");
 
-   assertThat(transaktion.zaehleBettler()).isEqualTo(2);
+   assertThat(transaktion.countBettler()).isEqualTo(2);
 
   }
 
@@ -230,7 +230,7 @@ public class TestDomaene {
     Set<Nutzer> participants =Set.of(new Nutzer("A"),new Nutzer("b"), nutzer);
     Transaktion transaktion =new Transaktion(nutzer,participants,Money.of(90,"EUR"), "");
 
-    assertThat(transaktion.zaehleBettler()).isEqualTo(3);
+    assertThat(transaktion.countBettler()).isEqualTo(3);
   }
   @Test()
   @DisplayName("ueberpruefe ob Nutzer Teilnehmer der Transaktion ist ")
@@ -240,9 +240,9 @@ public class TestDomaene {
     Set<Nutzer> participants =Set.of(new Nutzer("b"), nutzer3);
     Transaktion transaktion =new Transaktion(nutzer,participants,Money.of(90,"EUR"), "");
 
-    assertThat(transaktion.istTeilnehmer(nutzer));
-    assertThat(transaktion.istTeilnehmer(nutzer3));
-    assertThat(transaktion.istTeilnehmer(nutzer2)).isFalse();
+    assertThat(transaktion.isTeilnehmer(nutzer));
+    assertThat(transaktion.isTeilnehmer(nutzer3));
+    assertThat(transaktion.isTeilnehmer(nutzer2)).isFalse();
 
   }
   @Test()
@@ -253,9 +253,9 @@ public class TestDomaene {
     Set<Nutzer> participants =Set.of(new Nutzer("b"), nutzer3);
     Transaktion transaktion =new Transaktion(nutzer,participants,Money.of(90,"EUR"), "");
 
-    assertThat(transaktion.istSponsor(nutzer));
-    assertThat(transaktion.istSponsor(nutzer3)).isFalse();
-    assertThat(transaktion.istSponsor(nutzer2)).isFalse();
+    assertThat(transaktion.isSponsor(nutzer));
+    assertThat(transaktion.isSponsor(nutzer3)).isFalse();
+    assertThat(transaktion.isSponsor(nutzer2)).isFalse();
 
   }
   @Test()
@@ -266,9 +266,9 @@ public class TestDomaene {
     Set<Nutzer> participants =Set.of(new Nutzer("b"), nutzer3);
     Transaktion transaktion =new Transaktion(nutzer,participants,Money.of(90,"EUR"), "");
 
-    assertThat(transaktion.istBettler(nutzer)).isFalse();
-    assertThat(transaktion.istBettler(nutzer3));
-    assertThat(transaktion.istBettler(nutzer2)).isFalse();
+    assertThat(transaktion.isBettler(nutzer)).isFalse();
+    assertThat(transaktion.isBettler(nutzer3));
+    assertThat(transaktion.isBettler(nutzer2)).isFalse();
 
   }
 

@@ -30,19 +30,19 @@ public final class Transaktion {
     this.beschreibung = beschreibung;
   }
 
-  public boolean istBettler(Nutzer nutzer) {
+  public boolean isBettler(Nutzer nutzer) {
     return bettler.contains(nutzer);
   }
 
-  public boolean istSponsor(Nutzer nutzer) {
+  public boolean isSponsor(Nutzer nutzer) {
     return nutzer.equals(sponsor);
   }
 
-  public boolean istTeilnehmer(Nutzer nutzer) {
-    return istSponsor(nutzer) || istBettler(nutzer);
+  public boolean isTeilnehmer(Nutzer nutzer) {
+    return isSponsor(nutzer) || isBettler(nutzer);
   }
 
-  public int zaehleBettler() {
+  public int countBettler() {
     return bettler.size();
   }
 

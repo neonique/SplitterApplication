@@ -8,14 +8,14 @@ public final class Nutzer {
   private final String name;
 
   public Nutzer(String name) {
-    if(!ueberpruefeName(name)){
+    if(!validateName(name)){
       throw new IllegalArgumentException("Nutzername ist nicht konform mit GitHub-Namenskonvention");
     }
 
     this.name = name;
   }
 
-  private boolean ueberpruefeName(String name) {
+  private boolean validateName(String name) {
 
 
 

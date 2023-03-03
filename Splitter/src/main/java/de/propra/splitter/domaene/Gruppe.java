@@ -14,11 +14,11 @@ public class Gruppe {
   }
 
 
-  public void nutzerHinzufuegen(Nutzer teilnehmer) {
+  public void addNutzer(Nutzer teilnehmer) {
     if(!transaktionen.isEmpty()){
       throw new RuntimeException("Nutzer koennen nach der ersten Transaktion nicht mehr zur Gruppe hinzugefuegt werden.");
     }
-    if(this.istGeschlossen()){
+    if(this.isclosed()){
       throw new RuntimeException("Nutzer koennen nicht zu geschlossenen Gruppen hinzugefuegt werden");
     }
     this.teilnehmer.add(teilnehmer);
@@ -28,14 +28,14 @@ public class Gruppe {
     return teilnehmer;
   }
 
-  public void transaktionHinzufuegen(Transaktion transaktion) {
+  public void addTransaktion(Transaktion transaktion) {
     if(!teilnehmer.containsAll(transaktion.bettler())){
       throw new IllegalArgumentException("invalider nutzer in transaktion");
     }
     if(transaktion.betrag().isNegativeOrZero()){
       throw new IllegalArgumentException("Transaktionsbetraege muessen positiv sein.");
     }
-    if(this.istGeschlossen()){
+    if(this.isclosed()){
       throw new RuntimeException("Transaktionen koennen nicht zu geschlossenen Gruppen hinzugefuegt werden");
     }
 
@@ -44,14 +44,14 @@ public class Gruppe {
   public Set<Transaktion> transaktionen(){
     return transaktionen;
   }
-  public boolean enthaeltNutzer(Nutzer nutzer) {
+  public boolean containsNutzer(Nutzer nutzer) {
     return teilnehmer.contains(nutzer);
   }
 
-  public boolean istGeschlossen(){
+  public boolean isclosed(){
     return geschlossen;
   }
-  public void schliessen(){
+  public void close(){
    geschlossen =true;
   }
 }
