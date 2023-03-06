@@ -1,6 +1,5 @@
 package de.propra.splitter.domain;
 
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -50,8 +49,8 @@ public class TestTransaktionsService {
   @DisplayName("jens test 1")
   @Test
   void test_03(){
-    Nutzer nutzer1 = new Nutzer("a");
-    Nutzer nutzer2 = new Nutzer("b");
+   String nutzer1 = "a";
+    String nutzer2 = "b";
     Gruppe gruppe = new Gruppe(nutzer1);
     gruppe.addNutzer(nutzer2);
     Money m1 = Money.of(10, "EUR");
@@ -68,8 +67,8 @@ public class TestTransaktionsService {
   @DisplayName("jens test 2")
   @Test
   void test_04(){
-    Nutzer nutzer1 = new Nutzer("a");
-    Nutzer nutzer2 = new Nutzer("b");
+   String nutzer1 = "a";
+    String nutzer2 = "b";
     Gruppe gruppe = new Gruppe(nutzer1);
     gruppe.addNutzer(nutzer2);
     Money m1 = Money.of(10, "EUR");
@@ -87,8 +86,8 @@ public class TestTransaktionsService {
   @DisplayName("jens test 3")
   @Test
   void test_05(){
-    Nutzer nutzer1 = new Nutzer("a");
-    Nutzer nutzer2 = new Nutzer("b");
+   String nutzer1 = "a";
+    String nutzer2 = "b";
     Gruppe gruppe = new Gruppe(nutzer1);
     gruppe.addNutzer(nutzer2);
     Money m1 = Money.of(10, "EUR");
@@ -106,8 +105,8 @@ public class TestTransaktionsService {
   @DisplayName("jens test 4")
   @Test
   void test_06(){
-    Nutzer nutzer1 = new Nutzer("a");
-    Nutzer nutzer2 = new Nutzer("b");
+   String nutzer1 = "a";
+    String nutzer2 = "b";
     Nutzer nutzer3 = new Nutzer("c");
     Gruppe gruppe = new Gruppe(nutzer1);
     gruppe.addNutzer(nutzer2);
@@ -129,8 +128,8 @@ public class TestTransaktionsService {
   @DisplayName("jens test 5")
   @Test
   void test_07() {
-    Nutzer nutzer1 = new Nutzer("a");
-    Nutzer nutzer2 = new Nutzer("b");
+   String nutzer1 = "a";
+    String nutzer2 = "b";
     Nutzer nutzer3 = new Nutzer("c");
     Gruppe gruppe = new Gruppe(nutzer1);
     gruppe.addNutzer(nutzer2);
@@ -155,8 +154,8 @@ public class TestTransaktionsService {
   @DisplayName("jens test 6")
   @Test
   void test_08() {
-    Nutzer nutzer1 = new Nutzer("a");
-    Nutzer nutzer2 = new Nutzer("b");
+   String nutzer1 = "a";
+    String nutzer2 = "b";
     Nutzer nutzer3 = new Nutzer("c");
     Nutzer nutzer4 = new Nutzer("d");
     Nutzer nutzer5 = new Nutzer("e");

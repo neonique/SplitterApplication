@@ -1,8 +1,9 @@
 package de.propra.splitter.domain;
 
+
+import java.util.Map;
 import java.util.stream.Collectors;
 import org.javamoney.moneta.Money;
-import org.springframework.lang.NonNull;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -59,7 +60,14 @@ public class Gruppe {
     return teilnehmer.stream().map(t -> t.name()).collect(Collectors.toSet());
   }
 
-  public void addTransaktion(Nutzer sponsor,Set<Nutzer> bettler, Money betrag, String beschreibung) {
+  public void addTransaktion(String sponsor,Set<String> bettler, Money betrag, String beschreibung) {
+    if(bettler.isEmpty()) {
+      throw new IllegalArgumentException("Transaktionen muessen Bettler haben");
+    }
+    if(bettler.size() == 1 && bettler.contains(sponsor)) {
+      throw new IllegalArgumentException("keine Transaktionen nur an sich selbst");
+    }
+
     if(!teilnehmer.containsAll(bettler)||!teilnehmer.contains(sponsor)){
       throw new IllegalArgumentException("invalider nutzer in transaktion");
     }
@@ -70,7 +78,8 @@ public class Gruppe {
       throw new RuntimeException("Transaktionen koennen nicht zu geschlossenen Gruppen hinzugefuegt werden");
     }
 
-    transaktionen.add(new Transaktion(sponsor, bettler, betrag, beschreibung));
+    transaktionen.add(new Transaktion(new Nutzer(sponsor), bettler.stream().map(b -> new Nutzer(b)).collect(
+        Collectors.toSet()), betrag, beschreibung));
   }
 
   public Set<TransaktionDTO> getTransaktionenData() {
@@ -96,9 +105,26 @@ public class Gruppe {
     return geschlossen;
   }
 
-  public HashMap<Nutzer, HashMap<Nutzer, Money>> NotwendigeTransaktionen(){
+  public HashMap<String, HashMap<String, String>> NotwendigeTransaktionen(){
     TransaktionsService Transaktionenrechner = new EinfacherTransaktionsService();
-    return Transaktionenrechner.berechneNotwendigeTransaktionen(this);
+    HashMap<Nutzer, HashMap<Nutzer, Money>> notwendigeTransaktionen = Transaktionenrechner.berechneNotwendigeTransaktionen(this);
+
+    HashMap<String, HashMap<String, String>> notwendigeTransaktionenString = notwendigeTransaktionen
+        .entrySet()
+        .stream()
+        .collect(Collectors.toMap(
+            e -> e.getKey().name(),
+            e -> e.getValue()
+                .entrySet()
+                .stream()
+                .collect(Collectors.toMap(
+                    e2 -> e2.getKey().name(),
+                    e2 -> e2.getValue().toString()
+                ))
+        ));
+
+
+    return notwendigeTransaktionenString;
   }
   public void close(){
    geschlossen =true;

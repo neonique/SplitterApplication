@@ -3,7 +3,6 @@ package de.propra.splitter.domain;
 import org.javamoney.moneta.Money;
 
 import java.util.Objects;
-
 final class NutzerSaldo {
     private final Nutzer nutzer;
     private Money saldo;

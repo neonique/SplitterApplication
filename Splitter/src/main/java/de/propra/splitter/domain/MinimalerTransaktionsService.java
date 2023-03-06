@@ -1,10 +1,7 @@
 package de.propra.splitter.domain;
 
-import de.propra.splitter.domain.Gruppe;
-import de.propra.splitter.domain.Nutzer;
 import java.util.HashMap;
 
-import de.propra.splitter.domain.TransaktionsService;
 import org.javamoney.moneta.Money;
 
 class MinimalerTransaktionsService implements TransaktionsService {
