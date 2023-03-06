@@ -14,7 +14,8 @@ public class Gruppe {
   private HashSet<Nutzer> teilnehmer = new HashSet<>();
   private HashSet<Transaktion> transaktionen =new HashSet<>();
 
-  public Gruppe(Nutzer nutzer) {
+  public Gruppe(String nutzerName) {
+    Nutzer nutzer = new Nutzer(nutzerName);
     teilnehmer.add(nutzer);
   }
 
@@ -75,16 +76,19 @@ public class Gruppe {
   public Set<TransaktionDTO> getTransaktionenData() {
       Set<TransaktionDTO> transaktionDTOS = transaktionen
           .stream()
-          .map(t -> new TransaktionDTO(t.sponsor().name(), t.bettler().stream().map(b -> b.name()).collect(
-              Collectors.toSet()), t.betrag().toString(), t.beschreibung())).collect(
-              Collectors.toSet());
+          .map(t -> new TransaktionDTO(t.sponsor().name(), t.bettler()
+              .stream()
+              .map(b -> b.name())
+              .collect(Collectors.toSet()), t.betrag().toString(), t.beschreibung()))
+          .collect(Collectors.toSet());
       return transaktionDTOS;
     }
   Set<Transaktion> transaktionen() {
     return Set.copyOf(transaktionen);
   }
 
-  public boolean containsNutzer(Nutzer nutzer) {
+  public boolean containsNutzer(String nutzerName) {
+    Nutzer nutzer = new Nutzer(nutzerName);
     return teilnehmer.contains(nutzer);
   }
 

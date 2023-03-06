@@ -17,8 +17,8 @@ public class TestGruppenService {
   @DisplayName("alle Gruppen eines Nutzers werden gefunden")
   void test_0(){
 
-     Nutzer nutzer1 =new Nutzer("moaz");
-     Nutzer nutzer2 =new Nutzer("nick");
+     String nutzer1 = "moaz";
+     String nutzer2 ="nick";
      Set<Gruppe> gruppen =new HashSet<>();
      Set<Gruppe> nutzer1Gruppen =new HashSet<>();
 
@@ -39,7 +39,7 @@ public class TestGruppenService {
   @Test
   @DisplayName("nur nach geschlossenen Gruppen suchen")
   void test_1(){
-    Nutzer nutzer1 =new Nutzer("moaz");
+    String nutzer1 = "moaz";
     Gruppe gruppe1 = new Gruppe(nutzer1);
     Gruppe gruppe2 = new Gruppe(nutzer1);
 
@@ -53,7 +53,7 @@ public class TestGruppenService {
   @Test
   @DisplayName("nur nach offenen Gruppen suchen")
   void test_2(){
-    Nutzer nutzer1 =new Nutzer("moaz");
+    String nutzer1 = "moaz";
     Gruppe gruppe1 = new Gruppe(nutzer1);
     Gruppe gruppe2 = new Gruppe(nutzer1);
 

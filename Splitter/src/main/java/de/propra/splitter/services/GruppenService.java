@@ -11,19 +11,19 @@ import org.springframework.stereotype.Service;
 @Service
 public class GruppenService {
 
-  public HashSet<Gruppe> nutzerGruppen(Set<Gruppe> gruppen, Nutzer nutzer){
-      return new HashSet<Gruppe>(gruppen.stream().filter(group -> group.containsNutzer(nutzer)).collect(Collectors.toSet()));
+  public HashSet<Gruppe> nutzerGruppen(Set<Gruppe> gruppen, String nutzerName){
+      return new HashSet<Gruppe>(gruppen.stream().filter(group -> group.containsNutzer(nutzerName)).collect(Collectors.toSet()));
   }
 
 
-  public HashSet<Gruppe> offeneNutzerGruppen(Set<Gruppe> gruppen, Nutzer nutzer){
+  public HashSet<Gruppe> offeneNutzerGruppen(Set<Gruppe> gruppen, String nutzerName){
       return new HashSet<Gruppe>(
-          gruppen.stream().filter(group -> group.containsNutzer(nutzer)).filter(Predicate.not(Gruppe::isclosed)).collect(Collectors.toSet()));
+          gruppen.stream().filter(group -> group.containsNutzer(nutzerName)).filter(Predicate.not(Gruppe::isclosed)).collect(Collectors.toSet()));
   }
 
-   public HashSet<Gruppe> geschlosseneNutzerGruppen(Set<Gruppe> gruppen, Nutzer nutzer){
+   public HashSet<Gruppe> geschlosseneNutzerGruppen(Set<Gruppe> gruppen, String nutzerName){
       return new HashSet<Gruppe>(
-          gruppen.stream().filter(group -> group.containsNutzer(nutzer)).filter(Gruppe::isclosed).collect(Collectors.toSet()));
+          gruppen.stream().filter(group -> group.containsNutzer(nutzerName)).filter(Gruppe::isclosed).collect(Collectors.toSet()));
   }
 
 }
