@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class GruppenService {
 
+  public HashSet<Gruppe> loadGruppen(){
+    return null;
+  }
   public HashSet<Gruppe> nutzerGruppen(Set<Gruppe> gruppen, String nutzerName){
       return new HashSet<Gruppe>(gruppen.stream().filter(group -> group.containsNutzer(nutzerName)).collect(Collectors.toSet()));
   }

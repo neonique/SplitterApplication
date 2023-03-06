@@ -1,17 +1,17 @@
-package de.propra.splitter.domain;
+package de.propra.splitter.domain.calculation;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import de.propra.splitter.domain.Gruppe;
+import de.propra.splitter.domain.Nutzer;
 import java.util.Set;
 import org.javamoney.moneta.Money;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import static org.assertj.core.api.Assertions.assertThat;
 
-public class TestTransaktionsService {
+public class TestTransaktionenBerechnung {
 /*
-  TransaktionsService transaktionsService = new EinfacherTransaktionsService();
+  TransaktionenBerechnung transaktionsService = new EinfacherTransaktionenBerechnung();
   @DisplayName("Saldo wird korrekt berechnet, wenn Sponsor kein Bettler ist")
   @Test
   void test_01(){
@@ -28,7 +28,6 @@ public class TestTransaktionsService {
     assertThat(u1Saldo).isEqualTo(Money.of(20, "EUR"));
     assertThat(u2Saldo).isEqualTo(Money.of(-20, "EUR"));
   }
-
   @DisplayName("Saldo wird korrekt berechnet, wenn Sponsor ein Bettler ist")
   @Test
   void test_02(){

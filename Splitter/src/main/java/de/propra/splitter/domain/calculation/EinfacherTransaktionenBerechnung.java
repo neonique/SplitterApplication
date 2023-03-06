@@ -1,11 +1,14 @@
-package de.propra.splitter.domain;
+package de.propra.splitter.domain.calculation;
 
+import de.propra.splitter.domain.Gruppe;
+import de.propra.splitter.domain.Nutzer;
+import de.propra.splitter.domain.Transaktion;
 import java.util.*;
 import java.util.stream.Collectors;
 
 import org.javamoney.moneta.Money;
 
-class EinfacherTransaktionsService implements TransaktionsService {
+public class EinfacherTransaktionenBerechnung implements TransaktionenBerechnung {
 
     @Override
     public HashMap<String, HashMap<String, String>> berechneNotwendigeTransaktionen(Gruppe gruppe) {
@@ -61,23 +64,23 @@ class EinfacherTransaktionsService implements TransaktionsService {
 
     @Override
     public Money berechneNutzerSaldo(Nutzer nutzer, Gruppe gruppe) {
-        Set<Transaktion> userTransaktions = gruppe.transaktionen()
+        Set<Transaktion> nutzerTransaktionen = gruppe.transaktionen()
                 .stream()
                 .filter(a -> a.isTeilnehmer(nutzer))
                 .collect(Collectors.toSet());
-        Set<Transaktion> userBeggarTransaktions = userTransaktions
+        Set<Transaktion> bettlerTransaktionen = nutzerTransaktionen
                 .stream()
                 .filter(a -> a.isBettler(nutzer))
                 .collect(Collectors.toSet());
-        Set<Transaktion> userSponsorTransaktions = userTransaktions
+        Set<Transaktion> sponsorTransaktionen = nutzerTransaktionen
                 .stream()
                 .filter(a -> a.isSponsor(nutzer))
                 .collect(Collectors.toSet());
 
-        Money beggarMoney = userBeggarTransaktions
+        Money beggarMoney = bettlerTransaktionen
                 .stream().map(a -> a.betrag().divide(a.countBettler()))
                 .reduce(Money.of(0, "EUR"), (a, b) -> a.add(b));
-        Money sponsorMoney = userSponsorTransaktions
+        Money sponsorMoney = sponsorTransaktionen
                 .stream().map(a -> a.betrag())
                 .reduce(Money.of(0, "EUR"), (a, b) -> a.add(b));
 

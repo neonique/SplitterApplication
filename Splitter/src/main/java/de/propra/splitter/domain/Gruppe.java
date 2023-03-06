@@ -1,6 +1,9 @@
 package de.propra.splitter.domain;
 
 
+import de.propra.splitter.domain.calculation.EinfacherTransaktionenBerechnung;
+import de.propra.splitter.domain.calculation.TransaktionenBerechnung;
+
 import java.util.stream.Collectors;
 import org.javamoney.moneta.Money;
 
@@ -36,21 +39,7 @@ public class Gruppe {
     this.teilnehmer.add(teilnehmer);
   }
 
-  private boolean validateName(String name) {
-
-    if(name.contains("--") || name.startsWith("-") || name.endsWith("-")){
-      return false;
-    }
-
-    String validChars = "[A-Za-z0-9-]+";
-    if(!name.matches(validChars)){
-      return false;
-    }
-
-    return true;
-  }
-
-  Set<Nutzer> teilnehmer() {
+  public Set<Nutzer> teilnehmer() {
 
     return Set.copyOf(teilnehmer);
   }
@@ -59,18 +48,20 @@ public class Gruppe {
     return teilnehmer.stream().map(t -> t.name()).collect(Collectors.toSet());
   }
 
-  public void addTransaktion(String sponsor,Set<String> bettler, Money betrag, String beschreibung) {
+  public void addTransaktion(String sponsor,Set<String> bettler, double betrag, String beschreibung) {
     if(bettler.isEmpty()) {
       throw new IllegalArgumentException("Transaktionen muessen Bettler haben");
     }
     if(bettler.size() == 1 && bettler.contains(sponsor)) {
       throw new IllegalArgumentException("keine Transaktionen nur an sich selbst");
     }
-
     if(!this.getTeilnehmerNamen().containsAll(bettler)||!this.getTeilnehmerNamen().contains(sponsor)){
       throw new IllegalArgumentException("invalider nutzer in transaktion");
     }
-    if(betrag.isNegativeOrZero()){
+
+    Money geld = Money.of(betrag, "EUR");
+
+    if(geld.isNegativeOrZero()){
       throw new IllegalArgumentException("Transaktionsbetraege muessen positiv sein.");
     }
     if(this.isclosed()){
@@ -78,10 +69,10 @@ public class Gruppe {
     }
 
     transaktionen.add(new Transaktion(new Nutzer(sponsor), bettler.stream().map(b -> new Nutzer(b)).collect(
-        Collectors.toSet()), betrag, beschreibung));
+        Collectors.toSet()), geld, beschreibung));
   }
 
-  public Set<TransaktionDTO> getTransaktionenData() {
+  public Set<TransaktionDTO> getTransaktionenDetails() {
       Set<TransaktionDTO> transaktionDTOS = transaktionen
           .stream()
           .map(t -> new TransaktionDTO(t.sponsor().name(), t.bettler()
@@ -91,7 +82,7 @@ public class Gruppe {
           .collect(Collectors.toSet());
       return transaktionDTOS;
     }
-  Set<Transaktion> transaktionen() {
+  public Set<Transaktion> transaktionen() {
     return Set.copyOf(transaktionen);
   }
 
@@ -105,12 +96,26 @@ public class Gruppe {
   }
 
   public HashMap<String, HashMap<String, String>> notwendigeTransaktionen(){
-    TransaktionsService Transaktionenrechner = new EinfacherTransaktionsService();
+    TransaktionenBerechnung Transaktionenrechner = new EinfacherTransaktionenBerechnung();
     return Transaktionenrechner.berechneNotwendigeTransaktionen(this);
 
   }
   public void close(){
    geschlossen =true;
+  }
+
+  private boolean validateName(String name) {
+
+    if(name.contains("--") || name.startsWith("-") || name.endsWith("-")){
+      return false;
+    }
+
+    String validChars = "[A-Za-z0-9-]+";
+    if(!name.matches(validChars)){
+      return false;
+    }
+
+    return true;
   }
 }
 
