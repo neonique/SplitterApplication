@@ -1,7 +1,9 @@
 package de.propra.splitter.domain;
 
 import org.javamoney.moneta.Money;
+import org.springframework.lang.NonNull;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -26,7 +28,7 @@ public class Gruppe {
     this.teilnehmer.add(teilnehmer);
   }
 
-  private Set<Nutzer> teilnehmer() {
+  Set<Nutzer> teilnehmer() {
     return teilnehmer;
   }
 
@@ -43,15 +45,22 @@ public class Gruppe {
 
     transaktionen.add(new Transaktion(sponsor, bettler, betrag, beschreibung));
   }
-  Set<Transaktion> transaktionen(){
-    return transaktionen;
+  Set<Transaktion> transaktionen() {
+    return Set.copyOf(transaktionen);
   }
+
   public boolean containsNutzer(Nutzer nutzer) {
     return teilnehmer.contains(nutzer);
   }
 
   public boolean isclosed(){
     return geschlossen;
+  }
+
+  public HashMap<Nutzer, HashMap<Nutzer, Money>> NotwendigeTransaktionen(){
+    //maybe make TransaktionenService static and remove interface?
+    TransaktionsService Transaktionenrechner = new EinfacherTransaktionsService();
+    return Transaktionenrechner.berechneNotwendigeTransaktionen(this);
   }
   public void close(){
    geschlossen =true;

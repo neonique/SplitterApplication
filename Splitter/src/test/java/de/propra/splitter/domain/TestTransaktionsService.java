@@ -1,6 +1,5 @@
 package de.propra.splitter.domain;
 
-import de.propra.splitter.domain.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,8 +21,7 @@ public class TestTransaktionsService {
     Gruppe gruppe = new Gruppe(nutzer1);
     gruppe.addNutzer(nutzer2);
     Money m1 = Money.of(20, "EUR");
-    Transaktion transaktion = new Transaktion(nutzer1, Set.of(nutzer2), m1, "");
-    gruppe.addTransaktion(transaktion);
+    gruppe.addTransaktion(nutzer1, Set.of(nutzer2), m1, "");
 
     Money u1Saldo = transaktionsService.berechneNutzerSaldo(nutzer1, gruppe);
     Money u2Saldo = transaktionsService.berechneNutzerSaldo(nutzer2, gruppe);
@@ -40,8 +38,7 @@ public class TestTransaktionsService {
     Gruppe gruppe = new Gruppe(nutzer1);
     gruppe.addNutzer(nutzer2);
     Money m1 = Money.of(20, "EUR");
-    Transaktion transaktion = new Transaktion(nutzer1, Set.of(nutzer2, nutzer1), m1, "");
-    gruppe.addTransaktion(transaktion);
+    gruppe.addTransaktion(nutzer1, Set.of(nutzer2, nutzer1), m1, "");
 
     Money u1Saldo = transaktionsService.berechneNutzerSaldo(nutzer1, gruppe);
     Money u2Saldo = transaktionsService.berechneNutzerSaldo(nutzer2, gruppe);
@@ -59,13 +56,10 @@ public class TestTransaktionsService {
     gruppe.addNutzer(nutzer2);
     Money m1 = Money.of(10, "EUR");
     Money m2 = Money.of(20, "EUR");
-    Transaktion transaktion1 = new Transaktion(nutzer1, Set.of(nutzer2, nutzer1), m1, "");
-    Transaktion transaktion2 = new Transaktion(nutzer1, Set.of(nutzer2, nutzer1), m2, "");
-    gruppe.addTransaktion(transaktion1);
-    gruppe.addTransaktion(transaktion2);
+    gruppe.addTransaktion(nutzer1, Set.of(nutzer2, nutzer1), m1, "");
+    gruppe.addTransaktion(nutzer1, Set.of(nutzer2, nutzer1), m2, "");
 
-    HashMap<Nutzer, HashMap<Nutzer, Money>> balance =  transaktionsService.berechneNotwendigeTransaktionen(
-        gruppe);
+    HashMap<Nutzer, HashMap<Nutzer, Money>> balance =  gruppe.NotwendigeTransaktionen();
 
     assertThat(balance.get(nutzer1)).isNull();
     Entry<Nutzer, Money> entry = Map.entry(nutzer1, Money.of(-15, "EUR"));
@@ -80,13 +74,10 @@ public class TestTransaktionsService {
     gruppe.addNutzer(nutzer2);
     Money m1 = Money.of(10, "EUR");
     Money m2 = Money.of(20, "EUR");
-    Transaktion transaktion1 = new Transaktion(nutzer1, Set.of(nutzer2, nutzer1), m1, "");
-    Transaktion transaktion2 = new Transaktion(nutzer2, Set.of(nutzer2, nutzer1), m2, "");
-    gruppe.addTransaktion(transaktion1);
-    gruppe.addTransaktion(transaktion2);
+    gruppe.addTransaktion(nutzer1, Set.of(nutzer2, nutzer1), m1, "");
+    gruppe.addTransaktion(nutzer2, Set.of(nutzer2, nutzer1), m2, "");
 
-    HashMap<Nutzer, HashMap<Nutzer, Money>> balance =  transaktionsService.berechneNotwendigeTransaktionen(
-        gruppe);
+    HashMap<Nutzer, HashMap<Nutzer, Money>> balance =  gruppe.NotwendigeTransaktionen();
 
     assertThat(balance.get(nutzer2)).isNull(); //Empty-> Null
     Entry<Nutzer, Money> entry = Map.entry(nutzer2, Money.of(-5, "EUR"));
@@ -102,13 +93,10 @@ public class TestTransaktionsService {
     gruppe.addNutzer(nutzer2);
     Money m1 = Money.of(10, "EUR");
     Money m2 = Money.of(20, "EUR");
-    Transaktion transaktion1 = new Transaktion(nutzer1, Set.of(nutzer2), m1, "");
-    Transaktion transaktion2 = new Transaktion(nutzer1, Set.of(nutzer2, nutzer1), m2, "");
-    gruppe.addTransaktion(transaktion1);
-    gruppe.addTransaktion(transaktion2);
+    gruppe.addTransaktion(nutzer1, Set.of(nutzer2), m1, "");
+    gruppe.addTransaktion(nutzer1, Set.of(nutzer2, nutzer1), m2, "");
 
-    HashMap<Nutzer, HashMap<Nutzer, Money>> balance =  transaktionsService.berechneNotwendigeTransaktionen(
-        gruppe);
+    HashMap<Nutzer, HashMap<Nutzer, Money>> balance =  gruppe.NotwendigeTransaktionen();
 
     assertThat(balance.get(nutzer1)).isNull(); //Empty-> Null
     Entry<Nutzer, Money> entry = Map.entry(nutzer1, Money.of(-20, "EUR"));
@@ -127,15 +115,11 @@ public class TestTransaktionsService {
     Money m1 = Money.of(10, "EUR");
     Money m2 = Money.of(10, "EUR");
     Money m3 = Money.of(10, "EUR");
-    Transaktion transaktion1 = new Transaktion(nutzer1, Set.of(nutzer2, nutzer1), m1, "");
-    Transaktion transaktion2 = new Transaktion(nutzer2, Set.of(nutzer2, nutzer3), m2, "");
-    Transaktion transaktion3 = new Transaktion(nutzer3, Set.of(nutzer3, nutzer1), m3, "");
-    gruppe.addTransaktion(transaktion1);
-    gruppe.addTransaktion(transaktion2);
-    gruppe.addTransaktion(transaktion3);
+    gruppe.addTransaktion(nutzer1, Set.of(nutzer2, nutzer1), m1, "");
+    gruppe.addTransaktion(nutzer2, Set.of(nutzer2, nutzer3), m2, "");
+    gruppe.addTransaktion(nutzer3, Set.of(nutzer3, nutzer1), m3, "");
 
-    HashMap<Nutzer, HashMap<Nutzer, Money>> balance =  transaktionsService.berechneNotwendigeTransaktionen(
-        gruppe);
+    HashMap<Nutzer, HashMap<Nutzer, Money>> balance =  gruppe.NotwendigeTransaktionen();
 
     assertThat(balance.get(nutzer1)).isNull(); //Empty-> Null
     assertThat(balance.get(nutzer2)).isNull(); //Empty-> Null
@@ -154,15 +138,11 @@ public class TestTransaktionsService {
     Money m1 = Money.of(60, "EUR");
     Money m2 = Money.of(30, "EUR");
     Money m3 = Money.of(100, "EUR");
-    Transaktion transaktion1 = new Transaktion(nutzer1, Set.of(nutzer1, nutzer2, nutzer3), m1, "");
-    Transaktion transaktion2 = new Transaktion(nutzer2, Set.of(nutzer1, nutzer2, nutzer3), m2, "");
-    Transaktion transaktion3 = new Transaktion(nutzer3, Set.of(nutzer2, nutzer3), m3, "");
-    gruppe.addTransaktion(transaktion1);
-    gruppe.addTransaktion(transaktion2);
-    gruppe.addTransaktion(transaktion3);
+    gruppe.addTransaktion(nutzer1, Set.of(nutzer1, nutzer2, nutzer3), m1, "");
+    gruppe.addTransaktion(nutzer2, Set.of(nutzer1, nutzer2, nutzer3), m2, "");
+    gruppe.addTransaktion(nutzer3, Set.of(nutzer2, nutzer3), m3, "");
 
-    HashMap<Nutzer, HashMap<Nutzer, Money>> balance = transaktionsService.berechneNotwendigeTransaktionen(
-        gruppe);
+    HashMap<Nutzer, HashMap<Nutzer, Money>> balance = gruppe.NotwendigeTransaktionen();
 
     assertThat(balance.get(nutzer1)).isNull(); //Empty-> Null
     //In den Lösungen sind folgende Entries getauscht, so ist es aber eigentlich richtig
@@ -193,23 +173,14 @@ public class TestTransaktionsService {
     Money m4 = Money.of(82.11, "EUR");
     Money m5 = Money.of(96, "EUR");
     Money m6 = Money.of(95.37, "EUR");
-    Transaktion transaktion1 = new Transaktion(
-        nutzer1, Set.of(nutzer1, nutzer2, nutzer3, nutzer4, nutzer5, nutzer6), m1, "Hotelzimmer");
-    Transaktion transaktion2 = new Transaktion(nutzer2, Set.of(nutzer2, nutzer1), m2, "Benzin (Hinweg)");
-    Transaktion transaktion3 = new Transaktion(nutzer2, Set.of(nutzer2, nutzer1, nutzer4), m3, "Benzin (Rückweg)");
-    Transaktion transaktion4 = new Transaktion(nutzer3, Set.of(nutzer3, nutzer5, nutzer6), m4, "Benzin");
-    Transaktion transaktion5 = new Transaktion(
-        nutzer4, Set.of(nutzer1, nutzer2, nutzer3, nutzer4, nutzer5, nutzer6), m5, "Städtetour");
-    Transaktion transaktion6 = new Transaktion(nutzer6, Set.of(nutzer2, nutzer5, nutzer6), m6, "Theatervorstellung");
-    gruppe.addTransaktion(transaktion1);
-    gruppe.addTransaktion(transaktion2);
-    gruppe.addTransaktion(transaktion3);
-    gruppe.addTransaktion(transaktion4);
-    gruppe.addTransaktion(transaktion5);
-    gruppe.addTransaktion(transaktion6);
+    gruppe.addTransaktion(nutzer1, Set.of(nutzer1, nutzer2, nutzer3, nutzer4, nutzer5, nutzer6), m1, "Hotelzimmer");
+    gruppe.addTransaktion(nutzer2, Set.of(nutzer2, nutzer1), m2, "Benzin (Hinweg)");
+    gruppe.addTransaktion(nutzer2, Set.of(nutzer2, nutzer1, nutzer4), m3, "Benzin (Rückweg)");
+    gruppe.addTransaktion(nutzer3, Set.of(nutzer3, nutzer5, nutzer6), m4, "Benzin");
+    gruppe.addTransaktion( nutzer4, Set.of(nutzer1, nutzer2, nutzer3, nutzer4, nutzer5, nutzer6), m5, "Städtetour");
+    gruppe.addTransaktion(nutzer6, Set.of(nutzer2, nutzer5, nutzer6), m6, "Theatervorstellung");
 
-    HashMap<Nutzer, HashMap<Nutzer, Money>> balance = transaktionsService.berechneNotwendigeTransaktionen(
-        gruppe);
+    HashMap<Nutzer, HashMap<Nutzer, Money>> balance = gruppe.NotwendigeTransaktionen();
 
     assertThat(balance.get(nutzer1)).isNull(); //Empty-> Null
 

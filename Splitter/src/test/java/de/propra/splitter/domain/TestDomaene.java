@@ -7,7 +7,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
@@ -41,7 +40,7 @@ public class TestDomaene {
     Money amount= Money.of(20.50 ,"EUR");
     Transaktion transaktion =new Transaktion(nutzer,participants,amount, "");
     //act
-    gruppe.addTransaktion(transaktion);
+    gruppe.addTransaktion(nutzer,participants,amount, "");
     //assert
     assertThat(gruppe.transaktionen()).contains(transaktion);
 
@@ -57,10 +56,9 @@ public class TestDomaene {
     participants.forEach(gruppe::addNutzer);
     Money amount= Money.of(20.50 ,"EUR");
     participants.add(new Nutzer("Jeremy"));
-    Transaktion transaktion =new Transaktion(nutzer,participants,amount, "" );
     //act
     IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
-      gruppe.addTransaktion(transaktion);
+      gruppe.addTransaktion(nutzer,participants,amount, "" );
     });
     //assert
     assertThat("invalider nutzer in transaktion").isEqualTo(thrown.getMessage());
@@ -79,7 +77,7 @@ public class TestDomaene {
     participants.remove(b);
     Transaktion transaktion =new Transaktion(nutzer,participants,amount, "");
     //act
-    gruppe.addTransaktion(transaktion);
+    gruppe.addTransaktion(nutzer,participants,amount, "");
     //assert
     assertThat(gruppe.transaktionen()).contains(transaktion);
   }
@@ -92,10 +90,9 @@ public class TestDomaene {
     Set<Nutzer> participants =Set.of(new Nutzer("A"),new Nutzer("b"));
     participants.forEach(gruppe::addNutzer);
     Money amount= Money.of(20.50 ,"EUR");
-    Transaktion transaktion =new Transaktion(nutzer,participants,amount, "");
 
     //act
-    gruppe.addTransaktion(transaktion);
+    gruppe.addTransaktion(nutzer,participants,amount, "");
 
     RuntimeException thrown = assertThrows(RuntimeException.class, () -> {
       gruppe.addNutzer(new Nutzer("Ellis"));
@@ -113,10 +110,9 @@ public class TestDomaene {
     Set<Nutzer> participants =Set.of(new Nutzer("A"),new Nutzer("b"));
     participants.forEach(gruppe::addNutzer);
     Money amount= Money.of(-20.50 ,"EUR");
-    Transaktion transaktion =new Transaktion(nutzer,participants,amount, "");
     //act
     IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
-      gruppe.addTransaktion(transaktion);
+      gruppe.addTransaktion(nutzer,participants,amount, "");
     });
     //assert
     assertThat("Transaktionsbetraege muessen positiv sein.").isEqualTo(thrown.getMessage());
@@ -131,10 +127,9 @@ public class TestDomaene {
     Set<Nutzer> participants =Set.of(new Nutzer("A"),new Nutzer("b"));
     participants.forEach(gruppe::addNutzer);
     Money amount= Money.of(0 ,"EUR");
-    Transaktion transaktion =new Transaktion(nutzer,participants,amount, "");
     //act
     IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
-      gruppe.addTransaktion(transaktion);
+      gruppe.addTransaktion(nutzer,participants,amount, "");
     });
     //assert
     assertThat("Transaktionsbetraege muessen positiv sein.").isEqualTo(thrown.getMessage());
@@ -188,11 +183,10 @@ public class TestDomaene {
     Money amount= Money.of(20 ,"EUR");
     Set<Nutzer> participants =Set.of(new Nutzer("A"),new Nutzer("b"));
     participants.forEach(gruppe::addNutzer);
-    Transaktion transaktion = new Transaktion(nutzer, participants, amount, "");
 
     gruppe.close();
     RuntimeException thrown = assertThrows(RuntimeException.class, () -> {
-      gruppe.addTransaktion(transaktion);
+      gruppe.addTransaktion(nutzer, participants, amount, "");
     });
 
     assertThat("Transaktionen koennen nicht zu geschlossenen Gruppen hinzugefuegt werden").isEqualTo(thrown.getMessage());
@@ -279,7 +273,7 @@ public class TestDomaene {
     Set<Nutzer> participants =Set.of(nutzer);
 
     IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
-      Transaktion transaktion =new Transaktion(nutzer,participants,Money.of(90,"EUR"), "");;
+      Transaktion transaktion =new Transaktion(nutzer,participants,Money.of(90,"EUR"), "");
     });
 
     assertThat("keine Transaktionen nur an sich selbst").isEqualTo(thrown.getMessage());
