@@ -1,5 +1,6 @@
 package de.propra.splitter.domain;
 
+import java.util.stream.Collectors;
 import org.javamoney.moneta.Money;
 
 import java.util.HashSet;
@@ -16,7 +17,13 @@ public class Gruppe {
   }
 
 
-  public void addNutzer(Nutzer teilnehmer) {
+  public void addNutzer(String name) {
+
+    if(!validateName(name)){
+      throw new IllegalArgumentException("Nutzername ist nicht konform mit GitHub-Namenskonvention");
+    }
+
+    Nutzer teilnehmer = new Nutzer(name);
     if(!transaktionen.isEmpty()){
       throw new RuntimeException("Nutzer koennen nach der ersten Transaktion nicht mehr zur Gruppe hinzugefuegt werden.");
     }
@@ -26,8 +33,27 @@ public class Gruppe {
     this.teilnehmer.add(teilnehmer);
   }
 
-  private Set<Nutzer> teilnehmer() {
-    return teilnehmer;
+  private boolean validateName(String name) {
+
+    if(name.contains("--") || name.startsWith("-") || name.endsWith("-")){
+      return false;
+    }
+
+    String validChars = "[A-Za-z0-9-]+";
+    if(!name.matches(validChars)){
+      return false;
+    }
+
+    return true;
+  }
+
+  Set<Nutzer> teilnehmer() {
+
+    return Set.copyOf(teilnehmer);
+  }
+
+  public Set<String> getTeilnehmerNamen(){
+    return teilnehmer.stream().map(t -> t.name()).collect(Collectors.toSet());
   }
 
   public void addTransaktion(Nutzer sponsor,Set<Nutzer> bettler, Money betrag, String beschreibung) {
@@ -43,8 +69,11 @@ public class Gruppe {
 
     transaktionen.add(new Transaktion(sponsor, bettler, betrag, beschreibung));
   }
-  Set<Transaktion> transaktionen(){
-    return transaktionen;
+  private Set<TransaktionDTO> transaktionen(){
+    Set<TransaktionDTO> transaktionDTOS = transaktionen
+        .stream()
+        .map(transaktion -> )
+    return transaktionDTOS;
   }
   public boolean containsNutzer(Nutzer nutzer) {
     return teilnehmer.contains(nutzer);

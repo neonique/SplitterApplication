@@ -8,27 +8,9 @@ public final class Nutzer {
   private final String name;
 
   public Nutzer(String name) {
-    if(!validateName(name)){
-      throw new IllegalArgumentException("Nutzername ist nicht konform mit GitHub-Namenskonvention");
-    }
+
 
     this.name = name;
-  }
-
-  private boolean validateName(String name) {
-
-
-
-    if(name.contains("--") || name.startsWith("-") || name.endsWith("-")){
-      return false;
-    }
-
-    String validChars = "[A-Za-z0-9-]+";
-    if(!name.matches(validChars)){
-      return false;
-    }
-
-    return true;
   }
 
   public String name() {
