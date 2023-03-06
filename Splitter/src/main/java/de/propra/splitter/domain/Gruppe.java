@@ -58,7 +58,6 @@ public class Gruppe {
   }
 
   public HashMap<Nutzer, HashMap<Nutzer, Money>> NotwendigeTransaktionen(){
-    //maybe make TransaktionenService static and remove interface?
     TransaktionsService Transaktionenrechner = new EinfacherTransaktionsService();
     return Transaktionenrechner.berechneNotwendigeTransaktionen(this);
   }
