@@ -2,7 +2,9 @@ package de.propra.splitter.domain;
 
 import java.util.stream.Collectors;
 import org.javamoney.moneta.Money;
+import org.springframework.lang.NonNull;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -52,7 +54,7 @@ public class Gruppe {
     return Set.copyOf(teilnehmer);
   }
 
-  public Set<String> getTeilnehmerNamen(){
+  public Set<String> getTeilnehmerNamen() {
     return teilnehmer.stream().map(t -> t.name()).collect(Collectors.toSet());
   }
 
@@ -69,18 +71,30 @@ public class Gruppe {
 
     transaktionen.add(new Transaktion(sponsor, bettler, betrag, beschreibung));
   }
-  private Set<TransaktionDTO> transaktionen(){
-    Set<TransaktionDTO> transaktionDTOS = transaktionen
-        .stream()
-        .map(transaktion -> )
-    return transaktionDTOS;
+
+  public Set<TransaktionDTO> getTransaktionenData() {
+      Set<TransaktionDTO> transaktionDTOS = transaktionen
+          .stream()
+          .map(t -> new TransaktionDTO(t.sponsor().name(), t.bettler().stream().map(b -> b.name()).collect(
+              Collectors.toSet()), t.betrag().toString(), t.beschreibung())).collect(
+              Collectors.toSet());
+      return transaktionDTOS;
+    }
+  Set<Transaktion> transaktionen() {
+    return Set.copyOf(transaktionen);
   }
+
   public boolean containsNutzer(Nutzer nutzer) {
     return teilnehmer.contains(nutzer);
   }
 
   public boolean isclosed(){
     return geschlossen;
+  }
+
+  public HashMap<Nutzer, HashMap<Nutzer, Money>> NotwendigeTransaktionen(){
+    TransaktionsService Transaktionenrechner = new EinfacherTransaktionsService();
+    return Transaktionenrechner.berechneNotwendigeTransaktionen(this);
   }
   public void close(){
    geschlossen =true;

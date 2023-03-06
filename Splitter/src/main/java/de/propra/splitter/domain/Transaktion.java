@@ -45,6 +45,9 @@ final class Transaktion {
   int countBettler() {
     return bettler.size();
   }
+  String beschreibung(){
+    return beschreibung;
+  }
 
   @NonNull
   Nutzer sponsor() {
