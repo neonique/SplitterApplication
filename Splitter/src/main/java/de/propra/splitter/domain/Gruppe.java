@@ -107,24 +107,8 @@ public class Gruppe {
 
   public HashMap<String, HashMap<String, String>> NotwendigeTransaktionen(){
     TransaktionsService Transaktionenrechner = new EinfacherTransaktionsService();
-    HashMap<Nutzer, HashMap<Nutzer, Money>> notwendigeTransaktionen = Transaktionenrechner.berechneNotwendigeTransaktionen(this);
+    return Transaktionenrechner.berechneNotwendigeTransaktionen(this);
 
-    HashMap<String, HashMap<String, String>> notwendigeTransaktionenString = notwendigeTransaktionen
-        .entrySet()
-        .stream()
-        .collect(Collectors.toMap(
-            e -> e.getKey().name(),
-            e -> e.getValue()
-                .entrySet()
-                .stream()
-                .collect(Collectors.toMap(
-                    e2 -> e2.getKey().name(),
-                    e2 -> e2.getValue().toString()
-                ))
-        ));
-
-
-    return notwendigeTransaktionenString;
   }
   public void close(){
    geschlossen =true;

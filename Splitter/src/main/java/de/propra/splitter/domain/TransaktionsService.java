@@ -7,7 +7,7 @@ import org.javamoney.moneta.Money;
 
 public interface TransaktionsService {
 
-  HashMap<Nutzer, HashMap<Nutzer, Money>> berechneNotwendigeTransaktionen(Gruppe gruppe);
+  HashMap<String, HashMap<String, String>> berechneNotwendigeTransaktionen(Gruppe gruppe);
   Money berechneNutzerSaldo(Nutzer nutzer, Gruppe gruppe);
 }
 
