@@ -1,7 +1,6 @@
 package de.propra.splitter.services;
 
 import de.propra.splitter.domain.Gruppe;
-import de.propra.splitter.domain.Nutzer;
 import java.util.HashSet;
 import java.util.Set;
 import org.junit.jupiter.api.DisplayName;

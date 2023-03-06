@@ -1,7 +1,6 @@
 package de.propra.splitter.domain;
 
 
-import java.util.Map;
 import java.util.stream.Collectors;
 import org.javamoney.moneta.Money;
 
@@ -68,7 +67,7 @@ public class Gruppe {
       throw new IllegalArgumentException("keine Transaktionen nur an sich selbst");
     }
 
-    if(!teilnehmer.containsAll(bettler)||!teilnehmer.contains(sponsor)){
+    if(!this.getTeilnehmerNamen().containsAll(bettler)||!this.getTeilnehmerNamen().contains(sponsor)){
       throw new IllegalArgumentException("invalider nutzer in transaktion");
     }
     if(betrag.isNegativeOrZero()){
@@ -105,7 +104,7 @@ public class Gruppe {
     return geschlossen;
   }
 
-  public HashMap<String, HashMap<String, String>> NotwendigeTransaktionen(){
+  public HashMap<String, HashMap<String, String>> notwendigeTransaktionen(){
     TransaktionsService Transaktionenrechner = new EinfacherTransaktionsService();
     return Transaktionenrechner.berechneNotwendigeTransaktionen(this);
 
