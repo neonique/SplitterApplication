@@ -1,9 +1,10 @@
-package de.propra.splitter.domain;
+package de.propra.splitter.domain.model;
 
 
-import de.propra.splitter.domain.calculation.EinfacherTransaktionenBerechnung;
-import de.propra.splitter.domain.calculation.TransaktionenBerechnung;
+import de.propra.splitter.domain.model.calculation.EinfacherTransaktionenBerechnung;
+import de.propra.splitter.domain.model.calculation.TransaktionenBerechnung;
 
+import de.propra.splitter.stereotypes.AggregateRoot;
 import java.util.stream.Collectors;
 import org.javamoney.moneta.Money;
 
@@ -11,7 +12,10 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
+@AggregateRoot
 public class Gruppe {
+
+  //id methode und variable adden
   private boolean geschlossen =false;
 
   private HashSet<Nutzer> teilnehmer = new HashSet<>();

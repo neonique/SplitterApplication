@@ -1,8 +1,8 @@
-package de.propra.splitter.domain.calculation;
+package de.propra.splitter.domain.model.calculation;
 
-import de.propra.splitter.domain.Gruppe;
-import de.propra.splitter.domain.Nutzer;
-import de.propra.splitter.domain.Transaktion;
+import de.propra.splitter.domain.model.Gruppe;
+import de.propra.splitter.domain.model.Nutzer;
+import de.propra.splitter.domain.model.Transaktion;
 import java.util.*;
 import java.util.stream.Collectors;
 

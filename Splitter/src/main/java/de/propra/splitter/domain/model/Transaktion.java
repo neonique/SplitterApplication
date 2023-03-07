@@ -1,6 +1,5 @@
-package de.propra.splitter.domain;
+package de.propra.splitter.domain.model;
 
-import java.util.Objects;
 import java.util.Set;
 import org.javamoney.moneta.Money;
 import org.springframework.lang.NonNull;

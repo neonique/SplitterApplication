@@ -1,14 +1,9 @@
 package de.propra.splitter.web;
 
-import static javax.swing.text.html.CSS.getAttribute;
-
-import ch.qos.logback.core.net.SyslogOutputStream;
-import de.propra.splitter.domain.Gruppe;
-import de.propra.splitter.services.GruppenService;
+import de.propra.splitter.domain.model.Gruppe;
+import de.propra.splitter.domain.service.GruppenService;
 import java.util.HashSet;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
-import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

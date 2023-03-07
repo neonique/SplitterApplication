@@ -1,5 +1,7 @@
-package de.propra.splitter.domain;
+package de.propra.splitter.domain.model;
 
+import de.propra.splitter.domain.model.Nutzer;
+import de.propra.splitter.domain.model.Transaktion;
 import java.util.Set;
 import org.javamoney.moneta.Money;
 import org.junit.jupiter.api.BeforeEach;

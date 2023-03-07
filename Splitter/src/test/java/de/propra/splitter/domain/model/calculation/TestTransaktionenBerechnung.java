@@ -1,14 +1,12 @@
-package de.propra.splitter.domain.calculation;
+package de.propra.splitter.domain.model.calculation;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import de.propra.splitter.domain.Gruppe;
-import de.propra.splitter.domain.Nutzer;
+import de.propra.splitter.domain.model.Gruppe;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-import org.javamoney.moneta.Money;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

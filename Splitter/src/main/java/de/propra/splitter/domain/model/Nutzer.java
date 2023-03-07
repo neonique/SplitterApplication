@@ -1,4 +1,4 @@
-package de.propra.splitter.domain;
+package de.propra.splitter.domain.model;
 
 import java.util.Objects;
 

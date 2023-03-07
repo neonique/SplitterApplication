@@ -1,8 +1,7 @@
-package de.propra.splitter.services;
+package de.propra.splitter.domain.service;
 
-import de.propra.splitter.domain.Gruppe;
+import de.propra.splitter.domain.model.Gruppe;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
@@ -39,6 +38,9 @@ public class GruppenService {
           gruppen.stream().filter(group -> group.containsNutzer(nutzerName)).filter(Gruppe::isclosed).collect(Collectors.toSet()));
   }
 
-
+//braucht id
+  public void closeGruppe(Gruppe g) {
+    g.close();
+  }
 
 }

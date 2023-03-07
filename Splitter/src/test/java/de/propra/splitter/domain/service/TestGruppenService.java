@@ -1,8 +1,10 @@
-package de.propra.splitter.services;
+package de.propra.splitter.domain.service;
 
-import de.propra.splitter.domain.Gruppe;
+import de.propra.splitter.domain.model.Gruppe;
+import de.propra.splitter.domain.service.GruppenService;
 import java.util.HashSet;
 import java.util.Set;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -10,43 +12,45 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class TestGruppenService {
 
-  GruppenService gruppenService = new GruppenService();
-/*
+  GruppenService gruppenService;
+
+  @BeforeEach
+  private void reset() {
+    gruppenService = new GruppenService();
+  }
+
   @Test
   @DisplayName("alle Gruppen eines Nutzers werden gefunden")
   void test_0(){
 
      String nutzer1 = "moaz";
      String nutzer2 ="nick";
-     Set<Gruppe> gruppen =new HashSet<>();
-     Set<Gruppe> nutzer1Gruppen =new HashSet<>();
 
     for (int i = 0; i <3 ; i++) {
-      Gruppe g=new Gruppe(nutzer1);
-      gruppen.add(g);
-      nutzer1Gruppen.add(g);
+      gruppenService.addGruppe("", nutzer1);
     }
-      gruppen.add(new Gruppe(nutzer2));
+      gruppenService.addGruppe("",nutzer2);
 
-    Set<Gruppe> gefundeneGruppen = gruppenService.nutzerGruppen(gruppen, nutzer1);
+    Set<Gruppe> gefundeneGruppen = gruppenService.nutzerGruppen(nutzer1);
 
-    assertThat(nutzer1Gruppen).containsExactlyElementsOf(gefundeneGruppen);
-
-
+    assertThat(gefundeneGruppen).hasSize(3);
 
   }
+   /*
   @Test
   @DisplayName("nur nach geschlossenen Gruppen suchen")
   void test_1(){
     String nutzer1 = "moaz";
-    Gruppe gruppe1 = new Gruppe(nutzer1);
-    Gruppe gruppe2 = new Gruppe(nutzer1);
+    String nutzer2 ="nick";
 
-    gruppe2.close();
-    HashSet<Gruppe> gruppen = new HashSet<>(Set.of(gruppe1, gruppe2));
+    for (int i = 0; i <3 ; i++) {
+      gruppenService.addGruppe("", nutzer1);
+    }
+    gruppenService.addGruppe("",nutzer2);
 
-    HashSet<Gruppe> closed = gruppenService.geschlosseneNutzerGruppen(gruppen, nutzer1);
-    assertThat(closed).containsExactly(gruppe2);
+    Set<Gruppe> gefundeneGruppen = gruppenService.nutzerGruppen(nutzer1);
+
+    assertThat(gefundeneGruppen).hasSize(3);
   }
 
   @Test

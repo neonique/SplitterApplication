@@ -1,5 +1,7 @@
-package de.propra.splitter.domain;
+package de.propra.splitter.domain.model;
 
+import de.propra.splitter.domain.model.Gruppe;
+import de.propra.splitter.domain.model.TransaktionDTO;
 import java.util.HashSet;
 import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;

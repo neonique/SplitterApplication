@@ -1,5 +1,6 @@
 package de.propra.splitter;
 
+import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.*;
 import static com.tngtech.archunit.library.Architectures.onionArchitecture;
 
 import com.tngtech.archunit.junit.AnalyzeClasses;
@@ -12,10 +13,16 @@ public class TestArch {
   @ArchTest
   ArchRule onionTest = onionArchitecture()
       .domainModels("..domain..")
-      //.domainServices("..domain.Gruppe..")
+      .domainServices("..domain..")
       .applicationServices("..services..")
       .adapter("web","..web..");
       //.adapter("db", "..repositories..")
       //.adapter("config", "..config..");
+
+ /* @ArchTest
+  ArchRule servicesOnlyUseAggregateRoot = classes()
+      .
+
+  */
 
 }
