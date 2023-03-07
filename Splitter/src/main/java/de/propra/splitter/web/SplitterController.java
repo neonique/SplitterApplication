@@ -1,5 +1,6 @@
 package de.propra.splitter.web;
 
+import ch.qos.logback.core.net.SyslogOutputStream;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.stereotype.Controller;
@@ -12,23 +13,13 @@ public class SplitterController {
 
 
 
-  public SplitterController(){
-    System.out.println("abc");
-  }
-  @GetMapping("/")
-  public String startSeite(OAuth2AuthenticationToken auth, Model m){
 
-    return "anmelden";
-  }
-  @PostMapping("/")
-  public String post(){
 
-    return "anmelden";
 
-}
-
-@GetMapping("/alleGruppen")
-public String alleGruppen(Model m){
+@GetMapping("/")
+public String alleGruppen(OAuth2AuthenticationToken auth, Model m){
+  String login = auth.getPrincipal().getAttribute("login");
+  m.addAttribute("nutzername", login);
     return "alleGruppen";
   }
   @GetMapping("/gruppe")
