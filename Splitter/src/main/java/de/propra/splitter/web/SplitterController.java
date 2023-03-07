@@ -27,8 +27,20 @@ public class SplitterController {
 
 }
 
-/*@GetMapping("/alleGruppen")
-public String alleGruppen(Model m,){
-
-  }*/
+@GetMapping("/alleGruppen")
+public String alleGruppen(Model m){
+    return "alleGruppen";
+  }
+  @GetMapping("/gruppe")
+  public String gruppe(Model m){
+    return "gruppe";
+  }
+  @GetMapping("/ausgleichsTransaktionen")
+  public String ausgleichsTransaktionen(Model m){
+    return "ausgleichsTransaktionen";
+  }
+  @GetMapping("/addTransaktion")
+  public String addTransaktion(Model m){
+    return "addTransaktion";
+  }
 }
