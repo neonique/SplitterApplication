@@ -9,10 +9,21 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class GruppenService {
+    //Zum Testen
+    private HashSet<Gruppe> gruppen = new HashSet<Gruppe>();
 
-  public HashSet<Gruppe> loadGruppen(){
-    return null;
+
+  public HashSet<Gruppe> getGruppen(){
+
+    return gruppen;
   }
+
+  public void addGruppe(String nutzerName){
+      gruppen.add(new Gruppe(nutzerName));
+  }
+
+
+
   public HashSet<Gruppe> nutzerGruppen(Set<Gruppe> gruppen, String nutzerName){
       return new HashSet<Gruppe>(gruppen.stream().filter(group -> group.containsNutzer(nutzerName)).collect(Collectors.toSet()));
   }
@@ -27,5 +38,7 @@ public class GruppenService {
       return new HashSet<Gruppe>(
           gruppen.stream().filter(group -> group.containsNutzer(nutzerName)).filter(Gruppe::isclosed).collect(Collectors.toSet()));
   }
+
+
 
 }
