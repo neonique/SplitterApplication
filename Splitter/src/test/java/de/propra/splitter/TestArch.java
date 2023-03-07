@@ -11,11 +11,11 @@ public class TestArch {
 
   @ArchTest
   ArchRule onionTest = onionArchitecture()
-      .domainModels("domain") //TODO: ??? ausfüllen
-      //.domainServices("???") //TODO: ??? ausfüllen
-      .applicationServices("services") //TODO: ??? ausfüllen
-      .adapter("web","..controllers..")
-      .adapter("db", "..repositories..")
-      .adapter("config", "..config..");
+      .domainModels("..domain..")
+      .domainServices("..domain..")
+      .applicationServices("..services..")
+      .adapter("web","..web..");
+      //.adapter("db", "..repositories..")
+      //.adapter("config", "..config..");
 
 }
