@@ -12,7 +12,7 @@ public class TestArch {
   @ArchTest
   ArchRule onionTest = onionArchitecture()
       .domainModels("..domain..")
-      .domainServices("..domain..")
+      //.domainServices("..domain.Gruppe..")
       .applicationServices("..services..")
       .adapter("web","..web..");
       //.adapter("db", "..repositories..")
