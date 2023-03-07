@@ -5,7 +5,19 @@
   <title>Deine Gruppen</title>
 </head>
 <body>
+<h1>Willkommen <span th:text="${nutzername}">Nutzer</span></h1>
 
+<form method="post" th:action="@{/alleGruppen}">
+  <label for="textid">Neue Gruppe erstellen:</label>
+  <input id="textid" type="text" th:name="neueGruppe">
+  <button type="submit">Erstellen</button>
+</form>
+
+<ul>
+  <li th:each="gruppen : ${gruppen}">
+    <span th:text="${gruppen.name()}">Gruppen Name</span>
+  </li>
+</ul>
 
 </body>
 </html>

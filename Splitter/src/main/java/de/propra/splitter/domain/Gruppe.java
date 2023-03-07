@@ -17,11 +17,16 @@ public class Gruppe {
   private HashSet<Nutzer> teilnehmer = new HashSet<>();
   private HashSet<Transaktion> transaktionen =new HashSet<>();
 
-  public Gruppe(String nutzerName) {
+  private final String name;
+  public Gruppe(String name, String nutzerName) {
     Nutzer nutzer = new Nutzer(nutzerName);
     teilnehmer.add(nutzer);
+    this.name = name;
   }
 
+  public String name(){
+    return this.name;
+  }
 
   public void addNutzer(String name) {
 

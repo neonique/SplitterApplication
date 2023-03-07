@@ -20,7 +20,7 @@ public class TestTransaktionenBerechnung {
   void test_01(){
     Nutzer nutzer1 = new Nutzer("Josch");
     Nutzer nutzer2 = new Nutzer("ellis");
-    Gruppe gruppe = new Gruppe(nutzer1);
+    Gruppe gruppe = new Gruppe("gruppenName", nutzer1);
     gruppe.addNutzer(nutzer2);
     Money m1 = "EUR 20");
     gruppe.addTransaktion(nutzer1, Set.of(nutzer2), m1, "");
@@ -36,7 +36,7 @@ public class TestTransaktionenBerechnung {
   void test_02(){
     Nutzer nutzer1 = new Nutzer("Josch");
     Nutzer nutzer2 = new Nutzer("ellis");
-    Gruppe gruppe = new Gruppe(nutzer1);
+    gruppe = new Gruppe Gruppe("gruppenName", nutzer1);
     gruppe.addNutzer(nutzer2);
     Money m1 = "EUR 20");
     gruppe.addTransaktion(nutzer1, Set.of(nutzer2, nutzer1), m1, "");
@@ -53,7 +53,7 @@ public class TestTransaktionenBerechnung {
   void test_03(){
     String nutzer1 = "a";
     String nutzer2 = "b";
-    Gruppe gruppe = new Gruppe(nutzer1);
+    Gruppe gruppe = new Gruppe("gruppenName", nutzer1);
     gruppe.addNutzer(nutzer2);
 
     gruppe.addTransaktion(nutzer1, Set.of(nutzer2, nutzer1), 10, "");
@@ -71,7 +71,7 @@ public class TestTransaktionenBerechnung {
   void test_04(){
    String nutzer1 = "a";
     String nutzer2 = "b";
-    Gruppe gruppe = new Gruppe(nutzer1);
+    Gruppe gruppe = new Gruppe("gruppenName", nutzer1);
     gruppe.addNutzer(nutzer2);
 
     gruppe.addTransaktion(nutzer1, Set.of(nutzer2, nutzer1), 10, "");
@@ -89,7 +89,7 @@ public class TestTransaktionenBerechnung {
   void test_05(){
    String nutzer1 = "a";
     String nutzer2 = "b";
-    Gruppe gruppe = new Gruppe(nutzer1);
+    Gruppe gruppe = new Gruppe("gruppenName", nutzer1);
     gruppe.addNutzer(nutzer2);
 
     gruppe.addTransaktion(nutzer1, Set.of(nutzer2), 10, "");
@@ -109,7 +109,7 @@ public class TestTransaktionenBerechnung {
    String nutzer1 = "a";
     String nutzer2 = "b";
     String nutzer3 = "c";
-    Gruppe gruppe = new Gruppe(nutzer1);
+    Gruppe gruppe = new Gruppe("gruppenName", nutzer1);
     gruppe.addNutzer(nutzer2);
     gruppe.addNutzer(nutzer3);
 
@@ -130,7 +130,7 @@ public class TestTransaktionenBerechnung {
    String nutzer1 = "a";
     String nutzer2 = "b";
     String nutzer3 = "c";
-    Gruppe gruppe = new Gruppe(nutzer1);
+    Gruppe gruppe = new Gruppe("gruppenName", nutzer1);
     gruppe.addNutzer(nutzer2);
     gruppe.addNutzer(nutzer3);
 
@@ -157,7 +157,7 @@ public class TestTransaktionenBerechnung {
     String nutzer4 = "d";
     String nutzer5 = "e";
     String nutzer6 = "f";
-    Gruppe gruppe = new Gruppe(nutzer1);
+    Gruppe gruppe = new Gruppe("gruppenName", nutzer1);
     gruppe.addNutzer(nutzer2);
     gruppe.addNutzer(nutzer3);
     gruppe.addNutzer(nutzer4);
@@ -197,7 +197,7 @@ public class TestTransaktionenBerechnung {
     String user5 = new String("e");
     String user6 = new String("f");
     String user7 = new String("g");
-    Gruppe group = new Gruppe(user1);
+    Gruppe group = new Gruppe("gruppenName", user1);
     group.addNutzer(user2);
     group.addNutzer(user3);
     group.addNutzer(user4);

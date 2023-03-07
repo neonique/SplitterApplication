@@ -18,23 +18,23 @@ public class GruppenService {
     return gruppen;
   }
 
-  public void addGruppe(String nutzerName){
-      gruppen.add(new Gruppe(nutzerName));
+  public void addGruppe(String gruppenName, String nutzerName){
+      gruppen.add(new Gruppe(gruppenName, nutzerName));
   }
 
 
 
-  public HashSet<Gruppe> nutzerGruppen(Set<Gruppe> gruppen, String nutzerName){
+  public HashSet<Gruppe> nutzerGruppen(String nutzerName){
       return new HashSet<Gruppe>(gruppen.stream().filter(group -> group.containsNutzer(nutzerName)).collect(Collectors.toSet()));
   }
 
 
-  public HashSet<Gruppe> offeneNutzerGruppen(Set<Gruppe> gruppen, String nutzerName){
+  public HashSet<Gruppe> offeneNutzerGruppen(String nutzerName){
       return new HashSet<Gruppe>(
           gruppen.stream().filter(group -> group.containsNutzer(nutzerName)).filter(Predicate.not(Gruppe::isclosed)).collect(Collectors.toSet()));
   }
 
-   public HashSet<Gruppe> geschlosseneNutzerGruppen(Set<Gruppe> gruppen, String nutzerName){
+   public HashSet<Gruppe> geschlosseneNutzerGruppen(String nutzerName){
       return new HashSet<Gruppe>(
           gruppen.stream().filter(group -> group.containsNutzer(nutzerName)).filter(Gruppe::isclosed).collect(Collectors.toSet()));
   }
