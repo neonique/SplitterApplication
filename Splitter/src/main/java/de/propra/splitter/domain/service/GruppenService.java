@@ -24,9 +24,11 @@ public class GruppenService {
   }
 
   private void addNutzer(Set<String> nutzerSet){
+      int i = 0;
       for (String nutzer : nutzerSet) {
-          if(gruppe == null){
+          if(i == 0){
               createGruppe(nutzer);
+              i++;
           }
           else{
               gruppe.addNutzer(nutzer);
@@ -45,7 +47,8 @@ public class GruppenService {
       }
   }
 
-  public HashMap<String, HashMap<String, String>> berechneNotwendigeTransaktionen(HashSet<String> nutzer, HashSet<TransaktionDTO> transaktionDTOs){
+  public HashMap<String, HashMap<String, String>> berechneNotwendigeTransaktionen
+          (HashSet<String> nutzer, HashSet<TransaktionDTO> transaktionDTOs){
       this.addNutzer(nutzer);
       this.addTransaction(transaktionDTOs);
       return gruppe.notwendigeTransaktionen();

@@ -1,7 +1,11 @@
 package de.propra.splitter.domain.service;
 
 import de.propra.splitter.domain.model.Gruppe;
+import de.propra.splitter.domain.model.Transaktion;
+import de.propra.splitter.domain.model.TransaktionDTO;
 import de.propra.splitter.domain.service.GruppenService;
+
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,7 +15,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class TestGruppenService {
-/*
+
   GruppenService gruppenService;
 
   @BeforeEach
@@ -19,6 +23,33 @@ public class TestGruppenService {
     gruppenService = new GruppenService();
   }
 
+  @Test
+  @DisplayName("UEbergabe von werten funktionieren und es wird das richtige berechnet")
+    void test_0(){
+      HashSet<String> nutzer = new HashSet<String>();
+      HashSet<TransaktionDTO> transaktionDTOs = new HashSet<>();
+      HashMap<String, HashMap<String, String>> notwendigeTransaktion = new HashMap<>();
+
+      nutzer.add("user1");
+      nutzer.add("user2");
+      nutzer.add("user3");
+
+      transaktionDTOs.add(new TransaktionDTO("user1", Set.of("user1","user2"),"20.20"));
+      transaktionDTOs.add(new TransaktionDTO("user3", Set.of("user1","user2"),"6.00"));
+
+      HashMap<String, String> transaktion = new HashMap<String, String>();
+      transaktion.put("user1", "EUR -7.10");
+      transaktion.put("user3", "EUR -6.00");
+      notwendigeTransaktion.put("user2", transaktion);
+
+    HashMap<String, HashMap<String, String>> berechnetetransaktionen = gruppenService.berechneNotwendigeTransaktionen(nutzer, transaktionDTOs);
+
+    assertThat(berechnetetransaktionen).containsAllEntriesOf(notwendigeTransaktion);
+
+    }
+
+
+  /*
   @Test
   @DisplayName("alle Gruppen eines Nutzers werden gefunden")
   void test_0(){
