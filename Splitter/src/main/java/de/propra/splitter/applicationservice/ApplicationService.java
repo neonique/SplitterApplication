@@ -1,44 +1,45 @@
 package de.propra.splitter.applicationservice;
 
 import de.propra.splitter.domain.model.Gruppe;
+
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+
+import de.propra.splitter.domain.service.GruppenService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ApplicationService {
-
-  private HashSet<Gruppe> gruppen = new HashSet<Gruppe>();
-
-
-  public HashSet<Gruppe> getGruppen(){
-
-    return gruppen;
+  GruppenService gruppenService;
+  @Autowired
+  public ApplicationService(GruppenService gruppenService){
+    this.gruppenService = gruppenService;
   }
-
-  public void addGruppe(String gruppenName, String nutzerName){
-    gruppen.add(new Gruppe(gruppenName, nutzerName));
+  public int addGruppe(String gruppenName, String nutzerName){
+    return gruppenService.addGruppe(gruppenName, nutzerName);
   }
 
 
 
-  public HashSet<Gruppe> nutzerGruppen(String nutzerName){
-    return new HashSet<Gruppe>(gruppen.stream().filter(group -> group.containsNutzer(nutzerName)).collect(
-        Collectors.toSet()));
+  public HashMap<Integer, String> nutzerGruppen(String nutzerName){
+    return gruppenService.nutzerGruppen(nutzerName);
   }
 
 
-  public HashSet<Gruppe> offeneNutzerGruppen(String nutzerName){
-    return new HashSet<Gruppe>(
-        gruppen.stream().filter(group -> group.containsNutzer(nutzerName)).filter(Predicate.not(Gruppe::isclosed)).collect(Collectors.toSet()));
+  public HashMap<Integer, String> offeneNutzerGruppen(String nutzerName){
+    return gruppenService.offeneNutzerGruppen(nutzerName);
   }
 
-  public HashSet<Gruppe> geschlosseneNutzerGruppen(String nutzerName){
-    return new HashSet<Gruppe>(
-        gruppen.stream().filter(group -> group.containsNutzer(nutzerName)).filter(Gruppe::isclosed).collect(Collectors.toSet()));
+  public HashMap<Integer, String> geschlosseneNutzerGruppen(String nutzerName){
+    return gruppenService.geschlosseneNutzerGruppen(nutzerName);
   }
 
   //braucht id
+  public void closeGruppe(int id) {
+    gruppenService.closeGruppe(id);
+  }
 
 }
