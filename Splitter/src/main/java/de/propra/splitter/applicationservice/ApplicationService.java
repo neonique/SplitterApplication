@@ -3,6 +3,7 @@ package de.propra.splitter.applicationservice;
 import de.propra.splitter.domain.model.Gruppe;
 
 import de.propra.splitter.domain.model.Nutzer;
+import de.propra.splitter.persistence.GruppenRepository;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.function.Predicate;
@@ -15,15 +16,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class ApplicationService {
   GruppenService gruppenService;
+  GruppenRepository gruppenRepository;
 
   @Autowired
-  public ApplicationService(GruppenService gruppenService){
+  public ApplicationService(GruppenService gruppenService, GruppenRepository gruppenRepository){
     this.gruppenService = gruppenService;
+    this.gruppenRepository = gruppenRepository;
   }
   public int addGruppe(String gruppenName, String nutzerName){
     return gruppenService.addGruppe(gruppenName, nutzerName);
   }
-
 
 
   public HashMap<Integer, String> nutzerGruppen(String nutzerName){

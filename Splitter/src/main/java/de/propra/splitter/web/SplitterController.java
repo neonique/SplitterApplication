@@ -2,6 +2,7 @@ package de.propra.splitter.web;
 
 import de.propra.splitter.applicationservice.ApplicationService;
 import de.propra.splitter.domain.model.Gruppe;
+import de.propra.splitter.domain.model.Nutzer;
 import de.propra.splitter.domain.service.GruppenService;
 import java.util.HashMap;
 import java.util.HashSet;
