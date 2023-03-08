@@ -21,8 +21,6 @@ public class GruppenService {
   }
 
 
-
-
   public HashMap<Integer, String> nutzerGruppen(String nutzerName){
       return new HashMap<Integer, String>(gruppen
               .stream()

@@ -27,9 +27,12 @@ public class TestArch {
       .areNotAnnotatedWith(AggregateRoot.class).should()
       .onlyBeAccessed().byClassesThat().resideInAPackage("..domain.model..");
 /*
+
   @ArchTest
-  ArchRule aggregateRootIsOnlyInDomain = classes().that()
-      .resideInAPackage("..domain.model..").should()
-      .onlyBeAccessed().
-*/
+  ArchRule DTOsCanBeAccessedFromAnywhere = classes().that()
+      .resideInAPackage("..domain.model..").and()
+      .areNotAnnotatedWith(AggregateRoot.class).should()
+      .onlyBeAccessed().byClassesThat().resideInAPackage("..domain.model..");
+
+ */
 }
