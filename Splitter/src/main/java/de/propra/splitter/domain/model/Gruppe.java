@@ -16,6 +16,11 @@ import java.util.Set;
 public class Gruppe {
 
   //id methode und variable adden
+
+  private  final int id;
+
+  private static int counter=0;
+
   private boolean geschlossen =false;
 
   private HashSet<Nutzer> teilnehmer = new HashSet<>();
@@ -23,11 +28,17 @@ public class Gruppe {
 
   private final String name;
   public Gruppe(String name, String nutzerName) {
+    // id wird später uber db erstellen
+    counter++;
+    id=counter;
     Nutzer nutzer = new Nutzer(nutzerName);
     teilnehmer.add(nutzer);
     this.name = name;
   }
 
+  public int id(){
+    return id;
+  }
   public String name(){
     return this.name;
   }

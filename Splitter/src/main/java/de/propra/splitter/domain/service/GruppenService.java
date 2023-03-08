@@ -2,6 +2,7 @@ package de.propra.splitter.domain.service;
 
 import de.propra.splitter.domain.model.Gruppe;
 import java.util.HashSet;
+import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
@@ -37,10 +38,15 @@ public class GruppenService {
       return new HashSet<Gruppe>(
           gruppen.stream().filter(group -> group.containsNutzer(nutzerName)).filter(Gruppe::isclosed).collect(Collectors.toSet()));
   }
+  private Gruppe findById(int id){
+    return gruppen.stream().filter(t-> t.id() == id).findFirst().orElse(null);
+
+  }
 
 //braucht id
-  public void closeGruppe(Gruppe g) {
-    g.close();
+  public void closeGruppe(int id) {
+    Gruppe gruppe=findById(id);
+    gruppe.close();
   }
 
 }

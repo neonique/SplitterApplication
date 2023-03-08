@@ -12,17 +12,17 @@ public class TestArch {
 
   @ArchTest
   ArchRule onionTest = onionArchitecture()
-      .domainModels("..domain..")
-      .domainServices("..domain..")
-      .applicationServices("..services..")
+      .domainModels("..domain.model..")
+      .domainServices("..domain.service..")
+      .applicationServices("..applicationservice..")
       .adapter("web","..web..");
       //.adapter("db", "..repositories..")
       //.adapter("config", "..config..");
+/*
+  @ArchTest
+  ArchRule servicesOnlyUseAggregateRoot = classes().
 
- /* @ArchTest
-  ArchRule servicesOnlyUseAggregateRoot = classes()
-      .
+*/
 
-  */
 
 }
