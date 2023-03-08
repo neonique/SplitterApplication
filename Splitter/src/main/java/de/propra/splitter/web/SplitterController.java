@@ -3,6 +3,7 @@ package de.propra.splitter.web;
 import de.propra.splitter.applicationservice.ApplicationService;
 import de.propra.splitter.domain.model.Gruppe;
 import de.propra.splitter.domain.service.GruppenService;
+import java.util.HashMap;
 import java.util.HashSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class SplitterController {
 
   private final ApplicationService applicationService;
+
   @Autowired
   public SplitterController(ApplicationService applicationService) {
     this.applicationService = applicationService;
@@ -28,7 +30,7 @@ public String alleGruppen(OAuth2AuthenticationToken auth, Model m){
   String login = auth.getPrincipal().getAttribute("login");
   m.addAttribute("nutzername", login);
 
-  HashSet<Integer> gruppen = applicationService.nutzerGruppen(login);
+  HashMap<Integer,String> gruppen = applicationService.nutzerGruppen(login);
   m.addAttribute("gruppen", gruppen);
 
   return "alleGruppen";

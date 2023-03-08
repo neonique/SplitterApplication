@@ -2,6 +2,7 @@ package de.propra.splitter.applicationservice;
 
 import de.propra.splitter.domain.model.Gruppe;
 
+import de.propra.splitter.domain.model.Nutzer;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.function.Predicate;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class ApplicationService {
   GruppenService gruppenService;
+
   @Autowired
   public ApplicationService(GruppenService gruppenService){
     this.gruppenService = gruppenService;
