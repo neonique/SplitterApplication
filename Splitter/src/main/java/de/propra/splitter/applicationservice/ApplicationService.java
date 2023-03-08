@@ -16,12 +16,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class ApplicationService {
   GruppenService gruppenService;
-  GruppenRepository gruppenRepository;
+  //GruppenRepository gruppenRepository;
 
   @Autowired
-  public ApplicationService(GruppenService gruppenService, GruppenRepository gruppenRepository){
+  public ApplicationService(GruppenService gruppenService){
     this.gruppenService = gruppenService;
-    this.gruppenRepository = gruppenRepository;
+  //  this.gruppenRepository = gruppenRepository;
   }
   public int addGruppe(String gruppenName, String nutzerName){
     return gruppenService.addGruppe(gruppenName, nutzerName);

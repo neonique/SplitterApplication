@@ -2,7 +2,9 @@ package de.propra.splitter.persistence;
 
 import de.propra.splitter.domain.model.Gruppe;
 import java.util.Optional;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class TestDatenbank implements GruppenRepository{
 
   @Override
