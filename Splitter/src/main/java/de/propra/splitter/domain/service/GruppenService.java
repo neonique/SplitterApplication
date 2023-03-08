@@ -5,54 +5,52 @@ import de.propra.splitter.domain.model.Gruppe;
 import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import org.javamoney.moneta.Money;
+
+import de.propra.splitter.domain.model.TransaktionDTO;
 import org.springframework.stereotype.Service;
+
+import javax.money.MonetaryAmount;
 
 @Service
 public class GruppenService {
     //Zum Testen
-    private HashSet<Gruppe> gruppen = new HashSet<Gruppe>();
+    private Gruppe gruppe;
 
 
 
-  public int addGruppe(String gruppenName, String nutzerName){
-      Gruppe gruppe = new Gruppe(gruppenName, nutzerName);
-      gruppen.add(gruppe);
-      return gruppe.id();
+  private void createGruppe(String nutzerName){
+      gruppe = new Gruppe("a", nutzerName);
   }
 
+  private void addNutzer(Set<String> nutzerSet){
+      for (String nutzer : nutzerSet) {
+          if(gruppe == null){
+              createGruppe(nutzer);
+          }
+          else{
+              gruppe.addNutzer(nutzer);
+          }
 
-  public HashMap<Integer, String> nutzerGruppen(String nutzerName){
-      return new HashMap<Integer, String>(gruppen
-              .stream()
-              .filter(group -> group.containsNutzer(nutzerName))
-              .collect(Collectors.toMap(e-> e.id(), e-> e.name())));
-  }
-
-
-  public HashMap<Integer, String> offeneNutzerGruppen(String nutzerName){
-      return new HashMap<Integer, String>(gruppen
-              .stream()
-              .filter(group -> group.containsNutzer(nutzerName))
-              .filter(Predicate.not(Gruppe::isclosed))
-              .collect(Collectors.toMap(e-> e.id(), e-> e.name())));
-  }
-
-   public HashMap<Integer, String> geschlosseneNutzerGruppen(String nutzerName){
-       return new HashMap<Integer, String>(gruppen
-               .stream()
-               .filter(group -> group.containsNutzer(nutzerName))
-               .filter(Gruppe::isclosed)
-               .collect(Collectors.toMap(e-> e.id(), e-> e.name())));
-  }
-  private Gruppe findById(int id){
-    return gruppen.stream().filter(t-> t.id() == id).findFirst().orElse(null);
+      }
 
   }
 
-//braucht id
-  public void closeGruppe(int id) {
-    Gruppe gruppe=findById(id);
-    gruppe.close();
+  private void addTransaction(Set<TransaktionDTO> transaktionDTOSet){
+      double betrag;
+      for(TransaktionDTO transaktionDTO : transaktionDTOSet){
+          //je nach dem wie der betrag geschrieben ist muss mehr gemacht werden!
+          betrag = Double.parseDouble(transaktionDTO.betrag());
+          gruppe.addTransaktion(transaktionDTO.sponsor(),transaktionDTO.bettler(), betrag);
+      }
   }
+
+  public HashMap<String, HashMap<String, String>> berechneNotwendigeTransaktionen(HashSet<String> nutzer, HashSet<TransaktionDTO> transaktionDTOs){
+      this.addNutzer(nutzer);
+      this.addTransaction(transaktionDTOs);
+      return gruppe.notwendigeTransaktionen();
+  }
+
+
 
 }

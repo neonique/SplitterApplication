@@ -21,7 +21,7 @@ public class TestTransaktionenBerechnung {
     Gruppe gruppe = new Gruppe("gruppenName", nutzer1);
     gruppe.addNutzer(nutzer2);
     Money m1 = "EUR 20");
-    gruppe.addTransaktion(nutzer1, Set.of(nutzer2), m1, "");
+    gruppe.addTransaktion(nutzer1, Set.of(nutzer2), m1);
 
     Money u1Saldo = transaktionsService.berechneNutzerSaldo(nutzer1, gruppe);
     Money u2Saldo = transaktionsService.berechneNutzerSaldo(nutzer2, gruppe);
@@ -37,7 +37,7 @@ public class TestTransaktionenBerechnung {
     gruppe = new Gruppe Gruppe("gruppenName", nutzer1);
     gruppe.addNutzer(nutzer2);
     Money m1 = "EUR 20");
-    gruppe.addTransaktion(nutzer1, Set.of(nutzer2, nutzer1), m1, "");
+    gruppe.addTransaktion(nutzer1, Set.of(nutzer2, nutzer1), m1);
 
     Money u1Saldo = transaktionsService.berechneNutzerSaldo(nutzer1, gruppe);
     Money u2Saldo = transaktionsService.berechneNutzerSaldo(nutzer2, gruppe);
@@ -54,8 +54,8 @@ public class TestTransaktionenBerechnung {
     Gruppe gruppe = new Gruppe("gruppenName", nutzer1);
     gruppe.addNutzer(nutzer2);
 
-    gruppe.addTransaktion(nutzer1, Set.of(nutzer2, nutzer1), 10, "");
-    gruppe.addTransaktion(nutzer1, Set.of(nutzer2, nutzer1), 20, "");
+    gruppe.addTransaktion(nutzer1, Set.of(nutzer2, nutzer1), 10);
+    gruppe.addTransaktion(nutzer1, Set.of(nutzer2, nutzer1), 20);
 
     HashMap<String, HashMap<String, String>> balance =  gruppe.notwendigeTransaktionen();
 
@@ -72,8 +72,8 @@ public class TestTransaktionenBerechnung {
     Gruppe gruppe = new Gruppe("gruppenName", nutzer1);
     gruppe.addNutzer(nutzer2);
 
-    gruppe.addTransaktion(nutzer1, Set.of(nutzer2, nutzer1), 10, "");
-    gruppe.addTransaktion(nutzer2, Set.of(nutzer2, nutzer1), 20, "");
+    gruppe.addTransaktion(nutzer1, Set.of(nutzer2, nutzer1), 10);
+    gruppe.addTransaktion(nutzer2, Set.of(nutzer2, nutzer1), 20);
 
     HashMap<String, HashMap<String, String>> balance =  gruppe.notwendigeTransaktionen();
 
@@ -90,8 +90,8 @@ public class TestTransaktionenBerechnung {
     Gruppe gruppe = new Gruppe("gruppenName", nutzer1);
     gruppe.addNutzer(nutzer2);
 
-    gruppe.addTransaktion(nutzer1, Set.of(nutzer2), 10, "");
-    gruppe.addTransaktion(nutzer1, Set.of(nutzer2, nutzer1), 20, "");
+    gruppe.addTransaktion(nutzer1, Set.of(nutzer2), 10);
+    gruppe.addTransaktion(nutzer1, Set.of(nutzer2, nutzer1), 20);
 
     HashMap<String, HashMap<String, String>> balance =  gruppe.notwendigeTransaktionen();
 
@@ -111,9 +111,9 @@ public class TestTransaktionenBerechnung {
     gruppe.addNutzer(nutzer2);
     gruppe.addNutzer(nutzer3);
 
-    gruppe.addTransaktion(nutzer1, Set.of(nutzer2, nutzer1), 10, "");
-    gruppe.addTransaktion(nutzer2, Set.of(nutzer2, nutzer3), 10, "");
-    gruppe.addTransaktion(nutzer3, Set.of(nutzer3, nutzer1), 10, "");
+    gruppe.addTransaktion(nutzer1, Set.of(nutzer2, nutzer1), 10);
+    gruppe.addTransaktion(nutzer2, Set.of(nutzer2, nutzer3), 10);
+    gruppe.addTransaktion(nutzer3, Set.of(nutzer3, nutzer1), 10);
 
     HashMap<String, HashMap<String, String>> balance =  gruppe.notwendigeTransaktionen();
 
@@ -132,9 +132,9 @@ public class TestTransaktionenBerechnung {
     gruppe.addNutzer(nutzer2);
     gruppe.addNutzer(nutzer3);
 
-    gruppe.addTransaktion(nutzer1, Set.of(nutzer1, nutzer2, nutzer3), 60, "");
-    gruppe.addTransaktion(nutzer2, Set.of(nutzer1, nutzer2, nutzer3), 30, "");
-    gruppe.addTransaktion(nutzer3, Set.of(nutzer2, nutzer3), 100, "");
+    gruppe.addTransaktion(nutzer1, Set.of(nutzer1, nutzer2, nutzer3), 60);
+    gruppe.addTransaktion(nutzer2, Set.of(nutzer1, nutzer2, nutzer3), 30);
+    gruppe.addTransaktion(nutzer3, Set.of(nutzer2, nutzer3), 100);
 
     HashMap<String, HashMap<String, String>> balance = gruppe.notwendigeTransaktionen();
 
@@ -161,12 +161,12 @@ public class TestTransaktionenBerechnung {
     gruppe.addNutzer(nutzer4);
     gruppe.addNutzer(nutzer5);
     gruppe.addNutzer(nutzer6);
-    gruppe.addTransaktion(nutzer1, Set.of(nutzer1, nutzer2, nutzer3, nutzer4, nutzer5, nutzer6), 564, "Hotelzimmer");
-    gruppe.addTransaktion(nutzer2, Set.of(nutzer2, nutzer1), 38.58, "Benzin (Hinweg)");
-    gruppe.addTransaktion(nutzer2, Set.of(nutzer2, nutzer1, nutzer4), 38.58, "Benzin (Rückweg)");
-    gruppe.addTransaktion(nutzer3, Set.of(nutzer3, nutzer5, nutzer6), 82.11, "Benzin");
-    gruppe.addTransaktion( nutzer4, Set.of(nutzer1, nutzer2, nutzer3, nutzer4, nutzer5, nutzer6), 96, "Städtetour");
-    gruppe.addTransaktion(nutzer6, Set.of(nutzer2, nutzer5, nutzer6), 95.37, "Theatervorstellung");
+    gruppe.addTransaktion(nutzer1, Set.of(nutzer1, nutzer2, nutzer3, nutzer4, nutzer5, nutzer6), 564);
+    gruppe.addTransaktion(nutzer2, Set.of(nutzer2, nutzer1), 38.58);
+    gruppe.addTransaktion(nutzer2, Set.of(nutzer2, nutzer1, nutzer4), 38.58);
+    gruppe.addTransaktion(nutzer3, Set.of(nutzer3, nutzer5, nutzer6), 82.11);
+    gruppe.addTransaktion( nutzer4, Set.of(nutzer1, nutzer2, nutzer3, nutzer4, nutzer5, nutzer6), 96);
+    gruppe.addTransaktion(nutzer6, Set.of(nutzer2, nutzer5, nutzer6), 95.37);
 
     HashMap<String, HashMap<String, String>> balance = gruppe.notwendigeTransaktionen();
 
@@ -203,14 +203,14 @@ public class TestTransaktionenBerechnung {
     group.addNutzer(user6);
     group.addNutzer(user7);
 
-    group.addTransaktion(user4, Set.of(user4,user6), 20, "");
-    group.addTransaktion(user7, Set.of(user2), 10, "");
+    group.addTransaktion(user4, Set.of(user4,user6), 20);
+    group.addTransaktion(user7, Set.of(user2), 10);
     group.addTransaktion(user5, Set.of(user1, user3, user5), 75, " ");
-    group.addTransaktion(user6, Set.of(user1, user6), 50, "");
-    group.addTransaktion(user5, Set.of(user4), 40, "");
-    group.addTransaktion(user6, Set.of(user2, user6), 40, "");
-    group.addTransaktion(user6, Set.of(user3), 5, "");
-    group.addTransaktion(user7, Set.of(user1), 30, "");
+    group.addTransaktion(user6, Set.of(user1, user6), 50);
+    group.addTransaktion(user5, Set.of(user4), 40);
+    group.addTransaktion(user6, Set.of(user2, user6), 40);
+    group.addTransaktion(user6, Set.of(user3), 5);
+    group.addTransaktion(user7, Set.of(user1), 30);
 
     HashMap<String, HashMap<String, String>> balance = group.notwendigeTransaktionen();
 

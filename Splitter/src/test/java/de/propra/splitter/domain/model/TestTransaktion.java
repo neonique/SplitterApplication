@@ -21,7 +21,7 @@ public class TestTransaktion {
   @DisplayName("zaehle Bettler einer Transaktion, wenn Sponsor kein Bettler ist richtig")
   void test_1(){
     Set<Nutzer> participants = Set.of(new Nutzer("A"), new Nutzer("b"));
-    Transaktion transaktion =new Transaktion(nutzer,participants,Money.of(90,"EUR"), "");
+    Transaktion transaktion =new Transaktion(nutzer,participants,Money.of(90,"EUR"));
 
    assertThat(transaktion.countBettler()).isEqualTo(2);
   }
@@ -30,7 +30,7 @@ public class TestTransaktion {
   @DisplayName("zaehle Bettler einer Transaktion, wenn Sponsor ein Bettler ist richtig")
   void test_2(){
     Set<Nutzer> participants =Set.of(new Nutzer("A"),new Nutzer("b"), nutzer);
-    Transaktion transaktion =new Transaktion(nutzer,participants, Money.of(90,"EUR"), "");
+    Transaktion transaktion =new Transaktion(nutzer,participants, Money.of(90,"EUR"));
 
     assertThat(transaktion.countBettler()).isEqualTo(3);
   }
@@ -40,7 +40,7 @@ public class TestTransaktion {
     Nutzer nutzer2 =new Nutzer("c");
     Nutzer nutzer3 =new Nutzer("a");
     Set<Nutzer> participants =Set.of(new Nutzer("b"), nutzer3);
-    Transaktion transaktion =new Transaktion(nutzer,participants,Money.of(90,"EUR"), "");
+    Transaktion transaktion =new Transaktion(nutzer,participants,Money.of(90,"EUR"));
 
     assertThat(transaktion.isTeilnehmer(nutzer));
     assertThat(transaktion.isTeilnehmer(nutzer3));
@@ -53,7 +53,7 @@ public class TestTransaktion {
     Nutzer nutzer2 =new Nutzer("c");
     Nutzer nutzer3 =new Nutzer("a");
     Set<Nutzer> participants =Set.of(new Nutzer("b"), nutzer3);
-    Transaktion transaktion =new Transaktion(nutzer,participants,Money.of(90,"EUR"), "");
+    Transaktion transaktion =new Transaktion(nutzer,participants,Money.of(90,"EUR"));
 
     assertThat(transaktion.isSponsor(nutzer));
     assertThat(transaktion.isSponsor(nutzer3)).isFalse();
@@ -66,7 +66,7 @@ public class TestTransaktion {
     Nutzer nutzer2 =new Nutzer("c");
     Nutzer nutzer3 =new Nutzer("a");
     Set<Nutzer> participants =Set.of(new Nutzer("b"), nutzer3);
-    Transaktion transaktion =new Transaktion(nutzer,participants,Money.of(90,"EUR"), "");
+    Transaktion transaktion =new Transaktion(nutzer,participants,Money.of(90,"EUR"));
 
     assertThat(transaktion.isBettler(nutzer)).isFalse();
     assertThat(transaktion.isBettler(nutzer3));

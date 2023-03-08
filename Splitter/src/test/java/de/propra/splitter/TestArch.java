@@ -8,6 +8,7 @@ import com.tngtech.archunit.junit.AnalyzeClasses;
 import com.tngtech.archunit.junit.ArchTest;
 import com.tngtech.archunit.lang.ArchRule;
 import de.propra.splitter.stereotypes.AggregateRoot;
+import de.propra.splitter.stereotypes.DTO;
 
 @AnalyzeClasses(packagesOf = SplitterApplication.class, importOptions = {ImportOption.DoNotIncludeTests.class})
 public class TestArch {
@@ -24,7 +25,7 @@ public class TestArch {
   @ArchTest
   ArchRule onlyAggregateRootCanBeAccessedFromOutsideDomain = classes().that()
       .resideInAPackage("..domain.model..").and()
-      .areNotAnnotatedWith(AggregateRoot.class).should()
+      .areNotAnnotatedWith(AggregateRoot.class).and().areNotAnnotatedWith(DTO.class).should()
       .onlyBeAccessed().byClassesThat().resideInAPackage("..domain.model..");
 /*
 

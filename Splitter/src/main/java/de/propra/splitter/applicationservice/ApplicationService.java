@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import de.propra.splitter.domain.model.TransaktionDTO;
 import de.propra.splitter.domain.service.GruppenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,7 @@ public class ApplicationService {
   public ApplicationService(GruppenService gruppenService){
     this.gruppenService = gruppenService;
   }
-  public int addGruppe(String gruppenName, String nutzerName){
+  /*public int addGruppe(String gruppenName, String nutzerName){
     return gruppenService.addGruppe(gruppenName, nutzerName);
   }
 
@@ -42,6 +43,13 @@ public class ApplicationService {
   //braucht id
   public void closeGruppe(int id) {
     gruppenService.closeGruppe(id);
+  }
+
+  */
+
+  //ab hier alles neu!
+  public HashMap<String, HashMap<String, String>> berechneNotwendigeTransaktionen(HashSet<String> nutzer, HashSet<TransaktionDTO> transaktionDTOs){
+    return gruppenService.berechneNotwendigeTransaktionen(nutzer, transaktionDTOs);
   }
 
 }

@@ -17,9 +17,6 @@ public class Gruppe {
 
   //id methode und variable adden
 
-  private  final int id;
-
-  private static int counter=0;
 
   private boolean geschlossen =false;
 
@@ -28,17 +25,11 @@ public class Gruppe {
 
   private final String name;
   public Gruppe(String name, String nutzerName) {
-    // id wird später uber db erstellen
-    counter++;
-    id=counter;
     Nutzer nutzer = new Nutzer(nutzerName);
     teilnehmer.add(nutzer);
     this.name = name;
   }
 
-  public int id(){
-    return id;
-  }
   public String name(){
     return this.name;
   }
@@ -68,7 +59,7 @@ public class Gruppe {
     return teilnehmer.stream().map(t -> t.name()).collect(Collectors.toSet());
   }
 
-  public void addTransaktion(String sponsor,Set<String> bettler, double betrag, String beschreibung) {
+  public void addTransaktion(String sponsor,Set<String> bettler, double betrag) {
     if(bettler.isEmpty()) {
       throw new IllegalArgumentException("Transaktionen muessen Bettler haben");
     }
@@ -89,7 +80,7 @@ public class Gruppe {
     }
 
     transaktionen.add(new Transaktion(new Nutzer(sponsor), bettler.stream().map(b -> new Nutzer(b)).collect(
-        Collectors.toSet()), geld, beschreibung));
+        Collectors.toSet()), geld));
   }
 
   public Set<TransaktionDTO> getTransaktionenDetails() {
@@ -98,7 +89,7 @@ public class Gruppe {
           .map(t -> new TransaktionDTO(t.sponsor().name(), t.bettler()
               .stream()
               .map(b -> b.name())
-              .collect(Collectors.toSet()), t.betrag().toString(), t.beschreibung()))
+              .collect(Collectors.toSet()), t.betrag().toString()))
           .collect(Collectors.toSet());
       return transaktionDTOS;
     }

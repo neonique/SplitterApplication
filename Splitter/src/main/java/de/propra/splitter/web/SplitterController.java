@@ -30,8 +30,8 @@ public String alleGruppen(OAuth2AuthenticationToken auth, Model m){
   String login = auth.getPrincipal().getAttribute("login");
   m.addAttribute("nutzername", login);
 
-  HashMap<Integer,String> gruppen = applicationService.nutzerGruppen(login);
-  m.addAttribute("gruppen", gruppen);
+  //HashMap<Integer,String> gruppen = applicationService.nutzerGruppen(login);
+  //m.addAttribute("gruppen", gruppen);
 
   return "alleGruppen";
   }
@@ -41,7 +41,7 @@ public String alleGruppen(OAuth2AuthenticationToken auth, Model m){
 
     String gruppenName = (String) m.getAttribute("neueGruppe");
     System.out.println(gruppenName);
-    applicationService.addGruppe(gruppenName, "neonique");
+    //applicationService.addGruppe(gruppenName, "neonique");
 
     return "alleGruppen";
   }
