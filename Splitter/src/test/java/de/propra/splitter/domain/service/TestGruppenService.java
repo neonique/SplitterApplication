@@ -29,14 +29,11 @@ public class TestGruppenService {
       HashSet<String> nutzer = new HashSet<String>();
       HashSet<TransaktionDTO> transaktionDTOs = new HashSet<>();
       HashMap<String, HashMap<String, String>> notwendigeTransaktion = new HashMap<>();
-
       nutzer.add("user1");
       nutzer.add("user2");
       nutzer.add("user3");
-
       transaktionDTOs.add(new TransaktionDTO("user1", Set.of("user1","user2"),"20.20"));
       transaktionDTOs.add(new TransaktionDTO("user3", Set.of("user1","user2"),"6.00"));
-
       HashMap<String, String> transaktion = new HashMap<String, String>();
       transaktion.put("user1", "EUR -7.10");
       transaktion.put("user3", "EUR -6.00");

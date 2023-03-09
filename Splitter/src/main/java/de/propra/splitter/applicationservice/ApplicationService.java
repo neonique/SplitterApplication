@@ -48,7 +48,9 @@ public class ApplicationService {
   */
 
   //ab hier alles neu!
-  public HashMap<String, HashMap<String, String>> berechneNotwendigeTransaktionen(HashSet<String> nutzer, HashSet<TransaktionDTO> transaktionDTOs){
+  public HashMap<String, HashMap<String, String>> berechneNotwendigeTransaktionen(int gruppenID){
+    HashSet<String> nutzer = new HashSet<>();
+    HashSet<TransaktionDTO> transaktionDTOs = new HashSet<>();
     return gruppenService.berechneNotwendigeTransaktionen(nutzer, transaktionDTOs);
   }
 

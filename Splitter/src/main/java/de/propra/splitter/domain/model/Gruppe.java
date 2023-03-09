@@ -15,8 +15,6 @@ import java.util.Set;
 @AggregateRoot
 public class Gruppe {
 
-  //id methode und variable adden
-
 
   private boolean geschlossen =false;
 
