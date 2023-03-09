@@ -1,13 +1,7 @@
 package de.propra.splitter.applicationservice;
 
-import de.propra.splitter.domain.model.Gruppe;
-
-import de.propra.splitter.domain.model.Nutzer;
-import de.propra.splitter.persistence.GruppenRepository;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 import de.propra.splitter.domain.model.TransaktionDTO;
 import de.propra.splitter.domain.service.GruppenService;
@@ -53,6 +47,7 @@ public class ApplicationService {
   public HashMap<String, HashMap<String, String>> berechneNotwendigeTransaktionen(int gruppenID){
     HashSet<String> nutzer = new HashSet<>();
     HashSet<TransaktionDTO> transaktionDTOs = new HashSet<>();
+
     return gruppenService.berechneNotwendigeTransaktionen(nutzer, transaktionDTOs);
   }
 

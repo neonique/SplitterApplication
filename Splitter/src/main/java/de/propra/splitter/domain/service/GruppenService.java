@@ -2,18 +2,10 @@ package de.propra.splitter.domain.service;
 
 import de.propra.splitter.domain.model.Gruppe;
 
-import de.propra.splitter.persistence.GruppenRepository;
-
 import java.util.*;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
-
-import org.javamoney.moneta.Money;
 
 import de.propra.splitter.domain.model.TransaktionDTO;
 import org.springframework.stereotype.Service;
-
-import javax.money.MonetaryAmount;
 
 @Service
 public class GruppenService {
