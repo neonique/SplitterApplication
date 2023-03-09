@@ -5,43 +5,41 @@ import java.util.HashSet;
 
 import de.propra.splitter.domain.model.TransaktionDTO;
 import de.propra.splitter.domain.service.GruppenService;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ApplicationService {
   GruppenService gruppenService;
-  //GruppenRepository gruppenRepository;
+
 
   @Autowired
   public ApplicationService(GruppenService gruppenService){
     this.gruppenService = gruppenService;
-  //  this.gruppenRepository = gruppenRepository;
   }
-  /*public int addGruppe(String gruppenName, String nutzerName){
-    return gruppenService.addGruppe(gruppenName, nutzerName);
+  public int addGruppe(String gruppenName, String nutzerName){
+    return 0;
   }
 
 
   public HashMap<Integer, String> nutzerGruppen(String nutzerName){
-    return gruppenService.nutzerGruppen(nutzerName);
+    return new HashMap<>();
   }
 
 
   public HashMap<Integer, String> offeneNutzerGruppen(String nutzerName){
-    return gruppenService.offeneNutzerGruppen(nutzerName);
+    return new HashMap<>();
   }
 
   public HashMap<Integer, String> geschlosseneNutzerGruppen(String nutzerName){
-    return gruppenService.geschlosseneNutzerGruppen(nutzerName);
+    return new HashMap<>();
   }
 
   //braucht id
   public void closeGruppe(int id) {
-    gruppenService.closeGruppe(id);
+    return;
   }
-
-  */
 
   //ab hier alles neu!
   public HashMap<String, HashMap<String, String>> berechneNotwendigeTransaktionen(int gruppenID){
@@ -50,5 +48,22 @@ public class ApplicationService {
 
     return gruppenService.berechneNotwendigeTransaktionen(nutzer, transaktionDTOs);
   }
+
+  public void addNutzerToGruppe(int id, String nutzerName) {
+
+  }
+
+  public int transaktionHinzufuegen(int gruppenId, TransaktionDTO transaktion ) {
+    return 0;
+  }
+
+  public Set<String> getGruppenNutzer(int gruppenId) {
+    return new HashSet<>();
+  }
+
+  public Set<TransaktionDTO> getGruppenTransaktionen(int gruppenId) {
+    return new HashSet<>();
+  }
+
 
 }
