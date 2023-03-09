@@ -36,7 +36,7 @@ public class TestGruppe {
     Gruppe gruppe = new Gruppe("gruppenName", nutzer);
     Set<String> participants =Set.of("A","b");
     participants.forEach(gruppe::addNutzer);
-    TransaktionDTO transaktionDTO = new TransaktionDTO(nutzer,participants,"EUR 20.50");
+    TransaktionDTO transaktionDTO = new TransaktionDTO(nutzer,participants,20.50);
     //act
     gruppe.addTransaktion(nutzer,participants,20.50);
     //assert
@@ -71,7 +71,7 @@ public class TestGruppe {
     participants.addAll(Set.of("A",b));
     participants.forEach(gruppe::addNutzer);
     participants.remove(b);
-    TransaktionDTO transaktionDTO = new TransaktionDTO(nutzer,participants,"EUR 20.50");
+    TransaktionDTO transaktionDTO = new TransaktionDTO(nutzer,participants,20.50);
     //act
     gruppe.addTransaktion(nutzer,participants,20.50);
     //assert

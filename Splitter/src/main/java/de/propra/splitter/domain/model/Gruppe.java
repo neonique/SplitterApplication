@@ -28,6 +28,12 @@ public class Gruppe {
     this.name = name;
   }
 
+  public Gruppe(Set<String> nutzerNamen){
+    Set<Nutzer> nutzer = nutzerNamen.stream().map(n -> new Nutzer(n)).collect(Collectors.toSet());
+    teilnehmer.addAll(nutzer);
+    this.name = "remove later";
+  }
+
   public String name(){
     return this.name;
   }
@@ -87,7 +93,7 @@ public class Gruppe {
           .map(t -> new TransaktionDTO(t.sponsor().name(), t.bettler()
               .stream()
               .map(b -> b.name())
-              .collect(Collectors.toSet()), t.betrag().toString()))
+              .collect(Collectors.toSet()), t.betrag().getNumber().doubleValueExact()))
           .collect(Collectors.toSet());
       return transaktionDTOS;
     }

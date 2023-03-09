@@ -5,6 +5,7 @@
   <title>Deine Gruppen</title>
 </head>
 <body>
+<div id="continer">
 <h1>Willkommen <span th:text="${nutzername}">Nutzer</span></h1>
 
 <form method="post" th:action="@{/alleGruppen}">
@@ -14,10 +15,10 @@
 </form>
 
 <ul>
-  <li th:each="gruppen : ${gruppen}">
-    <span th:text="${gruppen.name()}">Gruppen Name</span>
+  <li th:each="gruppenName : ${gruppenNamen}">
+    <span th:text="${gruppenName}">Gruppen Name</span>
   </li>
 </ul>
-
+</div>
 </body>
 </html>

@@ -18,9 +18,9 @@ public class TestArch {
       .domainModels("..domain.model..")
       .domainServices("..domain.service..")
       .applicationServices("..applicationservice..")
-      .adapter("web","..web..");
-      //.adapter("db", "..repositories..")
-      //.adapter("config", "..config..");
+      .adapter("web","..web..")
+      .adapter("db", "..persistence..")
+      .adapter("config", "..config..");
 
   @ArchTest
   ArchRule onlyAggregateRootCanBeAccessedFromOutsideDomain = classes().that()
