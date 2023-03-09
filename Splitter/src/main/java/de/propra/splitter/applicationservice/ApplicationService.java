@@ -36,12 +36,11 @@ public class ApplicationService {
     return new HashMap<>();
   }
 
-  //braucht id
+
   public void closeGruppe(int id) {
     return;
   }
 
-  //ab hier alles neu!
   public HashMap<String, HashMap<String, String>> berechneNotwendigeTransaktionen(int gruppenID){
     HashSet<String> nutzer = new HashSet<>();
     HashSet<TransaktionDTO> transaktionDTOs = new HashSet<>();

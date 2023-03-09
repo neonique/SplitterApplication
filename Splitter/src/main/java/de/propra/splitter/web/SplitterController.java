@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class SplitterController {
@@ -29,34 +30,24 @@ public class SplitterController {
 
 
   @GetMapping("/")
-  public String alleGruppen(OAuth2AuthenticationToken auth, Model m){
+  public String authentifizierung(OAuth2AuthenticationToken auth, RedirectAttributes attrs){
 
   String login = auth.getPrincipal().getAttribute("login");
-  m.addAttribute("nutzername", login);
+  attrs.addFlashAttribute("nutzername", login);
 
-  /*HashMap<Integer,String> gruppen = applicationService.nutzerGruppen(login);
-  m.addAttribute("gruppen", gruppen);
-
-  HashMap<Integer,String> gruppen = applicationService.nutzerGruppen(login);
-    List<String> gruppenNamen =new ArrayList<>();
-    for (Map.Entry<Integer,String> entry:gruppen.entrySet()) {
-      gruppenNamen.add(entry.getValue());
-    }
-
-
-  m.addAttribute("gruppenNamen", gruppenNamen);
-  */
-  return "alleGruppen";
+    return "redirect:/alleGruppen";
   }
 
-  @PostMapping("/alleGruppen")
-  public String neueGruppe(Model m){
-
-    String gruppenName = (String) m.getAttribute("neueGruppe");
-    System.out.println(gruppenName);
-    //applicationService.addGruppe(gruppenName, "neonique");
-
+  @GetMapping("/alleGruppen")
+  public String alleGruppen(Model m, String nutzername){
+    m.addAttribute("nutzername", nutzername);
     return "alleGruppen";
+  }
+  @PostMapping("/alleGruppen")
+  public String neueGruppe(Model m, RedirectAttributes attrs){
+
+
+    return "redirect:/alleGruppen";
   }
 
   @GetMapping("/gruppe")
