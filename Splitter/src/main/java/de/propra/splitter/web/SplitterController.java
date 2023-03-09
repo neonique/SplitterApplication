@@ -32,26 +32,26 @@ public class SplitterController {
   }
 
   @GetMapping("/alleGruppen")
-  public String alleGruppen(Model m){
-
+  public String alleGruppen(Model m,OAuth2AuthenticationToken auth){
+    String login = auth.getPrincipal().getAttribute("login");
+    m.addAttribute("nutzername",login);
     return "alleGruppen";
   }
   @PostMapping("/alleGruppen")
-  public String neueGruppe( RedirectAttributes attrs,String nutzername){
-    attrs.addFlashAttribute("nutzername", nutzername);
+  public String neueGruppe( RedirectAttributes attrs,OAuth2AuthenticationToken auth){
     return "redirect:/alleGruppen";
   }
 
   @GetMapping("/gruppe")
-  public String gruppe(Model m){
+  public String gruppe(Model m,OAuth2AuthenticationToken auth){
     return "gruppe";
   }
   @GetMapping("/ausgleichsTransaktionen")
-  public String ausgleichsTransaktionen(Model m){
+  public String ausgleichsTransaktionen(Model m,OAuth2AuthenticationToken auth){
     return "ausgleichsTransaktionen";
   }
   @GetMapping("/addTransaktion")
-  public String addTransaktion(Model m){
+  public String addTransaktion(Model m,OAuth2AuthenticationToken auth){
     return "addTransaktion";
   }
 }

@@ -9,7 +9,6 @@
 <h1>Willkommen <span th:text="${nutzername}">Nutzer</span></h1>
 
 <form method="post" th:action="@{/alleGruppen}">
-  <input type="hidden" th:value="${nutzername}" name="nutzername">
   <label for="textid">Neue Gruppe erstellen:</label>
   <input id="textid" type="text" th:name="neueGruppe">
   <button type="submit">Erstellen</button>

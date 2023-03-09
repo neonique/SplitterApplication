@@ -5,20 +5,15 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 import de.propra.splitter.domain.model.TransaktionDTO;
-import de.propra.splitter.domain.service.GruppenService;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ApplicationService {
-  GruppenService gruppenService;
 
 
-  @Autowired
-  public ApplicationService(GruppenService gruppenService){
-    this.gruppenService = gruppenService;
-  }
+
   public int addGruppe(String gruppenName, String nutzerName){
     return 0;
   }
