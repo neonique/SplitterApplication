@@ -16,8 +16,8 @@ public class TestArch {
   @ArchTest
   ArchRule onionTest = onionArchitecture()
       .domainModels("..domain.model..")
-      .domainServices("..domain.service..")
-      .applicationServices("..applicationservice..")
+      .domainServices("..service..")
+      .applicationServices("..service..")
       .adapter("web","..web..")
       .adapter("db", "..persistence..")
       .adapter("config", "..config..");

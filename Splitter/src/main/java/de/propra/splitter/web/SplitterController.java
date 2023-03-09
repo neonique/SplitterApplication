@@ -1,15 +1,7 @@
 package de.propra.splitter.web;
 
-import de.propra.splitter.applicationservice.ApplicationService;
-import de.propra.splitter.domain.model.Gruppe;
-import de.propra.splitter.domain.model.Nutzer;
-import de.propra.splitter.domain.service.GruppenService;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
+import de.propra.splitter.service.ApplicationService;
 
-import java.util.List;
-import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.stereotype.Controller;

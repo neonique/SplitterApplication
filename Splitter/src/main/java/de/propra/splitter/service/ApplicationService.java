@@ -1,5 +1,6 @@
-package de.propra.splitter.applicationservice;
+package de.propra.splitter.service;
 
+import de.propra.splitter.domain.model.Gruppe;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -40,14 +41,14 @@ public class ApplicationService {
   public void closeGruppe(int id) {
     return;
   }
-
+/*
   public HashMap<String, HashMap<String, String>> berechneNotwendigeTransaktionen(int gruppenID){
     HashSet<String> nutzer = new HashSet<>();
     HashSet<TransaktionDTO> transaktionDTOs = new HashSet<>();
 
     return gruppenService.berechneNotwendigeTransaktionen(nutzer, transaktionDTOs);
   }
-
+*/
   public void addNutzerToGruppe(int id, String nutzerName) {
 
   }
@@ -63,6 +64,19 @@ public class ApplicationService {
   public Set<TransaktionDTO> getGruppenTransaktionen(int gruppenId) {
     return new HashSet<>();
   }
+  public HashMap<String, HashMap<String, String>> berechneNotwendigeTransaktionen
+      (HashSet<String> nutzer, HashSet<TransaktionDTO> transaktionDTOs) {
+
+    Gruppe gruppe = new Gruppe(nutzer);
+
+    for (TransaktionDTO transaktionDTO : transaktionDTOs) {
+      //je nach dem wie der betrag geschrieben ist muss mehr gemacht werden!
+      gruppe.addTransaktion(transaktionDTO.sponsor(), transaktionDTO.bettler(), transaktionDTO.betrag());
+    }
+
+    return gruppe.notwendigeTransaktionen();
+  }
+
 
 
 }
