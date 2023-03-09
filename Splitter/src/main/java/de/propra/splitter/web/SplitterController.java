@@ -35,18 +35,18 @@ public class SplitterController {
   String login = auth.getPrincipal().getAttribute("login");
   attrs.addFlashAttribute("nutzername", login);
 
+
     return "redirect:/alleGruppen";
   }
 
   @GetMapping("/alleGruppen")
-  public String alleGruppen(Model m, String nutzername){
-    m.addAttribute("nutzername", nutzername);
+  public String alleGruppen(Model m){
+
     return "alleGruppen";
   }
   @PostMapping("/alleGruppen")
-  public String neueGruppe(Model m, RedirectAttributes attrs){
-
-
+  public String neueGruppe( RedirectAttributes attrs,String nutzername){
+    attrs.addFlashAttribute("nutzername", nutzername);
     return "redirect:/alleGruppen";
   }
 
