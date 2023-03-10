@@ -18,27 +18,40 @@ public class ApplicationService {
   public ApplicationService(GruppenRepo gruppenRepo){
     this.gruppenRepo = gruppenRepo;
   }
-  public int addGruppe(String gruppenName, String nutzerName){
-    return 0;
+  public String addGruppe(String gruppenName, String nutzerName){
+    Gruppe gruppe = new Gruppe(gruppenName, nutzerName);
+    gruppenRepo.save(gruppe);
+    return gruppe.Id();
   }
 
 
-  public HashMap<Integer, String> nutzerGruppen(String nutzerName){
-    return new HashMap<>();
+  public HashMap<String, String> nutzerGruppen(String nutzerName){
+   Set<Gruppe> gruppen = gruppenRepo.nutzerGruppen(nutzerName);
+   HashMap<String, String> nutzerGruppen = new HashMap<>();
+   gruppen.stream().forEach(a -> nutzerGruppen.put(a.Id(), a.name()));
+   return nutzerGruppen;
   }
 
 
-  public HashMap<Integer, String> offeneNutzerGruppen(String nutzerName){
-    return new HashMap<>();
+  public HashMap<String, String> offenenutzerGruppen(String nutzerName){
+    Set<Gruppe> gruppen = gruppenRepo.nutzerGruppen(nutzerName);
+    HashMap<String, String> nutzerGruppen = new HashMap<>();
+    gruppen.stream().filter(a -> !a.isclosed()).forEach(a -> nutzerGruppen.put(a.Id(), a.name()));
+    return nutzerGruppen;
   }
 
-  public HashMap<Integer, String> geschlosseneNutzerGruppen(String nutzerName){
-    return new HashMap<>();
+  public HashMap<String, String> geschlosseneNutzerGruppen(String nutzerName){
+    Set<Gruppe> gruppen = gruppenRepo.nutzerGruppen(nutzerName);
+    HashMap<String, String> nutzerGruppen = new HashMap<>();
+    gruppen.stream().filter(a -> a.isclosed()).forEach(a -> nutzerGruppen.put(a.Id(), a.name()));
+    return nutzerGruppen;
   }
 
 
-  public void closeGruppe(int id) {
-    return;
+  public void closeGruppe(String id) {
+    Gruppe gruppe = gruppenRepo.load(id);
+    gruppe.close();
+    gruppenRepo.save(gruppe);
   }
 /*
   public HashMap<String, HashMap<String, String>> berechneNotwendigeTransaktionen(int gruppenID){
@@ -48,20 +61,25 @@ public class ApplicationService {
     return gruppenService.berechneNotwendigeTransaktionen(nutzer, transaktionDTOs);
   }
 */
-  public void addNutzerToGruppe(int id, String nutzerName) {
+  public void addNutzerToGruppe(String id, String nutzerName) {
+    Gruppe gruppe = gruppenRepo.load(id);
+    gruppe.addNutzer(nutzerName);
+    gruppenRepo.save(gruppe);
 
   }
 
-  public int transaktionHinzufuegen(int gruppenId, TransaktionDTO transaktion ) {
-    return 0;
+  public void transaktionHinzufuegen(String id, String sponsor, Set<String> bettler, double betrag ) {
+    Gruppe gruppe = gruppenRepo.load(id);
+    gruppe.addTransaktion(sponsor, bettler, betrag);
+    gruppenRepo.save(gruppe);
   }
 
-  public Set<String> getGruppenNutzer(int gruppenId) {
-    return new HashSet<>();
+  public Set<String> getGruppenNutzer(String id) {
+    return gruppenRepo.gruppeNutzer(id);
   }
 
-  public Set<TransaktionDTO> getGruppenTransaktionen(int gruppenId) {
-    return new HashSet<>();
+  public Set<TransaktionDTO> getGruppenTransaktionen(String id) {
+    return gruppenRepo.gruppeTransaktionen(id);
   }
   public HashMap<String, HashMap<String, String>> berechneNotwendigeTransaktionen
       (HashSet<String> nutzer, HashSet<TransaktionDTO> transaktionDTOs) {
