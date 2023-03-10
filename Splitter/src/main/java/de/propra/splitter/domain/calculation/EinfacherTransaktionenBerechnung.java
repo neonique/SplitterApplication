@@ -1,8 +1,8 @@
-package de.propra.splitter.domain.model.calculation;
+package de.propra.splitter.domain.calculation;
 
-import de.propra.splitter.domain.model.Gruppe;
-import de.propra.splitter.domain.model.Nutzer;
-import de.propra.splitter.domain.model.Transaktion;
+import de.propra.splitter.domain.Gruppe;
+import de.propra.splitter.domain.Nutzer;
+import de.propra.splitter.domain.Transaktion;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -38,7 +38,7 @@ public class EinfacherTransaktionenBerechnung implements TransaktionenBerechnung
             if (balance.isPositive()) {
 
                 necessaryTransactions.putIfAbsent(beggar.nutzer().name(), necessaryTransaction);
-                necessaryTransactions.get(beggar.nutzer().name()).put(sponsor.nutzer().name(), beggar.saldo().toString());
+                necessaryTransactions.get(beggar.nutzer().name()).put(sponsor.nutzer().name(), beggar.saldo().negate().toString());
 
                 sponsor.setSaldo(balance);
                 beggar = negativeBalance.poll();
@@ -46,14 +46,14 @@ public class EinfacherTransaktionenBerechnung implements TransaktionenBerechnung
             } else if (balance.isNegative()) {
 
                 necessaryTransactions.putIfAbsent(beggar.nutzer().name(), necessaryTransaction);;
-                necessaryTransactions.get(beggar.nutzer().name()).put(sponsor.nutzer().name(), sponsor.saldo().negate().toString());
+                necessaryTransactions.get(beggar.nutzer().name()).put(sponsor.nutzer().name(), sponsor.saldo().toString());
 
                 beggar.setSaldo(balance);
                 sponsor = positiveBalance.poll();
             } else {
 
                 necessaryTransactions.putIfAbsent(beggar.nutzer().name(), necessaryTransaction);;
-                necessaryTransactions.get(beggar.nutzer().name()).put(sponsor.nutzer().name(), beggar.saldo().toString());
+                necessaryTransactions.get(beggar.nutzer().name()).put(sponsor.nutzer().name(), beggar.saldo().negate().toString());
 
                 beggar = negativeBalance.poll();
                 sponsor = positiveBalance.poll();

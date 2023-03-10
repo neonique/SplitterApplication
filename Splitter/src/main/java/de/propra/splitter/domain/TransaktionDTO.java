@@ -1,4 +1,4 @@
-package de.propra.splitter.domain.model;
+package de.propra.splitter.domain;
 
 import de.propra.splitter.stereotypes.DTO;
 import java.util.Set;

@@ -1,10 +1,8 @@
 package de.propra.splitter.service;
 
-import de.propra.splitter.domain.model.Gruppe;
-import de.propra.splitter.domain.model.TransaktionDTO;
-import org.springframework.context.annotation.Bean;
+import de.propra.splitter.domain.Gruppe;
+import de.propra.splitter.domain.TransaktionDTO;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Set;

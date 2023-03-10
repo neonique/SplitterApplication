@@ -1,6 +1,6 @@
-package de.propra.splitter.domain.model.calculation;
+package de.propra.splitter.domain.calculation;
 
-import de.propra.splitter.domain.model.Nutzer;
+import de.propra.splitter.domain.Nutzer;
 import org.javamoney.moneta.Money;
 
 import java.util.Objects;

@@ -1,4 +1,4 @@
-package de.propra.splitter.domain.model;
+package de.propra.splitter.domain;
 
 import java.util.Set;
 import org.javamoney.moneta.Money;

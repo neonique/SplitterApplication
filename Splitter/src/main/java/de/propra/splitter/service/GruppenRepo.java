@@ -1,7 +1,7 @@
 package de.propra.splitter.service;
 
-import de.propra.splitter.domain.model.Gruppe;
-import de.propra.splitter.domain.model.TransaktionDTO;
+import de.propra.splitter.domain.Gruppe;
+import de.propra.splitter.domain.TransaktionDTO;
 
 import java.util.Set;
 

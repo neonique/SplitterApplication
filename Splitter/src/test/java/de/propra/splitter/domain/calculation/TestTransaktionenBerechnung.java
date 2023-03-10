@@ -1,8 +1,8 @@
-package de.propra.splitter.domain.model.calculation;
+package de.propra.splitter.domain.calculation;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import de.propra.splitter.domain.model.Gruppe;
+import de.propra.splitter.domain.Gruppe;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -60,7 +60,7 @@ public class TestTransaktionenBerechnung {
     HashMap<String, HashMap<String, String>> balance =  gruppe.notwendigeTransaktionen();
 
     assertThat(balance.get(nutzer1)).isNull();
-    Entry<String, String> entry = Map.entry(nutzer1,"EUR -15.00");
+    Entry<String, String> entry = Map.entry(nutzer1,"EUR 15.00");
     assertThat(balance.get(nutzer2)).containsExactly(entry);
   }
 
@@ -78,7 +78,7 @@ public class TestTransaktionenBerechnung {
     HashMap<String, HashMap<String, String>> balance =  gruppe.notwendigeTransaktionen();
 
     assertThat(balance.get(nutzer2)).isNull(); //Empty-> Null
-    Entry<String, String> entry = Map.entry(nutzer2, "EUR -5.00");
+    Entry<String, String> entry = Map.entry(nutzer2, "EUR 5.00");
     assertThat(balance.get(nutzer1)).containsExactly(entry);
   }
 
@@ -96,7 +96,7 @@ public class TestTransaktionenBerechnung {
     HashMap<String, HashMap<String, String>> balance =  gruppe.notwendigeTransaktionen();
 
     assertThat(balance.get(nutzer1)).isNull(); //Empty-> Null
-    Entry<String, String> entry = Map.entry(nutzer1, "EUR -20.00");
+    Entry<String, String> entry = Map.entry(nutzer1, "EUR 20.00");
     assertThat(balance.get(nutzer2)).containsExactly(entry);
   }
 
@@ -140,8 +140,8 @@ public class TestTransaktionenBerechnung {
 
     assertThat(balance.get(nutzer1)).isNull(); //Empty-> Null
     //In den Lösungen sind folgende Entries getauscht, so ist es aber eigentlich richtig
-    Entry<String, String> entry1 = Map.entry(nutzer1,  "EUR -30.00");
-    Entry<String, String> entry2 = Map.entry(nutzer3, "EUR -20.00");
+    Entry<String, String> entry1 = Map.entry(nutzer1,  "EUR 30.00");
+    Entry<String, String> entry2 = Map.entry(nutzer3, "EUR 20.00");
     assertThat(balance.get(nutzer2)).containsExactly(entry1,entry2);
     assertThat(balance.get(nutzer3)).isNull(); //Empty-> Null
   }
@@ -172,15 +172,15 @@ public class TestTransaktionenBerechnung {
 
     assertThat(balance.get(nutzer1)).isNull(); //Empty-> Null
 
-    Entry<String, String> entry1 = Map.entry(nutzer1, "EUR -96.78");
+    Entry<String, String> entry1 = Map.entry(nutzer1, "EUR 96.78");
     assertThat(balance.get(nutzer2)).containsExactly(entry1);
-    Entry<String, String> entry2 = Map.entry(nutzer1, "EUR -55.26");
+    Entry<String, String> entry2 = Map.entry(nutzer1, "EUR 55.26");
     assertThat(balance.get(nutzer3)).containsExactly(entry2);
-    Entry<String, String> entry3 = Map.entry(nutzer1, "EUR -26.86");
+    Entry<String, String> entry3 = Map.entry(nutzer1, "EUR 26.86");
     assertThat(balance.get(nutzer4)).containsExactly(entry3);
-    Entry<String, String> entry4 = Map.entry(nutzer1, "EUR -169.16");
+    Entry<String, String> entry4 = Map.entry(nutzer1, "EUR 169.16");
     assertThat(balance.get(nutzer5)).containsExactly(entry4);
-    Entry<String, String> entry5 = Map.entry(nutzer1, "EUR -73.79");
+    Entry<String, String> entry5 = Map.entry(nutzer1, "EUR 73.79");
     assertThat(balance.get(nutzer6)).containsExactly(entry5);
   }
 
@@ -217,14 +217,14 @@ public class TestTransaktionenBerechnung {
     balance.forEach((u,b) -> System.out.println(u + "pays: " + b.toString()));
 
     //Assert for Minimal
-    Entry<String, String> entry1 = Map.entry(user1, "EUR -40");
-    Entry<String, String> entry2 = Map.entry(user1, "EUR -40");
+    Entry<String, String> entry1 = Map.entry(user1, "EUR 40");
+    Entry<String, String> entry2 = Map.entry(user1, "EUR 40");
     assertThat(balance.get(user1)).containsExactly(entry1, entry2);
-    Entry<String, String> entry3 = Map.entry(user1, "EUR -30");
+    Entry<String, String> entry3 = Map.entry(user1, "EUR 30");
     assertThat(balance.get(user2)).containsExactly(entry3);
-    Entry<String, String> entry4 = Map.entry(user1, "EUR -30");
+    Entry<String, String> entry4 = Map.entry(user1, "EUR 30");
     assertThat(balance.get(user3)).containsExactly(entry4);
-    Entry<String, String> entry5 = Map.entry(user1, "EUR -30");
+    Entry<String, String> entry5 = Map.entry(user1, "EUR 30");
     assertThat(balance.get(user4)).containsExactly(entry5);
   }
       */

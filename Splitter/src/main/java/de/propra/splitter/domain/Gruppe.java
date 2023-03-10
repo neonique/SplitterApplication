@@ -1,8 +1,8 @@
-package de.propra.splitter.domain.model;
+package de.propra.splitter.domain;
 
 
-import de.propra.splitter.domain.model.calculation.EinfacherTransaktionenBerechnung;
-import de.propra.splitter.domain.model.calculation.TransaktionenBerechnung;
+import de.propra.splitter.domain.calculation.EinfacherTransaktionenBerechnung;
+import de.propra.splitter.domain.calculation.TransaktionenBerechnung;
 
 import de.propra.splitter.stereotypes.AggregateRoot;
 
