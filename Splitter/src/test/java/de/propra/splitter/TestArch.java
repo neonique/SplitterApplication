@@ -15,7 +15,7 @@ public class TestArch {
 
   @ArchTest
   ArchRule onionTest = onionArchitecture()
-      .domainModels("..domain.model..")
+      .domainModels("..domain..")
       .domainServices("..service..")
       .applicationServices("..service..")
       .adapter("web","..web..")
@@ -24,9 +24,9 @@ public class TestArch {
 
   @ArchTest
   ArchRule onlyAggregateRootCanBeAccessedFromOutsideDomain = classes().that()
-      .resideInAPackage("..domain.model..").and()
+      .resideInAPackage("..domain..").and()
       .areNotAnnotatedWith(AggregateRoot.class).and().areNotAnnotatedWith(DTO.class).should()
-      .onlyBeAccessed().byClassesThat().resideInAPackage("..domain.model..");
+      .onlyBeAccessed().byClassesThat().resideInAPackage("..domain..");
 /*
 
   @ArchTest
