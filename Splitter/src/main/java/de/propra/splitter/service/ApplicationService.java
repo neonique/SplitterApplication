@@ -32,7 +32,7 @@ public class ApplicationService {
   }
 
 
-  public HashMap<String, String> offenenutzerGruppen(String nutzerName){
+  public HashMap<String, String> offeneNutzerGruppen(String nutzerName){
     Set<Gruppe> gruppen = gruppenRepo.nutzerGruppen(nutzerName);
     HashMap<String, String> nutzerGruppen = new HashMap<>();
     gruppen.stream().filter(a -> !a.isclosed()).forEach(a -> nutzerGruppen.put(a.Id(), a.name()));
@@ -53,7 +53,7 @@ public class ApplicationService {
     gruppenRepo.save(gruppe);
   }
 
-  public HashMap<String, HashMap<String, String>> berechneNotwendigeTransaktionen(String id){
+  public HashMap<String, HashMap<String, String>> notwendigeTransaktionen(String id){
     Gruppe gruppe = gruppenRepo.load(id);
 
     return gruppe.notwendigeTransaktionen();
@@ -66,7 +66,7 @@ public class ApplicationService {
 
   }
 
-  public void transaktionHinzufuegen(String id, String sponsor, Set<String> bettler, double betrag ) {
+  public void addTransaktionToGruppe(String id, String sponsor, Set<String> bettler, double betrag ) {
     Gruppe gruppe = gruppenRepo.load(id);
     gruppe.addTransaktion(sponsor, bettler, betrag);
     gruppenRepo.save(gruppe);

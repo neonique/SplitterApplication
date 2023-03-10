@@ -44,6 +44,7 @@ public class Gruppe {
     Set<Nutzer> nutzer = nutzerNamen.stream().map(n -> new Nutzer(n)).collect(Collectors.toSet());
     teilnehmer.addAll(nutzer);
     this.name = "remove later";
+    id = UUID.randomUUID();
   }
 
   public String Id() {
