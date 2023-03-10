@@ -47,7 +47,7 @@ public class Gruppe {
     id = UUID.randomUUID();
   }
 
-  public String Id() {
+  public String id() {
     return id.toString();
   }
 

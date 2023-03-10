@@ -17,4 +17,6 @@ public interface GruppenRepo {
 
     public Set<TransaktionDTO> gruppeTransaktionen(String id);
 
+    public boolean isClosed(String id);
+
 }

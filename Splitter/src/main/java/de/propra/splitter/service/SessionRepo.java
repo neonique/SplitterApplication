@@ -20,7 +20,7 @@ public class SessionRepo implements GruppenRepo {
 
     @Override
     public Gruppe load(String id) {
-        return gruppen.stream().filter(a -> a.Id().equals(id)).findFirst().orElse(null);
+        return gruppen.stream().filter(a -> a.id().equals(id)).findFirst().orElse(null);
     }
 
     @Override
@@ -30,7 +30,7 @@ public class SessionRepo implements GruppenRepo {
 
     @Override
     public Set<String> gruppeNutzer(String id) {
-       Gruppe gruppe = gruppen.stream().filter(a -> a.Id().equals(id)).findFirst().orElse(null);
+       Gruppe gruppe = gruppen.stream().filter(a -> a.id().equals(id)).findFirst().orElse(null);
        if (gruppe == null){
            return null;
        }
@@ -39,10 +39,19 @@ public class SessionRepo implements GruppenRepo {
 
     @Override
     public Set<TransaktionDTO> gruppeTransaktionen(String id) {
-        Gruppe gruppe = gruppen.stream().filter(a -> a.Id().equals(id)).findFirst().orElse(null);
+        Gruppe gruppe = gruppen.stream().filter(a -> a.id().equals(id)).findFirst().orElse(null);
         if (gruppe == null){
             return null;
         }
         return gruppe.getTransaktionenDetails();
+    }
+
+    @Override
+    public boolean isClosed(String id) {
+        Gruppe gruppe = gruppen.stream().filter(a -> a.id().equals(id)).findFirst().orElse(null);
+        if (gruppe == null){
+            throw new IllegalArgumentException("gruppe nicht gefunden");
+        }
+        return gruppe.isclosed();
     }
 }

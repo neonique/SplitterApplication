@@ -20,14 +20,14 @@ public class ApplicationService {
   public String addGruppe(String gruppenName, String nutzerName){
     Gruppe gruppe = new Gruppe(gruppenName, nutzerName);
     gruppenRepo.save(gruppe);
-    return gruppe.Id();
+    return gruppe.id();
   }
 
 
   public HashMap<String, String> nutzerGruppen(String nutzerName){
    Set<Gruppe> gruppen = gruppenRepo.nutzerGruppen(nutzerName);
    HashMap<String, String> nutzerGruppen = new HashMap<>();
-   gruppen.stream().forEach(a -> nutzerGruppen.put(a.Id(), a.name()));
+   gruppen.stream().forEach(a -> nutzerGruppen.put(a.id(), a.name()));
    return nutzerGruppen;
   }
 
@@ -35,14 +35,14 @@ public class ApplicationService {
   public HashMap<String, String> offeneNutzerGruppen(String nutzerName){
     Set<Gruppe> gruppen = gruppenRepo.nutzerGruppen(nutzerName);
     HashMap<String, String> nutzerGruppen = new HashMap<>();
-    gruppen.stream().filter(a -> !a.isclosed()).forEach(a -> nutzerGruppen.put(a.Id(), a.name()));
+    gruppen.stream().filter(a -> !a.isclosed()).forEach(a -> nutzerGruppen.put(a.id(), a.name()));
     return nutzerGruppen;
   }
 
   public HashMap<String, String> geschlosseneNutzerGruppen(String nutzerName){
     Set<Gruppe> gruppen = gruppenRepo.nutzerGruppen(nutzerName);
     HashMap<String, String> nutzerGruppen = new HashMap<>();
-    gruppen.stream().filter(a -> a.isclosed()).forEach(a -> nutzerGruppen.put(a.Id(), a.name()));
+    gruppen.stream().filter(a -> a.isclosed()).forEach(a -> nutzerGruppen.put(a.id(), a.name()));
     return nutzerGruppen;
   }
 
@@ -80,4 +80,7 @@ public class ApplicationService {
     return gruppenRepo.gruppeTransaktionen(id);
   }
 
+  public boolean isClosed(String id){
+    return gruppenRepo.isClosed(id);
+  }
 }
