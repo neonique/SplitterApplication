@@ -53,14 +53,13 @@ public class ApplicationService {
     gruppe.close();
     gruppenRepo.save(gruppe);
   }
-/*
-  public HashMap<String, HashMap<String, String>> berechneNotwendigeTransaktionen(int gruppenID){
-    HashSet<String> nutzer = new HashSet<>();
-    HashSet<TransaktionDTO> transaktionDTOs = new HashSet<>();
 
-    return gruppenService.berechneNotwendigeTransaktionen(nutzer, transaktionDTOs);
+  public HashMap<String, HashMap<String, String>> berechneNotwendigeTransaktionen(String id){
+    Gruppe gruppe = gruppenRepo.load(id);
+
+    return gruppe.notwendigeTransaktionen();
   }
-*/
+
   public void addNutzerToGruppe(String id, String nutzerName) {
     Gruppe gruppe = gruppenRepo.load(id);
     gruppe.addNutzer(nutzerName);
@@ -81,19 +80,5 @@ public class ApplicationService {
   public Set<TransaktionDTO> getGruppenTransaktionen(String id) {
     return gruppenRepo.gruppeTransaktionen(id);
   }
-  public HashMap<String, HashMap<String, String>> berechneNotwendigeTransaktionen
-      (HashSet<String> nutzer, HashSet<TransaktionDTO> transaktionDTOs) {
-
-    Gruppe gruppe = new Gruppe(nutzer);
-
-    for (TransaktionDTO transaktionDTO : transaktionDTOs) {
-      //je nach dem wie der betrag geschrieben ist muss mehr gemacht werden!
-      gruppe.addTransaktion(transaktionDTO.sponsor(), transaktionDTO.bettler(), transaktionDTO.betrag());
-    }
-
-    return gruppe.notwendigeTransaktionen();
-  }
-
-
 
 }
