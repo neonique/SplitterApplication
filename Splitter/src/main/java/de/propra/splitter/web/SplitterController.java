@@ -2,6 +2,7 @@ package de.propra.splitter.web;
 
 import de.propra.splitter.service.ApplicationService;
 
+import java.util.HashMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.stereotype.Controller;
@@ -35,10 +36,16 @@ public class SplitterController {
   public String alleGruppen(Model m,OAuth2AuthenticationToken auth){
     String login = auth.getPrincipal().getAttribute("login");
     m.addAttribute("nutzername",login);
+    HashMap<String, String> offeneNutzerGruppen = applicationService.offeneNutzerGruppen(login);
+    m.addAttribute("offeneNutzerGruppen", offeneNutzerGruppen );
+    HashMap<String, String> geschlosseneNutzerGruppen = applicationService.geschlosseneNutzerGruppen(login);
+    m.addAttribute("geschlosseneNutzerGruppen", geschlosseneNutzerGruppen );
     return "alleGruppen";
   }
   @PostMapping("/alleGruppen")
-  public String neueGruppe( RedirectAttributes attrs,OAuth2AuthenticationToken auth){
+  public String gruppeErstellen( RedirectAttributes attrs,OAuth2AuthenticationToken auth, String neueGruppe){
+    String login = auth.getPrincipal().getAttribute("login");
+    applicationService.addGruppe(neueGruppe, login);
     return "redirect:/alleGruppen";
   }
 

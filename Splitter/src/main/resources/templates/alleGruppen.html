@@ -14,11 +14,20 @@
   <button type="submit">Erstellen</button>
 </form>
 
-<!--<ul>
-  <li th:each="gruppenName : ${gruppenNamen}">
-    <span th:text="${gruppenName}">Gruppen Name</span>
+  <h2>Offene Gruppen</h2>
+<ul>
+  <li th:each="gruppe : ${offeneNutzerGruppen}">
+    <a th:href="@{/gruppe}" th:text="${gruppe.getValue()}">Gruppen Name</a>
   </li>
-</ul> -->
+</ul>
+
+  <h2>Geschlossene Gruppen</h2>
+  <ul>
+    <li th:each="gruppe : ${geschlosseneNutzerGruppen}">
+      <span th:text="${gruppe.getValue()}">Gruppen Name</span>
+    </li>
+  </ul>
+
 </div>
 </body>
 </html>

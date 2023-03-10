@@ -2,9 +2,28 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>titile</title>
+  <title th:text="${gruppenName}"> Gruppe</title>
 </head>
 <body>
+
+<h1 th:text="${gruppenName}"> Gruppe</h1>
+
+<form method="post" th:action="@{/gruppe}">
+  <label for="textid">Neuen Nutzer hinzufuegen:</label>
+  <input id="textid" type="text" th:name="neuerNutzer">
+  <button type="submit">Hinzufügen</button>
+</form>
+
+<table>
+  <tr >
+     <th >Sponsor</th>
+    <th > Betrag</th>
+    <th > Schuldner</th>
+  </tr>
+  <tr th:each="transaktion : ${Transaktionen}" >
+
+  </tr>
+</table>
 
 </body>
 </html>
