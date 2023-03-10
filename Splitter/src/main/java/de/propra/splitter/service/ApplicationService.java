@@ -13,7 +13,11 @@ import org.springframework.stereotype.Service;
 public class ApplicationService {
 
 
-
+  private GruppenRepo gruppenRepo;
+  @Autowired
+  public ApplicationService(GruppenRepo gruppenRepo){
+    this.gruppenRepo = gruppenRepo;
+  }
   public int addGruppe(String gruppenName, String nutzerName){
     return 0;
   }

@@ -5,6 +5,8 @@ import de.propra.splitter.domain.model.calculation.EinfacherTransaktionenBerechn
 import de.propra.splitter.domain.model.calculation.TransaktionenBerechnung;
 
 import de.propra.splitter.stereotypes.AggregateRoot;
+
+import java.util.UUID;
 import java.util.stream.Collectors;
 import org.javamoney.moneta.Money;
 
@@ -18,6 +20,8 @@ public class Gruppe {
 
   private boolean geschlossen =false;
 
+  private UUID id;
+
   private HashSet<Nutzer> teilnehmer = new HashSet<>();
   private HashSet<Transaktion> transaktionen =new HashSet<>();
 
@@ -26,12 +30,24 @@ public class Gruppe {
     Nutzer nutzer = new Nutzer(nutzerName);
     teilnehmer.add(nutzer);
     this.name = name;
+    id = UUID.randomUUID();
+  }
+
+  public Gruppe(String name, String nutzerName, UUID id) {
+    Nutzer nutzer = new Nutzer(nutzerName);
+    teilnehmer.add(nutzer);
+    this.name = name;
+    this.id = id;
   }
 
   public Gruppe(Set<String> nutzerNamen){
     Set<Nutzer> nutzer = nutzerNamen.stream().map(n -> new Nutzer(n)).collect(Collectors.toSet());
     teilnehmer.addAll(nutzer);
     this.name = "remove later";
+  }
+
+  public String Id() {
+    return id.toString();
   }
 
   public String name(){
