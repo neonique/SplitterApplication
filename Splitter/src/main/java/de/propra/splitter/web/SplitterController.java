@@ -51,9 +51,18 @@ public class SplitterController {
 
   @GetMapping("/gruppe")
   public String gruppe(Model m,OAuth2AuthenticationToken auth,String gruppenid){
+    boolean geschlossen=applicationService.isClosed(gruppenid);
     String gruppenName =applicationService.getName(gruppenid);
     m.addAttribute("gruppenName",gruppenName);
+    m.addAttribute("geschlossen",geschlossen);
     return "gruppe";
+  }
+  @PostMapping("/gruppe/close")
+  public String closeGruppe(OAuth2AuthenticationToken auth,String gruppenid,RedirectAttributes attrs){
+    applicationService.closeGruppe(gruppenid);
+    attrs.addFlashAttribute("gruppenid",gruppenid);
+
+    return "redirect:/gruppe";
   }
   @GetMapping("/ausgleichsTransaktionen")
   public String ausgleichsTransaktionen(Model m,OAuth2AuthenticationToken auth){

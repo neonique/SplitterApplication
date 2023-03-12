@@ -3,9 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <title>Deine Gruppen</title>
+  <link rel="stylesheet" href="../static/alleGruppen.css">
 </head>
 <body>
 <div id="continer">
+
 <h1>Willkommen <span th:text="${nutzername}">Nutzer</span></h1>
 
 <form method="post" th:action="@{/alleGruppen}">

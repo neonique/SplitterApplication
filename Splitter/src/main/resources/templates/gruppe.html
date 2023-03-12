@@ -21,9 +21,18 @@
     <th > Schuldner</th>
   </tr>
   <tr th:each="transaktion : ${Transaktionen}" >
-
+    <td ></td>
+    <td ></td>
+    <td ></td>
   </tr>
 </table>
+<form method="post" th:action="@{/gruppe/close}" th:if="${!geschlossen}" >
+  <input  type="hidden" th:value="gruppenid">
+  <button type="submit">gruppe schließen</button>
+</form>
+
+<
+<a href="/alleGruppen" th:href="@{/alleGruppen}">zurück zur Gruppenubersicht</a>
 
 </body>
 </html>
