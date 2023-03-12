@@ -50,7 +50,9 @@ public class SplitterController {
   }
 
   @GetMapping("/gruppe")
-  public String gruppe(Model m,OAuth2AuthenticationToken auth){
+  public String gruppe(Model m,OAuth2AuthenticationToken auth,String gruppenid){
+    String gruppenName =applicationService.getName(gruppenid);
+    m.addAttribute("gruppenName",gruppenName);
     return "gruppe";
   }
   @GetMapping("/ausgleichsTransaktionen")

@@ -54,4 +54,12 @@ public class SessionRepo implements GruppenRepo {
         }
         return gruppe.isclosed();
     }
+
+    @Override
+    public String getName(String id) {
+        Gruppe gruppe = gruppen.stream().filter(a -> a.id().equals(id)).findFirst().orElse(null);
+        if (gruppe == null){
+            return null;
+        }
+        return gruppe.name();    }
 }

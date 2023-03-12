@@ -83,4 +83,8 @@ public class ApplicationService {
   public boolean isClosed(String id){
     return gruppenRepo.isClosed(id);
   }
+
+  public String getName(String id) {
+    return gruppenRepo.getName(id);
+  }
 }
