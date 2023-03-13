@@ -37,16 +37,27 @@
     <th > Betrag</th>
     <th > Schuldner</th>
   </tr>
-  <tr th:each="transaktion : ${transaktionen}" >
-    <td ></td>
-    <td ></td>
-    <td ></td>
+  <tr th:each="transaktion : ${gruppeTransaktionen}" >
+    <td th:text="${transaktion.sponsor}" >Sponsor</td>
+    <td th:text="${transaktion.betrag}">Betrag</td>
+    <td>
+      <ul >
+        <li th:each="beggar : ${transaktion.bettler}">
+          <span th:text="${beggar}">Schuldner</span>
+        </li>
+      </ul>
+    </td>
   </tr>
 </table>
 <form method="post" th:action="@{/gruppe/close}" th:if="${!geschlossen}">
   <input  type="hidden" th:value="${gruppenid}" th:name="gruppenid" >
   <button type="submit" class="listbutton">Gruppe schließen</button>
 </form>
+<form method="post" th:action="@{/gruppe/notwendigeTransaktionen}" th:if="${hasTransaktionen}">
+  <input  type="hidden" th:value="${gruppenid}" th:name="gruppenid" >
+  <button type="submit" class="listbutton">notwendige Transaktionen</button>
+</form>
+
 
 <a href="/alleGruppen" th:href="@{/alleGruppen}">zurück zur Gruppenubersicht</a>
 

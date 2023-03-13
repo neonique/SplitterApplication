@@ -69,6 +69,8 @@ public class SplitterController {
     boolean hasTransaktionen = !gruppeTransaktionen.isEmpty();
     m.addAttribute("gruppeNutzer", gruppeNutzer);
     m.addAttribute("hasTransaktionen", hasTransaktionen);
+    m.addAttribute("gruppeTransaktionen",gruppeTransaktionen);
+
 
     return "gruppe";
   }
@@ -94,6 +96,9 @@ public class SplitterController {
   }
   @GetMapping("/ausgleichsTransaktionen")
   public String ausgleichsTransaktionen(Model m,OAuth2AuthenticationToken auth){
+    String gruppenid = (String) m.getAttribute("gruppenid");
+    HashMap<String, HashMap<String, String>> notwendigeTransaktionen = applicationService.notwendigeTransaktionen(gruppenid);
+    m.addAttribute("notwendigeTransaktionen",notwendigeTransaktionen);
     return "ausgleichsTransaktionen";
   }
   @GetMapping("/gruppe/addTransaktion")
@@ -124,6 +129,11 @@ public class SplitterController {
    applicationService.addTransaktionToGruppe(gruppenid, sponsor, beggarSet, betrag);
 
     return "redirect:/gruppe";
+  }
+  @PostMapping("/gruppe/notwendigeTransaktionen")
+  public String notwendigTransaktion(OAuth2AuthenticationToken auth,String gruppenid,RedirectAttributes attrs){
+    attrs.addFlashAttribute("gruppenid",gruppenid);
+    return "redirect:/ausgleichsTransaktionen";
   }
 
 }
