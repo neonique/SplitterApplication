@@ -17,7 +17,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class TestApplicationService {
-  /*
+
   @Test
   @DisplayName("Gruppe erstellen und speichern")
   void test_01(){
@@ -143,11 +143,11 @@ public class TestApplicationService {
     double betrag = 100 - 31; //haha funny number
     UUID id1 = UUID.randomUUID();
     Gruppe g1 = new Gruppe(name1, sponsor, id1);
-    TransaktionDTO transaktionDTO = new TransaktionDTO(sponsor, Set.of(bettler), betrag);
+    TransaktionDTO transaktionDTO = new TransaktionDTO(sponsor, Set.of(bettler), betrag, "");
     g1.addNutzer(bettler);
     when(gruppenRepo.load(id1.toString())).thenReturn(g1);
 
-    applicationService.addTransaktionToGruppe(id1.toString(), sponsor, Set.of(bettler), betrag);
+    applicationService.addTransaktionToGruppe(id1.toString(), sponsor, Set.of(bettler), betrag, "");
 
     assertThat(g1.getTransaktionenDetails()).containsOnly(transaktionDTO);
     verify(gruppenRepo).save(g1);
@@ -179,8 +179,8 @@ public class TestApplicationService {
     String nutzername2 = "marco";
     double betrag1 = 22;
     double betrag2 = 23;
-    TransaktionDTO t1 = new TransaktionDTO(nutzername1, Set.of(nutzername2), betrag1);
-    TransaktionDTO t2 = new TransaktionDTO(nutzername2, Set.of(nutzername1, nutzername2), betrag2);
+    TransaktionDTO t1 = new TransaktionDTO(nutzername1, Set.of(nutzername2), betrag1, "");
+    TransaktionDTO t2 = new TransaktionDTO(nutzername2, Set.of(nutzername1, nutzername2), betrag2, "");
     Set<TransaktionDTO> transaktionDTOS = Set.of(t1, t2);
 
 
@@ -202,11 +202,10 @@ public class TestApplicationService {
     String id = UUID.randomUUID().toString();
     when(gruppenRepo.load(id)).thenReturn(gruppe);
 
-    HashMap<String, HashMap<String, String>> notwendigeTransaktionen =
+    HashMap<String, HashMap<String, Double>> notwendigeTransaktionen =
         applicationService.notwendigeTransaktionen(id);
 
     verify(gruppe).notwendigeTransaktionen();
   }
-  */
 
 }
