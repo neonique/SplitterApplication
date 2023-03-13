@@ -2,9 +2,26 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Title</title>
+  <title>Notwendige Transaktionen</title>
 </head>
 <body>
-
+<h1 th:text="${gruppenName}">Gruppenname</h1>
+<table>
+  <tr>
+    <th>Schuldner</th>
+    <th>notige Transaktionen</th>
+  </tr>
+  <tr th:each="schuldner : ${notwendigeTransaktionen}" >
+    <td th:text="${schuldner.getKey()}" >schuldner</td>
+    <td >
+      <ul>
+        <li th:each="schuldner : ${schuldner.getValue()}">
+          <span th:text="${schuldner.getKey()}">Schuldner</span>
+          <span th:text="${schuldner.getValue()}">Betrage</span>
+        </li>
+      </ul>
+    </td>
+  </tr>
+</table>
 </body>
 </html>
