@@ -38,10 +38,19 @@ public class ApiController {
   //works
   @PostMapping("/gruppen")
   public ResponseEntity<String> addGruppe(@RequestBody GruppeBasicDataAPI neueGruppe){
+    System.out.println(neueGruppe);
+    if(!(neueGruppe.gruppe() == null) || (neueGruppe.name() == null) || (neueGruppe.personen() == null)) {
+      return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+    }
+    if(neueGruppe.personen().isEmpty()) {
+      return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+    }
+
     String id = applicationService.addGruppe(neueGruppe.name(), neueGruppe.personen().poll());
     for (String nutzer: neueGruppe.personen()) {
       applicationService.addNutzerToGruppe(id, nutzer);
     }
+
     return new ResponseEntity<>(id, HttpStatus.CREATED);
   }
 
@@ -61,10 +70,11 @@ public class ApiController {
   }
 
 //works aber ohne grund für transaktionen
-  @GetMapping("/user/gruppen/{id}")
+  @GetMapping("/gruppen/{id}")
   public ResponseEntity<GruppenDataDetailedAPI> getGruppenInfo(@PathVariable String id){
 
     if(!applicationService.exists(id)){
+
       return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 
@@ -99,6 +109,15 @@ public class ApiController {
   @PostMapping("/gruppen/{id}/auslagen")
   public ResponseEntity<String> getTransaktionen(@PathVariable String id,
       @RequestBody AusgabenDataAPI neueAusgabe){
+    System.out.println(neueAusgabe);
+    if(neueAusgabe.grund() == null || neueAusgabe.glaeubiger() == null ||
+        neueAusgabe.cent() == 0 || neueAusgabe.schuldner() == null){
+      return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+    }
+    if(neueAusgabe.schuldner().isEmpty()){
+      return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+    }
+
     if(!applicationService.exists(id)){
       return new ResponseEntity<>("Gruppe " + id + " nicht gefunden.", HttpStatus.NOT_FOUND);
     }
