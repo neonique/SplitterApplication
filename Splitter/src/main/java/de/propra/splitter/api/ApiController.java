@@ -38,7 +38,7 @@ public class ApiController {
   //works
   @PostMapping("/gruppen")
   public ResponseEntity<String> addGruppe(@RequestBody GruppeBasicDataAPI neueGruppe){
-    System.out.println(neueGruppe);
+
     if(!(neueGruppe.gruppe() == null) || (neueGruppe.name() == null) || (neueGruppe.personen() == null)) {
       return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
     }
@@ -57,6 +57,9 @@ public class ApiController {
   //works
   @GetMapping("/user/{nutzername}/gruppen")
   public ResponseEntity<NutzerGruppenBasicDataAPI> getNutzerGruppen(@PathVariable String nutzername){
+    if(nutzername == null){
+      return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+    }
     LinkedList<GruppeBasicDataAPI> list = new LinkedList<>();
 
     HashMap<String, String> gruppen = applicationService.nutzerGruppen(nutzername);
@@ -72,7 +75,9 @@ public class ApiController {
 //works aber ohne grund für transaktionen
   @GetMapping("/gruppen/{id}")
   public ResponseEntity<GruppenDataDetailedAPI> getGruppenInfo(@PathVariable String id){
-
+    if(id == null){
+      return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+    }
     if(!applicationService.exists(id)){
 
       return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
@@ -99,6 +104,9 @@ public class ApiController {
 //works
   @PostMapping("/gruppen/{id}/schliessen")
   public ResponseEntity<String> closeGruppe(@PathVariable String id){
+    if(id == null){
+      return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+    }
     if(!applicationService.exists(id)){
       return new ResponseEntity<>("Gruppe " + id + " nicht gefunden.", HttpStatus.NOT_FOUND);
     }
@@ -109,7 +117,7 @@ public class ApiController {
   @PostMapping("/gruppen/{id}/auslagen")
   public ResponseEntity<String> getTransaktionen(@PathVariable String id,
       @RequestBody AusgabenDataAPI neueAusgabe){
-    System.out.println(neueAusgabe);
+
     if(neueAusgabe.grund() == null || neueAusgabe.glaeubiger() == null ||
         neueAusgabe.cent() == 0 || neueAusgabe.schuldner() == null){
       return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
@@ -136,6 +144,9 @@ public class ApiController {
 //works
   @GetMapping("/gruppen/{id}/ausgleich")
   public ResponseEntity<LinkedList<AusgleichDataAPI>> notwendigeTransaktionen(@PathVariable String id){
+    if(id == null){
+      return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+    }
     if(!applicationService.exists(id)){
       return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
