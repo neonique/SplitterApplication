@@ -4,7 +4,7 @@ import java.util.Set;
 import org.javamoney.moneta.Money;
 import org.springframework.lang.NonNull;
 
-public record Transaktion(@NonNull Nutzer sponsor, @NonNull Set<Nutzer> bettler, @NonNull Money betrag) {
+public record Transaktion(@NonNull Nutzer sponsor, @NonNull Set<Nutzer> bettler, @NonNull Money betrag, @NonNull String grund) {
 
   public boolean isBettler(Nutzer nutzer) {
     return this.bettler.contains(nutzer);

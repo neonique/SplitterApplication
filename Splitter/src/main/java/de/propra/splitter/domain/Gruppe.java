@@ -80,7 +80,7 @@ public class Gruppe {
     return teilnehmer.stream().map(t -> t.name()).collect(Collectors.toSet());
   }
 
-  public void addTransaktion(String sponsor,Set<String> bettler, double betrag) {
+  public void addTransaktion(String sponsor,Set<String> bettler, double betrag, String grund) {
     if(bettler.isEmpty()) {
       throw new IllegalArgumentException("Transaktionen muessen Bettler haben");
     }
@@ -101,7 +101,7 @@ public class Gruppe {
     }
 
     transaktionen.add(new Transaktion(new Nutzer(sponsor), bettler.stream().map(b -> new Nutzer(b)).collect(
-        Collectors.toSet()), geld));
+        Collectors.toSet()), geld, grund));
   }
 
   public Set<TransaktionDTO> getTransaktionenDetails() {
@@ -110,7 +110,7 @@ public class Gruppe {
           .map(t -> new TransaktionDTO(t.sponsor().name(), t.bettler()
               .stream()
               .map(b -> b.name())
-              .collect(Collectors.toSet()), t.betrag().getNumber().doubleValueExact()))
+              .collect(Collectors.toSet()), t.betrag().getNumber().doubleValueExact(), t.grund()))
           .collect(Collectors.toSet());
       return transaktionDTOS;
     }

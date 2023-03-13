@@ -117,7 +117,7 @@ public class SplitterController {
     return "addTransaktion";
   }
   @PostMapping("/neueTransaktion")
-  public String addTransaktionPost(Model m,OAuth2AuthenticationToken auth,String sponsor, HttpServletRequest request, Double betrag, String gruppenid, RedirectAttributes attrs){
+  public String addTransaktionPost(Model m,OAuth2AuthenticationToken auth,String sponsor, HttpServletRequest request, Double betrag, String grund, String gruppenid, RedirectAttributes attrs){
     attrs.addFlashAttribute("gruppenid", gruppenid);
     Set<String> gruppeNutzer = applicationService.getGruppenNutzer(gruppenid);
     Set<String> beggarSet = new HashSet<>();
@@ -128,7 +128,7 @@ public class SplitterController {
         beggarSet.add(name);
       }
     }
-   applicationService.addTransaktionToGruppe(gruppenid, sponsor, beggarSet, betrag);
+   applicationService.addTransaktionToGruppe(gruppenid, sponsor, beggarSet, betrag, grund);
 
     return "redirect:/gruppe";
   }

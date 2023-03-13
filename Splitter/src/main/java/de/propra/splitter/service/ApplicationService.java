@@ -66,9 +66,9 @@ public class ApplicationService {
 
   }
 
-  public void addTransaktionToGruppe(String id, String sponsor, Set<String> bettler, double betrag ) {
+  public void addTransaktionToGruppe(String id, String sponsor, Set<String> bettler, double betrag, String grund ) {
     Gruppe gruppe = gruppenRepo.load(id);
-    gruppe.addTransaktion(sponsor, bettler, betrag);
+    gruppe.addTransaktion(sponsor, bettler, betrag, grund);
     gruppenRepo.save(gruppe);
   }
 

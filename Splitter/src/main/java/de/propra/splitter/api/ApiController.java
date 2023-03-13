@@ -60,7 +60,7 @@ public class ApiController {
     return new ResponseEntity<>(gruppenData, HttpStatus.OK);
   }
 
-
+//works aber ohne grund für transaktionen
   @GetMapping("/user/gruppen/{id}")
   public ResponseEntity<GruppenDataDetailedAPI> getGruppenInfo(@PathVariable String id){
 
@@ -71,7 +71,7 @@ public class ApiController {
     LinkedList<AusgabenDataAPI> ausgaben = new LinkedList<>();
     Set<TransaktionDTO> gruppenTransaktionen = applicationService.getGruppenTransaktionen(id);
     for (TransaktionDTO transaktion : gruppenTransaktionen) {
-      String grund = "BLANK";
+      String grund = transaktion.grund();
       String glaeubiger = transaktion.sponsor();
       int cent = (int)(transaktion.betrag() * 100);
       LinkedList<String> schuldner = new LinkedList<>(transaktion.bettler());
@@ -108,7 +108,8 @@ public class ApiController {
 
     Set<String> bettler = new HashSet<>(neueAusgabe.schuldner());
     double betrag = (double)(neueAusgabe.cent()/100);
-    applicationService.addTransaktionToGruppe(id, neueAusgabe.glaeubiger(), bettler, betrag);
+    applicationService.addTransaktionToGruppe(id, neueAusgabe.glaeubiger(), bettler, betrag,
+        neueAusgabe.grund());
 
     return new ResponseEntity<>("Ausgabe zu Gruppe " + id + " hinzugefuegt.", HttpStatus.CREATED);
   }

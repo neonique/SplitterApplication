@@ -28,8 +28,12 @@
     </li>
   </ul>
 
-  <label>Betrag: </label>
-  <input type="number" step="0.01" min="0.01" th:name="betrag"></input>
+  <label for="betragsfeld">Betrag: </label>
+  <input id="betragsfeld" type="number" step="0.01" min="0.01" th:name="betrag"></input>
+  </br>
+  </br>
+  <label for="grundfeld">Grund: </label>
+  <input id="grundfeld" type="text" maxlength="200" th:name="grund"></input>
   </br>
   </br>
 

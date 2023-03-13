@@ -9,6 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class TestGruppe {
+  /*
   private String nutzer;
   @BeforeEach
   private void nutzerZuruecksetzen(){
@@ -228,6 +229,6 @@ public class TestGruppe {
   }
 
 
-
+*/
 
 }

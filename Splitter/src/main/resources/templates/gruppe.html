@@ -36,6 +36,7 @@
      <th >Sponsor</th>
     <th > Betrag</th>
     <th > Schuldner</th>
+    <th > Grund</th>
   </tr>
   <tr th:each="transaktion : ${gruppeTransaktionen}" >
     <td th:text="${transaktion.sponsor}" >Sponsor</td>
@@ -47,6 +48,7 @@
         </li>
       </ul>
     </td>
+    <td th:text="${transaktion.grund}">Grund</td>
   </tr>
 </table>
 <form method="post" th:action="@{/gruppe/close}" th:if="${!geschlossen}">
