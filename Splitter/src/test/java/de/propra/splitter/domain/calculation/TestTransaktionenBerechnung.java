@@ -11,8 +11,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class TestTransaktionenBerechnung {
-/*
+
   TransaktionenBerechnung transaktionsService = new EinfacherTransaktionenBerechnung();
+ /*
   @DisplayName("Saldo wird korrekt berechnet, wenn Sponsor kein Bettler ist")
   @Test
   void test_01(){
@@ -45,7 +46,7 @@ public class TestTransaktionenBerechnung {
     assertThat(u1Saldo).isEqualTo("EUR 10"));
     assertThat(u2Saldo).isEqualTo("EUR -10"));
   }
-
+*/
   @DisplayName("jens test 1")
   @Test
   void test_03(){
@@ -54,13 +55,13 @@ public class TestTransaktionenBerechnung {
     Gruppe gruppe = new Gruppe("gruppenName", nutzer1);
     gruppe.addNutzer(nutzer2);
 
-    gruppe.addTransaktion(nutzer1, Set.of(nutzer2, nutzer1), 10);
-    gruppe.addTransaktion(nutzer1, Set.of(nutzer2, nutzer1), 20);
+    gruppe.addTransaktion(nutzer1, Set.of(nutzer2, nutzer1), 10, "");
+    gruppe.addTransaktion(nutzer1, Set.of(nutzer2, nutzer1), 20, "");
 
-    HashMap<String, HashMap<String, String>> balance =  gruppe.notwendigeTransaktionen();
+    HashMap<String, HashMap<String, Double>> balance =  gruppe.notwendigeTransaktionen();
 
     assertThat(balance.get(nutzer1)).isNull();
-    Entry<String, String> entry = Map.entry(nutzer1,"EUR 15.00");
+    Entry<String, Double> entry = Map.entry(nutzer1,15.00);
     assertThat(balance.get(nutzer2)).containsExactly(entry);
   }
 
@@ -72,13 +73,13 @@ public class TestTransaktionenBerechnung {
     Gruppe gruppe = new Gruppe("gruppenName", nutzer1);
     gruppe.addNutzer(nutzer2);
 
-    gruppe.addTransaktion(nutzer1, Set.of(nutzer2, nutzer1), 10);
-    gruppe.addTransaktion(nutzer2, Set.of(nutzer2, nutzer1), 20);
+    gruppe.addTransaktion(nutzer1, Set.of(nutzer2, nutzer1), 10, "");
+    gruppe.addTransaktion(nutzer2, Set.of(nutzer2, nutzer1), 20, "");
 
-    HashMap<String, HashMap<String, String>> balance =  gruppe.notwendigeTransaktionen();
+    HashMap<String, HashMap<String, Double>> balance =  gruppe.notwendigeTransaktionen();
 
     assertThat(balance.get(nutzer2)).isNull(); //Empty-> Null
-    Entry<String, String> entry = Map.entry(nutzer2, "EUR 5.00");
+    Entry<String, Double> entry = Map.entry(nutzer2, 5.00);
     assertThat(balance.get(nutzer1)).containsExactly(entry);
   }
 
@@ -90,13 +91,13 @@ public class TestTransaktionenBerechnung {
     Gruppe gruppe = new Gruppe("gruppenName", nutzer1);
     gruppe.addNutzer(nutzer2);
 
-    gruppe.addTransaktion(nutzer1, Set.of(nutzer2), 10);
-    gruppe.addTransaktion(nutzer1, Set.of(nutzer2, nutzer1), 20);
+    gruppe.addTransaktion(nutzer1, Set.of(nutzer2), 10, "");
+    gruppe.addTransaktion(nutzer1, Set.of(nutzer2, nutzer1), 20, "");
 
-    HashMap<String, HashMap<String, String>> balance =  gruppe.notwendigeTransaktionen();
+    HashMap<String, HashMap<String, Double>> balance =  gruppe.notwendigeTransaktionen();
 
     assertThat(balance.get(nutzer1)).isNull(); //Empty-> Null
-    Entry<String, String> entry = Map.entry(nutzer1, "EUR 20.00");
+    Entry<String, Double> entry = Map.entry(nutzer1, 20.00);
     assertThat(balance.get(nutzer2)).containsExactly(entry);
   }
 
@@ -111,11 +112,11 @@ public class TestTransaktionenBerechnung {
     gruppe.addNutzer(nutzer2);
     gruppe.addNutzer(nutzer3);
 
-    gruppe.addTransaktion(nutzer1, Set.of(nutzer2, nutzer1), 10);
-    gruppe.addTransaktion(nutzer2, Set.of(nutzer2, nutzer3), 10);
-    gruppe.addTransaktion(nutzer3, Set.of(nutzer3, nutzer1), 10);
+    gruppe.addTransaktion(nutzer1, Set.of(nutzer2, nutzer1), 10, "");
+    gruppe.addTransaktion(nutzer2, Set.of(nutzer2, nutzer3), 10, "");
+    gruppe.addTransaktion(nutzer3, Set.of(nutzer3, nutzer1), 10, "");
 
-    HashMap<String, HashMap<String, String>> balance =  gruppe.notwendigeTransaktionen();
+    HashMap<String, HashMap<String, Double>> balance =  gruppe.notwendigeTransaktionen();
 
     assertThat(balance.get(nutzer1)).isNull(); //Empty-> Null
     assertThat(balance.get(nutzer2)).isNull(); //Empty-> Null
@@ -132,16 +133,16 @@ public class TestTransaktionenBerechnung {
     gruppe.addNutzer(nutzer2);
     gruppe.addNutzer(nutzer3);
 
-    gruppe.addTransaktion(nutzer1, Set.of(nutzer1, nutzer2, nutzer3), 60);
-    gruppe.addTransaktion(nutzer2, Set.of(nutzer1, nutzer2, nutzer3), 30);
-    gruppe.addTransaktion(nutzer3, Set.of(nutzer2, nutzer3), 100);
+    gruppe.addTransaktion(nutzer1, Set.of(nutzer1, nutzer2, nutzer3), 60, "");
+    gruppe.addTransaktion(nutzer2, Set.of(nutzer1, nutzer2, nutzer3), 30, "");
+    gruppe.addTransaktion(nutzer3, Set.of(nutzer2, nutzer3), 100, "");
 
-    HashMap<String, HashMap<String, String>> balance = gruppe.notwendigeTransaktionen();
+    HashMap<String, HashMap<String, Double>> balance = gruppe.notwendigeTransaktionen();
 
     assertThat(balance.get(nutzer1)).isNull(); //Empty-> Null
     //In den Lösungen sind folgende Entries getauscht, so ist es aber eigentlich richtig
-    Entry<String, String> entry1 = Map.entry(nutzer1,  "EUR 30.00");
-    Entry<String, String> entry2 = Map.entry(nutzer3, "EUR 20.00");
+    Entry<String, Double> entry1 = Map.entry(nutzer1,  30.00);
+    Entry<String, Double> entry2 = Map.entry(nutzer3, 20.00);
     assertThat(balance.get(nutzer2)).containsExactly(entry1,entry2);
     assertThat(balance.get(nutzer3)).isNull(); //Empty-> Null
   }
@@ -161,26 +162,26 @@ public class TestTransaktionenBerechnung {
     gruppe.addNutzer(nutzer4);
     gruppe.addNutzer(nutzer5);
     gruppe.addNutzer(nutzer6);
-    gruppe.addTransaktion(nutzer1, Set.of(nutzer1, nutzer2, nutzer3, nutzer4, nutzer5, nutzer6), 564);
-    gruppe.addTransaktion(nutzer2, Set.of(nutzer2, nutzer1), 38.58);
-    gruppe.addTransaktion(nutzer2, Set.of(nutzer2, nutzer1, nutzer4), 38.58);
-    gruppe.addTransaktion(nutzer3, Set.of(nutzer3, nutzer5, nutzer6), 82.11);
-    gruppe.addTransaktion( nutzer4, Set.of(nutzer1, nutzer2, nutzer3, nutzer4, nutzer5, nutzer6), 96);
-    gruppe.addTransaktion(nutzer6, Set.of(nutzer2, nutzer5, nutzer6), 95.37);
+    gruppe.addTransaktion(nutzer1, Set.of(nutzer1, nutzer2, nutzer3, nutzer4, nutzer5, nutzer6), 564, "");
+    gruppe.addTransaktion(nutzer2, Set.of(nutzer2, nutzer1), 38.58, "");
+    gruppe.addTransaktion(nutzer2, Set.of(nutzer2, nutzer1, nutzer4), 38.58, "");
+    gruppe.addTransaktion(nutzer3, Set.of(nutzer3, nutzer5, nutzer6), 82.11, "");
+    gruppe.addTransaktion( nutzer4, Set.of(nutzer1, nutzer2, nutzer3, nutzer4, nutzer5, nutzer6), 96, "");
+    gruppe.addTransaktion(nutzer6, Set.of(nutzer2, nutzer5, nutzer6), 95.37, "");
 
-    HashMap<String, HashMap<String, String>> balance = gruppe.notwendigeTransaktionen();
+    HashMap<String, HashMap<String, Double>> balance = gruppe.notwendigeTransaktionen();
 
     assertThat(balance.get(nutzer1)).isNull(); //Empty-> Null
 
-    Entry<String, String> entry1 = Map.entry(nutzer1, "EUR 96.78");
+    Entry<String, Double> entry1 = Map.entry(nutzer1, 96.78);
     assertThat(balance.get(nutzer2)).containsExactly(entry1);
-    Entry<String, String> entry2 = Map.entry(nutzer1, "EUR 55.26");
+    Entry<String, Double> entry2 = Map.entry(nutzer1, 55.26);
     assertThat(balance.get(nutzer3)).containsExactly(entry2);
-    Entry<String, String> entry3 = Map.entry(nutzer1, "EUR 26.86");
+    Entry<String, Double> entry3 = Map.entry(nutzer1, 26.86);
     assertThat(balance.get(nutzer4)).containsExactly(entry3);
-    Entry<String, String> entry4 = Map.entry(nutzer1, "EUR 169.16");
+    Entry<String, Double> entry4 = Map.entry(nutzer1, 169.16);
     assertThat(balance.get(nutzer5)).containsExactly(entry4);
-    Entry<String, String> entry5 = Map.entry(nutzer1, "EUR 73.79");
+    Entry<String, Double> entry5 = Map.entry(nutzer1, 73.79);
     assertThat(balance.get(nutzer6)).containsExactly(entry5);
   }
 

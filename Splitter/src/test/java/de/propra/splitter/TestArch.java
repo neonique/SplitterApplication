@@ -20,6 +20,7 @@ public class TestArch {
       .applicationServices("..service..")
       .adapter("web","..web..")
       .adapter("db", "..persistence..")
+      .adapter("api", "..api..")
       .adapter("config", "..config..");
 
   @ArchTest

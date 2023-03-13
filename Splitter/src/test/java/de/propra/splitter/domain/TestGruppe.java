@@ -9,7 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class TestGruppe {
-  /*
+
   private String nutzer;
   @BeforeEach
   private void nutzerZuruecksetzen(){
@@ -35,9 +35,9 @@ public class TestGruppe {
     Gruppe gruppe = new Gruppe("gruppenName", nutzer);
     Set<String> participants =Set.of("A","b");
     participants.forEach(gruppe::addNutzer);
-    TransaktionDTO transaktionDTO = new TransaktionDTO(nutzer,participants,20.50);
+    TransaktionDTO transaktionDTO = new TransaktionDTO(nutzer,participants,20.50,"");
     //act
-    gruppe.addTransaktion(nutzer,participants,20.50);
+    gruppe.addTransaktion(nutzer,participants,20.50,"");
     //assert
     assertThat(gruppe.getTransaktionenDetails().contains(transaktionDTO));
 
@@ -54,7 +54,7 @@ public class TestGruppe {
     participants.add("Jeremy");
     //act
     IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
-      gruppe.addTransaktion(nutzer,participants,20.50);
+      gruppe.addTransaktion(nutzer,participants,20.50,"");
     });
     //assert
     assertThat("invalider nutzer in transaktion").isEqualTo(thrown.getMessage());
@@ -70,9 +70,9 @@ public class TestGruppe {
     participants.addAll(Set.of("A",b));
     participants.forEach(gruppe::addNutzer);
     participants.remove(b);
-    TransaktionDTO transaktionDTO = new TransaktionDTO(nutzer,participants,20.50);
+    TransaktionDTO transaktionDTO = new TransaktionDTO(nutzer,participants,20.50,"");
     //act
-    gruppe.addTransaktion(nutzer,participants,20.50);
+    gruppe.addTransaktion(nutzer,participants,20.50,"");
     //assert
     assertThat(gruppe.getTransaktionenDetails()).contains(transaktionDTO);
   }
@@ -87,7 +87,7 @@ public class TestGruppe {
 
 
     //act
-    gruppe.addTransaktion(nutzer,participants,20.50);
+    gruppe.addTransaktion(nutzer,participants,20.50,"");
 
     RuntimeException thrown = assertThrows(RuntimeException.class, () -> {
       gruppe.addNutzer("Ellis");
@@ -107,7 +107,7 @@ public class TestGruppe {
 
     //act
     IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
-      gruppe.addTransaktion(nutzer,participants,-20.50);
+      gruppe.addTransaktion(nutzer,participants,-20.50,"");
     });
     //assert
     assertThat("Transaktionsbetraege muessen positiv sein.").isEqualTo(thrown.getMessage());
@@ -124,7 +124,7 @@ public class TestGruppe {
 
     //act
     IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
-      gruppe.addTransaktion(nutzer,participants,0);
+      gruppe.addTransaktion(nutzer,participants,0,"");
     });
     //assert
     assertThat("Transaktionsbetraege muessen positiv sein.").isEqualTo(thrown.getMessage());
@@ -181,7 +181,7 @@ public class TestGruppe {
 
     gruppe.close();
     RuntimeException thrown = assertThrows(RuntimeException.class, () -> {
-      gruppe.addTransaktion(nutzer, participants, 20);
+      gruppe.addTransaktion(nutzer, participants, 20,"");
     });
 
     assertThat("Transaktionen koennen nicht zu geschlossenen Gruppen hinzugefuegt werden").isEqualTo(thrown.getMessage());
@@ -208,7 +208,7 @@ public class TestGruppe {
     Set<String> participants =Set.of(nutzer);
 
     IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
-      gruppe.addTransaktion(nutzer,participants,90);
+      gruppe.addTransaktion(nutzer,participants,90,"");
     });
 
     assertThat("keine Transaktionen nur an sich selbst").isEqualTo(thrown.getMessage());
@@ -222,13 +222,11 @@ public class TestGruppe {
     Set<String> participants = new HashSet<>();
 
     IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
-      gruppe.addTransaktion(nutzer,participants,90);
+      gruppe.addTransaktion(nutzer,participants,90,"");
     });
 
     assertThat("Transaktionen muessen Bettler haben").isEqualTo(thrown.getMessage());
   }
 
-
-*/
 
 }
