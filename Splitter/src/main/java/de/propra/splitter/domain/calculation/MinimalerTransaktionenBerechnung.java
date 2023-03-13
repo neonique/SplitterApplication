@@ -9,7 +9,7 @@ import org.javamoney.moneta.Money;
 public class MinimalerTransaktionenBerechnung implements TransaktionenBerechnung {
 
   @Override
-  public HashMap<String, HashMap<String, String>> berechneNotwendigeTransaktionen(Gruppe gruppe) {
+  public HashMap<String, HashMap<String, Double>> berechneNotwendigeTransaktionen(Gruppe gruppe) {
     return null;
   }
 

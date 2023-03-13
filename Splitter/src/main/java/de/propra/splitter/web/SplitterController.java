@@ -98,7 +98,7 @@ public class SplitterController {
   public String ausgleichsTransaktionen(Model m,OAuth2AuthenticationToken auth){
     String gruppenid = (String) m.getAttribute("gruppenid");
     String gruppeName = applicationService.getName(gruppenid);
-    HashMap<String, HashMap<String, String>> notwendigeTransaktionen = applicationService.notwendigeTransaktionen(gruppenid);
+    HashMap<String, HashMap<String, Double>> notwendigeTransaktionen = applicationService.notwendigeTransaktionen(gruppenid);
     m.addAttribute("notwendigeTransaktionen",notwendigeTransaktionen);
     m.addAttribute("gruppenName",gruppeName);
     return "ausgleichsTransaktionen";

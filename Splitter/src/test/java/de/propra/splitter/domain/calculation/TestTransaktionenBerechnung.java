@@ -45,7 +45,7 @@ public class TestTransaktionenBerechnung {
     assertThat(u1Saldo).isEqualTo("EUR 10"));
     assertThat(u2Saldo).isEqualTo("EUR -10"));
   }
-*/
+
   @DisplayName("jens test 1")
   @Test
   void test_03(){

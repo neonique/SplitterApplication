@@ -53,7 +53,7 @@ public class ApplicationService {
     gruppenRepo.save(gruppe);
   }
 
-  public HashMap<String, HashMap<String, String>> notwendigeTransaktionen(String id){
+  public HashMap<String, HashMap<String, Double>> notwendigeTransaktionen(String id){
     Gruppe gruppe = gruppenRepo.load(id);
 
     return gruppe.notwendigeTransaktionen();

@@ -127,7 +127,7 @@ public class Gruppe {
     return geschlossen;
   }
 
-  public HashMap<String, HashMap<String, String>> notwendigeTransaktionen(){
+  public HashMap<String, HashMap<String, Double>> notwendigeTransaktionen(){
     TransaktionenBerechnung Transaktionenrechner = new EinfacherTransaktionenBerechnung();
     return Transaktionenrechner.berechneNotwendigeTransaktionen(this);
 

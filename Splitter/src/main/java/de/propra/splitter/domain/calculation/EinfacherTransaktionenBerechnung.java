@@ -11,7 +11,7 @@ import org.javamoney.moneta.Money;
 public class EinfacherTransaktionenBerechnung implements TransaktionenBerechnung {
 
     @Override
-    public HashMap<String, HashMap<String, String>> berechneNotwendigeTransaktionen(Gruppe gruppe) {
+    public HashMap<String, HashMap<String, Double>> berechneNotwendigeTransaktionen(Gruppe gruppe) {
         LinkedList<NutzerSaldo> positiveBalance = new LinkedList<>();
         LinkedList<NutzerSaldo> negativeBalance = new LinkedList<>();
         Set<Nutzer> nutzers = gruppe.teilnehmer();
@@ -25,7 +25,7 @@ public class EinfacherTransaktionenBerechnung implements TransaktionenBerechnung
             }
         }
 
-        HashMap<String, HashMap<String, String>> necessaryTransactions = new HashMap<>();
+        HashMap<String, HashMap<String, Double>> necessaryTransactions = new HashMap<>();
 
         NutzerSaldo beggar = negativeBalance.poll();
         NutzerSaldo sponsor = positiveBalance.poll();
@@ -33,12 +33,13 @@ public class EinfacherTransaktionenBerechnung implements TransaktionenBerechnung
         while (!(beggar == null) || !(sponsor == null)) {
 
             Money balance = sponsor.saldo().add(beggar.saldo());
-            HashMap<String, String> necessaryTransaction = new HashMap<>();
+            HashMap<String, Double> necessaryTransaction = new HashMap<>();
 
             if (balance.isPositive()) {
 
                 necessaryTransactions.putIfAbsent(beggar.nutzer().name(), necessaryTransaction);
-                necessaryTransactions.get(beggar.nutzer().name()).put(sponsor.nutzer().name(), beggar.saldo().negate().toString());
+                necessaryTransactions.get(beggar.nutzer().name()).put(sponsor.nutzer().name(), beggar.saldo().negate().getNumber()
+                    .doubleValueExact());
 
                 sponsor.setSaldo(balance);
                 beggar = negativeBalance.poll();
@@ -46,14 +47,16 @@ public class EinfacherTransaktionenBerechnung implements TransaktionenBerechnung
             } else if (balance.isNegative()) {
 
                 necessaryTransactions.putIfAbsent(beggar.nutzer().name(), necessaryTransaction);;
-                necessaryTransactions.get(beggar.nutzer().name()).put(sponsor.nutzer().name(), sponsor.saldo().toString());
+                necessaryTransactions.get(beggar.nutzer().name()).put(sponsor.nutzer().name(), sponsor.saldo().getNumber()
+                    .doubleValueExact());
 
                 beggar.setSaldo(balance);
                 sponsor = positiveBalance.poll();
             } else {
 
                 necessaryTransactions.putIfAbsent(beggar.nutzer().name(), necessaryTransaction);;
-                necessaryTransactions.get(beggar.nutzer().name()).put(sponsor.nutzer().name(), beggar.saldo().negate().toString());
+                necessaryTransactions.get(beggar.nutzer().name()).put(sponsor.nutzer().name(), beggar.saldo().negate().getNumber()
+                    .doubleValueExact());
 
                 beggar = negativeBalance.poll();
                 sponsor = positiveBalance.poll();
