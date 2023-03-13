@@ -4,8 +4,12 @@ import de.propra.splitter.domain.Transaktion;
 import de.propra.splitter.domain.TransaktionDTO;
 import de.propra.splitter.service.ApplicationService;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Set;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.stereotype.Controller;
@@ -106,12 +110,20 @@ public class SplitterController {
     return "addTransaktion";
   }
   @PostMapping("/neueTransaktion")
-  public String addTransaktionPost(Model m,OAuth2AuthenticationToken auth){
-    String gruppenid = (String) m.getAttribute("gruppenid");
-    //applicationService.addTransaktionToGruppe(gruppenid, );
+  public String addTransaktionPost(Model m,OAuth2AuthenticationToken auth,String sponsor, HttpServletRequest request, Double betrag, String gruppenid, RedirectAttributes attrs){
+    attrs.addFlashAttribute("gruppenid", gruppenid);
+    Set<String> gruppeNutzer = applicationService.getGruppenNutzer(gruppenid);
+    Set<String> beggarSet = new HashSet<>();
+    int size = gruppeNutzer.size();
+    for (String s : gruppeNutzer) {
+      String name = request.getParameter("checkbox"+ s);
+      if(name != null) {
+        beggarSet.add(name);
+      }
+    }
+   applicationService.addTransaktionToGruppe(gruppenid, sponsor, beggarSet, betrag);
 
-
-    return "addTransaktion";
+    return "redirect:/gruppe";
   }
 
 }
