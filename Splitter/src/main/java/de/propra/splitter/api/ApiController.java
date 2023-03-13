@@ -7,6 +7,7 @@ import de.propra.splitter.api.answer.NutzerGruppenBasicDataAPI;
 import de.propra.splitter.domain.TransaktionDTO;
 import de.propra.splitter.service.ApplicationService;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Set;
@@ -60,6 +61,10 @@ public class ApiController {
   @GetMapping("/user/gruppen/{id}")
   public ResponseEntity<GruppenDataDetailedAPI> getGruppenInfo(@PathVariable String id){
 
+    if(!applicationService.exists(id)){
+      return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+    }
+
     LinkedList<AusgabenDataAPI> ausgaben = new LinkedList<>();
     Set<TransaktionDTO> gruppenTransaktionen = applicationService.getGruppenTransaktionen(id);
     for (TransaktionDTO transaktion : gruppenTransaktionen) {
@@ -87,9 +92,22 @@ public class ApiController {
     applicationService.closeGruppe(id);
     return new ResponseEntity<>("Gruppe " + id + " geschlossen.", HttpStatus.OK);
   }
-
+//works
   @PostMapping("/gruppen/{id}/auslagen")
-  public GruppeBasicDataAPI getTransaktionen(){
-    return null;
+  public ResponseEntity<String> getTransaktionen(@PathVariable String id,
+      @RequestBody AusgabenDataAPI neueAusgabe){
+    if(!applicationService.exists(id)){
+      return new ResponseEntity<>("Gruppe " + id + " nicht gefunden.", HttpStatus.NOT_FOUND);
+    }
+    if(applicationService.isClosed(id)){
+      return new ResponseEntity<>("Gruppe " + id + " ist geschlossen.", HttpStatus.CONFLICT);
+    }
+
+    Set<String> bettler = new HashSet<>(neueAusgabe.schuldner());
+    double betrag = (double)(neueAusgabe.cent()/100);
+    applicationService.addTransaktionToGruppe(id, neueAusgabe.glaeubiger(), bettler, betrag);
+
+    return new ResponseEntity<>("Ausgabe zu Gruppe " + id + " hinzugefuegt.", HttpStatus.CREATED);
   }
+
 }
