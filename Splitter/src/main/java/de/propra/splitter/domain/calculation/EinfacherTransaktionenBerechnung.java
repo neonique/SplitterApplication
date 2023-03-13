@@ -30,7 +30,7 @@ public class EinfacherTransaktionenBerechnung implements TransaktionenBerechnung
         NutzerSaldo beggar = negativeBalance.poll();
         NutzerSaldo sponsor = positiveBalance.poll();
 
-        while (!(beggar == null) || !(sponsor == null)) {
+        while (!(beggar == null) && !(sponsor == null)) {
 
             Money balance = sponsor.saldo().add(beggar.saldo());
             HashMap<String, Double> necessaryTransaction = new HashMap<>();
