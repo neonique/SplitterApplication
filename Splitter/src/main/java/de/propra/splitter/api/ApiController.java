@@ -1,11 +1,15 @@
 package de.propra.splitter.api;
 
+import de.propra.splitter.api.answer.AusgabenDataAPI;
 import de.propra.splitter.api.answer.GruppeBasicDataAPI;
+import de.propra.splitter.api.answer.GruppenDataDetailedAPI;
 import de.propra.splitter.api.answer.NutzerGruppenBasicDataAPI;
+import de.propra.splitter.domain.TransaktionDTO;
 import de.propra.splitter.service.ApplicationService;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -49,15 +53,30 @@ public class ApiController {
       list.add(data);
     }
     NutzerGruppenBasicDataAPI gruppenData =  new NutzerGruppenBasicDataAPI(list);
-    return new ResponseEntity<>(gruppenData, HttpStatus.CREATED);
+    return new ResponseEntity<>(gruppenData, HttpStatus.OK);
   }
 
 
   @GetMapping("/user/gruppen/{id}")
-  public GruppeBasicDataAPI getGruppenInfo(@PathVariable String id){
+  public ResponseEntity<GruppenDataDetailedAPI> getGruppenInfo(@PathVariable String id){
 
+    LinkedList<AusgabenDataAPI> ausgaben = new LinkedList<>();
+    Set<TransaktionDTO> gruppenTransaktionen = applicationService.getGruppenTransaktionen(id);
+    for (TransaktionDTO transaktion : gruppenTransaktionen) {
+      String grund = "BLANK";
+      String glaeubiger = transaktion.sponsor();
+      int cent = (int)(transaktion.betrag() * 100);
+      LinkedList<String> schuldner = new LinkedList<>(transaktion.bettler());
 
-    return null;
+      AusgabenDataAPI ausgabe = new AusgabenDataAPI(grund, glaeubiger, cent, schuldner);
+
+      ausgaben.add(ausgabe);
+    }
+
+    GruppenDataDetailedAPI gruppenData = new GruppenDataDetailedAPI(id, applicationService.getName(id),
+        new LinkedList<>(applicationService.getGruppenNutzer(id)), applicationService.isClosed(id),
+        ausgaben);
+    return new ResponseEntity<>(gruppenData, HttpStatus.OK);
   }
 
   @PostMapping("/gruppen/{id}/schliessen")
