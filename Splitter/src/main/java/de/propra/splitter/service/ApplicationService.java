@@ -87,4 +87,7 @@ public class ApplicationService {
   public String getName(String id) {
     return gruppenRepo.getName(id);
   }
+  public boolean exists(String id){
+    return gruppenRepo.exists(id);
+  }
 }

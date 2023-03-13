@@ -78,10 +78,14 @@ public class ApiController {
         ausgaben);
     return new ResponseEntity<>(gruppenData, HttpStatus.OK);
   }
-
+//works
   @PostMapping("/gruppen/{id}/schliessen")
-  public GruppeBasicDataAPI closeGruppe(){
-    return null;
+  public ResponseEntity<String> closeGruppe(@PathVariable String id){
+    if(!applicationService.exists(id)){
+      return new ResponseEntity<>("Gruppe " + id + " nicht gefunden.", HttpStatus.NOT_FOUND);
+    }
+    applicationService.closeGruppe(id);
+    return new ResponseEntity<>("Gruppe " + id + " geschlossen.", HttpStatus.OK);
   }
 
   @PostMapping("/gruppen/{id}/auslagen")

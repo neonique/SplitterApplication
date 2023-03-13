@@ -20,4 +20,7 @@ public interface GruppenRepo {
     public boolean isClosed(String id);
 
     String getName(String id);
+
+  boolean exists(String id);
+
 }

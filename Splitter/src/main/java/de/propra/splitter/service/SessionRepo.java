@@ -62,4 +62,9 @@ public class SessionRepo implements GruppenRepo {
             return null;
         }
         return gruppe.name();    }
+
+    @Override
+    public boolean exists(String id) {
+        return !gruppen.stream().filter(a -> a.id().equals(id)).findAny().isEmpty();
+    }
 }
