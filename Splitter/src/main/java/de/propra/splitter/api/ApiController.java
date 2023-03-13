@@ -1,15 +1,18 @@
 package de.propra.splitter.api;
 
 import de.propra.splitter.api.answer.AusgabenDataAPI;
+import de.propra.splitter.api.answer.AusgleichDataAPI;
 import de.propra.splitter.api.answer.GruppeBasicDataAPI;
 import de.propra.splitter.api.answer.GruppenDataDetailedAPI;
 import de.propra.splitter.api.answer.NutzerGruppenBasicDataAPI;
 import de.propra.splitter.domain.TransaktionDTO;
 import de.propra.splitter.service.ApplicationService;
+import io.swagger.v3.oas.models.links.Link;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -110,4 +113,30 @@ public class ApiController {
     return new ResponseEntity<>("Ausgabe zu Gruppe " + id + " hinzugefuegt.", HttpStatus.CREATED);
   }
 
+
+  @GetMapping("/gruppen/{id}/ausgleich")
+  public ResponseEntity<LinkedList<AusgleichDataAPI>> notwendigeTransaktionen(@PathVariable String id){
+    if(!applicationService.exists(id)){
+      return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+    }
+
+    LinkedList<AusgleichDataAPI> ausgleichsTransaktionen = new LinkedList<>();
+
+    HashMap<String, HashMap<String, String>> gruppenTransaktionen = applicationService.notwendigeTransaktionen(
+        id);
+    for (Entry<String, HashMap<String, String>> nutzerTransaktionen : gruppenTransaktionen.entrySet()) {
+      String von = nutzerTransaktionen.getKey();
+      for (Entry<String, String> transaktion : nutzerTransaktionen.getValue().entrySet()) {
+        String an = transaktion.getKey();
+
+        String betrag = transaktion.getValue();
+        int cent = 0; // (int)(Double.parseDouble(betrag) * 100); //cast betrag to cent
+
+        AusgleichDataAPI ausgleich = new AusgleichDataAPI(von, an, cent);
+        ausgleichsTransaktionen.add(ausgleich);
+      }
+    }
+
+    return new ResponseEntity<>(ausgleichsTransaktionen, HttpStatus.OK);
+  }
 }
