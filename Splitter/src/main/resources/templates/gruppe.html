@@ -8,10 +8,10 @@
 
 <h1 th:text="${gruppenName}"> Gruppe</h1>
 
-<form method="post" th:action="@{/gruppe}">
+<form method="post" th:action="@{/gruppe/neuerNutzer}" th:if="${!geschlossen}">
   <label for="textid">Neuen Nutzer hinzufuegen:</label>
   <input id="textid" type="text" th:name="neuerNutzer">
-  <button type="submit">Hinzufügen</button>
+  <button type="submit" class="listbutton">Hinzufügen</button>
 </form>
 
 <table>
@@ -20,18 +20,17 @@
     <th > Betrag</th>
     <th > Schuldner</th>
   </tr>
-  <tr th:each="transaktion : ${Transaktionen}" >
+  <tr th:each="transaktion : ${transaktionen}" >
     <td ></td>
     <td ></td>
     <td ></td>
   </tr>
 </table>
-<form method="post" th:action="@{/gruppe/close}" th:if="${!geschlossen}" >
-  <input  type="hidden" th:value="gruppenid">
-  <button type="submit">gruppe schließen</button>
+<form method="post" th:action="@{/gruppe/close}" th:if="${!geschlossen}">
+  <input  type="hidden" th:value="${gruppenid}" th:name="gruppenid" >
+  <button type="submit" class="listbutton">Gruppe schließen</button>
 </form>
 
-<
 <a href="/alleGruppen" th:href="@{/alleGruppen}">zurück zur Gruppenubersicht</a>
 
 </body>

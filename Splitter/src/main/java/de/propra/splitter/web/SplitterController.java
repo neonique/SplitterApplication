@@ -50,18 +50,35 @@ public class SplitterController {
   }
 
   @GetMapping("/gruppe")
-  public String gruppe(Model m,OAuth2AuthenticationToken auth,String gruppenid){
+  public String gruppe(Model m,OAuth2AuthenticationToken auth){
+    String gruppenid = (String) m.getAttribute("gruppenid");
     boolean geschlossen=applicationService.isClosed(gruppenid);
     String gruppenName =applicationService.getName(gruppenid);
+    m.addAttribute("gruppenid", gruppenid);
     m.addAttribute("gruppenName",gruppenName);
     m.addAttribute("geschlossen",geschlossen);
+
+    System.out.println(applicationService.getGruppenNutzer(gruppenid));
     return "gruppe";
+  }
+
+  @GetMapping("/gruppe/auswahl")
+  public String waehleGruppe(OAuth2AuthenticationToken auth,String gruppenid,RedirectAttributes attrs){
+    attrs.addFlashAttribute("gruppenid",gruppenid);
+
+    return "redirect:/gruppe";
   }
   @PostMapping("/gruppe/close")
   public String closeGruppe(OAuth2AuthenticationToken auth,String gruppenid,RedirectAttributes attrs){
     applicationService.closeGruppe(gruppenid);
     attrs.addFlashAttribute("gruppenid",gruppenid);
+    return "redirect:/gruppe";
+  }
 
+  @PostMapping("/gruppe/neuerNutzer")
+  public String neuerNutzer(OAuth2AuthenticationToken auth,String gruppenid,String neuerNutzer,RedirectAttributes attrs){
+    applicationService.addNutzerToGruppe(gruppenid,neuerNutzer);
+    attrs.addAttribute("gruppenid",gruppenid);
     return "redirect:/gruppe";
   }
   @GetMapping("/ausgleichsTransaktionen")

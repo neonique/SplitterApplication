@@ -19,7 +19,7 @@
   <h2>Offene Gruppen</h2>
 <ul>
   <li th:each="gruppe : ${offeneNutzerGruppen}">
-    <form method="get" th:action="@{/gruppe}">
+    <form method="get" th:action="@{/gruppe/auswahl}">
       <input  type="hidden" th:value="${gruppe.getKey()}" th:name="gruppenid" >
       <button type="submit" class="listbutton" th:text="${gruppe.getValue()}">Gruppenname</button>
     </form>
@@ -29,7 +29,7 @@
   <h2>Geschlossene Gruppen</h2>
   <ul>
     <li th:each="gruppe : ${geschlosseneNutzerGruppen}">
-      <form method="get" th:action="@{/gruppe}">
+      <form method="get" th:action="@{/gruppe/auswahl}">
         <input  type="hidden" th:value="${gruppe.getKey()}" th:name="gruppenid" >
         <button type="submit" class="listbutton" th:text="${gruppe.getValue()}" >Gruppenname</button>
       </form>
