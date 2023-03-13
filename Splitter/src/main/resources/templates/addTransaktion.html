@@ -2,22 +2,24 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Title</title>
+  <title>Neue Transaktion</title>
 </head>
 <body>
-<div id="container">
-  <div id="transaktion">
-    <form>
-        <input id="battler" type="checkbox"  name="battler">
-      <label for="battler">Teilnehmer
-      </label>
+<h1>Neue Transaktion</h1>
+<form method="post" th:action="@{/addTransaktion}">
+  <input  type="hidden" th:value="${gruppenid}" th:name="gruppenid" >
+  <label for="sponsor">Sponsor:</label>
+  <select id="sponsor" th:name="sponsor">
+    <option th:each="nutzer : ${gruppeNutzer}" th:value="${nutzer}">
+      <span th:text="${nutzer}" >Nutzername</span>
+    </option>
+  </select>
+  </br>
 
-      <label for="betrag">
-          <input id="betrag" type="text" name="betrag">
-      </label>
-    </form>
-  </div>
-</div>
-
+  <label>Schuldner: </label>
+    <p th:each="nutzer : ${gruppeNutzer}" >
+      <input type="checkbox"><span th:text="${nutzer}" th:value="${nutzer}"></span></input>
+    </p>
+</form>
 </body>
 </html>

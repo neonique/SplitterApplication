@@ -1,8 +1,11 @@
 package de.propra.splitter.web;
 
+import de.propra.splitter.domain.Transaktion;
+import de.propra.splitter.domain.TransaktionDTO;
 import de.propra.splitter.service.ApplicationService;
 
 import java.util.HashMap;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.stereotype.Controller;
@@ -54,11 +57,15 @@ public class SplitterController {
     String gruppenid = (String) m.getAttribute("gruppenid");
     boolean geschlossen=applicationService.isClosed(gruppenid);
     String gruppenName =applicationService.getName(gruppenid);
-    m.addAttribute("gruppenid", gruppenid);
+    //m.addAttribute("gruppenid", gruppenid);
     m.addAttribute("gruppenName",gruppenName);
     m.addAttribute("geschlossen",geschlossen);
+    Set<String> gruppeNutzer = applicationService.getGruppenNutzer(gruppenid);
+    Set<TransaktionDTO> gruppeTransaktionen = applicationService.getGruppenTransaktionen(gruppenid);
+    boolean hasTransaktionen = !gruppeTransaktionen.isEmpty();
+    m.addAttribute("gruppeNutzer", gruppeNutzer);
+    m.addAttribute("hasTransaktionen", hasTransaktionen);
 
-    System.out.println(applicationService.getGruppenNutzer(gruppenid));
     return "gruppe";
   }
 
@@ -78,15 +85,33 @@ public class SplitterController {
   @PostMapping("/gruppe/neuerNutzer")
   public String neuerNutzer(OAuth2AuthenticationToken auth,String gruppenid,String neuerNutzer,RedirectAttributes attrs){
     applicationService.addNutzerToGruppe(gruppenid,neuerNutzer);
-    attrs.addAttribute("gruppenid",gruppenid);
+    attrs.addFlashAttribute("gruppenid",gruppenid);
     return "redirect:/gruppe";
   }
   @GetMapping("/ausgleichsTransaktionen")
   public String ausgleichsTransaktionen(Model m,OAuth2AuthenticationToken auth){
     return "ausgleichsTransaktionen";
   }
-  @GetMapping("/addTransaktion")
+  @GetMapping("/gruppe/addTransaktion")
+  public String addTransaktionZuGruppe(OAuth2AuthenticationToken auth,String gruppenid,RedirectAttributes attrs){
+    attrs.addFlashAttribute("gruppenid", gruppenid);
+    return "redirect:/neueTransaktion";
+  }
+  @GetMapping("/neueTransaktion")
   public String addTransaktion(Model m,OAuth2AuthenticationToken auth){
+    String gruppenid = (String) m.getAttribute("gruppenid");
+    Set<String> gruppeNutzer = applicationService.getGruppenNutzer(gruppenid);
+    m.addAttribute("gruppeNutzer", gruppeNutzer);
+
     return "addTransaktion";
   }
+  @PostMapping("/neueTransaktion")
+  public String addTransaktionPost(Model m,OAuth2AuthenticationToken auth){
+    String gruppenid = (String) m.getAttribute("gruppenid");
+    //applicationService.addTransaktionToGruppe(gruppenid, );
+
+
+    return "addTransaktion";
+  }
+
 }

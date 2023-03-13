@@ -8,13 +8,30 @@
 
 <h1 th:text="${gruppenName}"> Gruppe</h1>
 
-<form method="post" th:action="@{/gruppe/neuerNutzer}" th:if="${!geschlossen}">
+
+
+<h2>Teilnehmer</h2>
+<form method="post" th:action="@{/gruppe/neuerNutzer}" th:if="${ !hasTransaktionen && !geschlossen}">
   <label for="textid">Neuen Nutzer hinzufuegen:</label>
   <input id="textid" type="text" th:name="neuerNutzer">
+  <input  type="hidden" th:value="${gruppenid}" th:name="gruppenid" >
   <button type="submit" class="listbutton">Hinzufügen</button>
 </form>
 
-<table>
+<ul>
+  <li th:each="nutzer : ${gruppeNutzer}">
+    <span th:text="${nutzer}">Nutzername</span>
+  </li>
+</ul>
+
+<h2>Transaktionen</h2>
+
+<form method="get" th:action="@{/gruppe/addTransaktion}" th:if="${!geschlossen}">
+  <input  type="hidden" th:value="${gruppenid}" th:name="gruppenid" >
+  <button type="submit" class="listbutton">Transaktion hinzufügen</button>
+</form>
+
+<table  th:if="${hasTransaktionen}">
   <tr >
      <th >Sponsor</th>
     <th > Betrag</th>
