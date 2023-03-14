@@ -10,10 +10,15 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.NonNull;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -47,23 +52,39 @@ public class SplitterController {
   }
   @PostMapping("/alleGruppen")
   public String gruppeErstellen( RedirectAttributes attrs,OAuth2AuthenticationToken auth, String neueGruppe){
+
     String login = auth.getPrincipal().getAttribute("login");
+
+    if(neueGruppe.isEmpty() || neueGruppe.isBlank()){
+      return "redirect:/alleGruppen";
+    }
+
     applicationService.addGruppe(neueGruppe, login);
     return "redirect:/alleGruppen";
   }
 
   @GetMapping("/gruppe")
   public String gruppe(Model m,OAuth2AuthenticationToken auth){
+
     String gruppenid = (String) m.getAttribute("gruppenid");
-    boolean geschlossen=applicationService.isClosed(gruppenid);
+
+    if(gruppenid == null){
+      return "redirect:/alleGruppen";
+    }
+
+    if(gruppenid.isEmpty() || gruppenid.isBlank()){
+      return "redirect:/alleGruppen";
+    }
+
     String gruppenName =applicationService.getName(gruppenid);
-    //m.addAttribute("gruppenid", gruppenid);
-    m.addAttribute("gruppenName",gruppenName);
-    m.addAttribute("geschlossen",geschlossen);
+    boolean geschlossen=applicationService.isClosed(gruppenid);
     Set<String> gruppeNutzer = applicationService.getGruppenNutzer(gruppenid);
     Set<TransaktionDTO> gruppeTransaktionen = applicationService.getGruppenTransaktionen(gruppenid);
     boolean hasTransaktionen = !gruppeTransaktionen.isEmpty();
     boolean hasMultipleNutzer = gruppeNutzer.size() > 1;
+
+    m.addAttribute("gruppenName",gruppenName);
+    m.addAttribute("geschlossen",geschlossen);
     m.addAttribute("gruppeNutzer", gruppeNutzer);
     m.addAttribute("hasTransaktionen", hasTransaktionen);
     m.addAttribute("hasMultipleNutzer", hasMultipleNutzer);
@@ -88,8 +109,19 @@ public class SplitterController {
 
   @PostMapping("/gruppe/neuerNutzer")
   public String neuerNutzer(OAuth2AuthenticationToken auth,String gruppenid,String neuerNutzer,RedirectAttributes attrs){
-    applicationService.addNutzerToGruppe(gruppenid,neuerNutzer);
+
     attrs.addFlashAttribute("gruppenid",gruppenid);
+
+    if(neuerNutzer.isBlank() || neuerNutzer.isEmpty()){
+      return "redirect:/gruppe";
+    }
+
+    try {
+      applicationService.addNutzerToGruppe(gruppenid, neuerNutzer);
+    }catch(IllegalArgumentException e){
+      return "redirect:/gruppe";
+    }
+
     return "redirect:/gruppe";
   }
   @GetMapping("/ausgleichsTransaktionen")

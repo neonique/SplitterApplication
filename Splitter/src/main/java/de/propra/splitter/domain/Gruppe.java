@@ -55,7 +55,7 @@ public class Gruppe {
     return this.name;
   }
 
-  public void addNutzer(String name) {
+  public void addNutzer(String name){
 
     if(!validateName(name)){
       throw new IllegalArgumentException("Nutzername ist nicht konform mit GitHub-Namenskonvention");
