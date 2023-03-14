@@ -43,3 +43,18 @@ Bei Fragen, die Sie selber persönlich betreffen (zum Beispiel bei Krankmeldunge
 == Verhaltensregeln
 
 Wir erwarten von Ihnen einen respektvollen Umgang miteinander. Es gilt grundsätzlich bei uns der https://berlincodeofconduct.org/de/[Berlin Code of Conduct]. Die Tutor:innen haben die Aufgabe, die Einhaltung der Regeln zu überwachen und können bei Verstößen gegen den Verhaltenskodex Personen aus dem Praktikum ausschließen. Ein Praktikumsausschluss hat zur Folge, dass Sie das Modul in diesem Semester nicht mehr abschließen können. 
+
+
+
+A.Nutzungsanweisung
+
+Zuerst clonen Sie sich das Repo von GitHub. Dann erstellen Sie eine neue OAuth App über GitHub. Dazu folgen Sie folgende Schritte:
+Profil->Settings->Developer Settings->OAuth Apps->Registrieren der Application
+
+Als Application Name verwenden Sie Splitter und die Url und Callback Url lauten http://localhost:9000/
+Dann können Sie die Application registrieren. Nun müssen Sie die Client ID kopieren und ein Client Secret generieren und auch speichern.
+Nun können Sie die Anwendung in ihrem Terminal starten über ./gradlew bootRun
+
+
+B.Arc42 (WIP)
+image::Kontextdiagramm.png[]
