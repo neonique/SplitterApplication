@@ -1,13 +1,12 @@
 package de.propra.splitter.api;
 
-import de.propra.splitter.api.answer.AusgabenDataAPI;
-import de.propra.splitter.api.answer.AusgleichDataAPI;
-import de.propra.splitter.api.answer.GruppeBasicDataAPI;
-import de.propra.splitter.api.answer.GruppenDataDetailedAPI;
-import de.propra.splitter.api.answer.NutzerGruppenBasicDataAPI;
+import de.propra.splitter.api.records.AusgabenDataAPI;
+import de.propra.splitter.api.records.AusgleichDataAPI;
+import de.propra.splitter.api.records.GruppeBasicDataAPI;
+import de.propra.splitter.api.records.GruppenDataDetailedAPI;
+import de.propra.splitter.api.records.NutzerGruppenBasicDataAPI;
 import de.propra.splitter.domain.TransaktionDTO;
 import de.propra.splitter.service.ApplicationService;
-import io.swagger.v3.oas.models.links.Link;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -72,7 +71,6 @@ public class ApiController {
     return new ResponseEntity<>(gruppenData, HttpStatus.OK);
   }
 
-//works aber ohne grund für transaktionen
   @GetMapping("/gruppen/{id}")
   public ResponseEntity<GruppenDataDetailedAPI> getGruppenInfo(@PathVariable String id){
     if(id == null){

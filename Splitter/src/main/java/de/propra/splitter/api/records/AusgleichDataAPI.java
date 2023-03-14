@@ -1,4 +1,4 @@
-package de.propra.splitter.api.answer;
+package de.propra.splitter.api.records;
 
 public record AusgleichDataAPI(String von, String an, int cents) {
 
