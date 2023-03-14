@@ -102,6 +102,14 @@ public class SplitterController {
   }
   @PostMapping("/gruppe/close")
   public String closeGruppe(OAuth2AuthenticationToken auth,String gruppenid,RedirectAttributes attrs){
+
+    if(gruppenid == null){
+      return "redirect:/alleGruppen";
+    }
+    if(gruppenid.isEmpty() || gruppenid.isBlank()){
+      return "redirect:/alleGruppen";
+    }
+
     applicationService.closeGruppe(gruppenid);
     attrs.addFlashAttribute("gruppenid",gruppenid);
     return "redirect:/gruppe";
@@ -126,7 +134,16 @@ public class SplitterController {
   }
   @GetMapping("/ausgleichsTransaktionen")
   public String ausgleichsTransaktionen(Model m,OAuth2AuthenticationToken auth){
+
     String gruppenid = (String) m.getAttribute("gruppenid");
+
+    if(gruppenid == null){
+      return "redirect:/alleGruppen";
+    }
+    if(gruppenid.isEmpty() || gruppenid.isBlank()){
+      return "redirect:/alleGruppen";
+    }
+
     String gruppeName = applicationService.getName(gruppenid);
     HashMap<String, HashMap<String, Double>> notwendigeTransaktionen = applicationService.notwendigeTransaktionen(gruppenid);
     m.addAttribute("notwendigeTransaktionen",notwendigeTransaktionen);
@@ -135,19 +152,47 @@ public class SplitterController {
   }
   @GetMapping("/gruppe/addTransaktion")
   public String addTransaktionZuGruppe(OAuth2AuthenticationToken auth,String gruppenid,RedirectAttributes attrs){
+
+    if(gruppenid == null){
+      return "redirect:/alleGruppen";
+    }
+
+    if(gruppenid.isEmpty() || gruppenid.isBlank()){
+      return "redirect:/alleGruppen";
+    }
+
     attrs.addFlashAttribute("gruppenid", gruppenid);
     return "redirect:/neueTransaktion";
   }
   @GetMapping("/neueTransaktion")
   public String addTransaktion(Model m,OAuth2AuthenticationToken auth){
     String gruppenid = (String) m.getAttribute("gruppenid");
+
+    if(gruppenid == null){
+      return "redirect:/alleGruppen";
+    }
+    if(gruppenid.isEmpty() || gruppenid.isBlank()){
+      return "redirect:/alleGruppen";
+    }
+
     Set<String> gruppeNutzer = applicationService.getGruppenNutzer(gruppenid);
     m.addAttribute("gruppeNutzer", gruppeNutzer);
 
     return "addTransaktion";
   }
   @PostMapping("/neueTransaktion")
-  public String addTransaktionPost(Model m,OAuth2AuthenticationToken auth,String sponsor, HttpServletRequest request, Double betrag, String grund, String gruppenid, RedirectAttributes attrs){
+  public String addTransaktionPost(Model m,OAuth2AuthenticationToken auth,String sponsor,
+      HttpServletRequest request, Double betrag, String grund, String gruppenid, RedirectAttributes attrs){
+
+    if(gruppenid == null){
+      return "redirect:/alleGruppen";
+    }
+    if(gruppenid.isEmpty() || gruppenid.isBlank()){
+      return "redirect:/alleGruppen";
+    }
+
+
+
     attrs.addFlashAttribute("gruppenid", gruppenid);
     Set<String> gruppeNutzer = applicationService.getGruppenNutzer(gruppenid);
     Set<String> beggarSet = new HashSet<>();
@@ -158,12 +203,35 @@ public class SplitterController {
         beggarSet.add(name);
       }
     }
+
+
+    if(beggarSet.isEmpty()){
+      return "redirect:/gruppe";
+    }
+    if(beggarSet.contains(sponsor) && beggarSet.size() < 2){
+      return "redirect:/gruppe";
+    }
+    if(betrag == null){
+      return "redirect:/gruppe";
+    }
+    if(betrag.isInfinite() || betrag.isNaN()){
+      return "redirect:/gruppe";
+    }
+
    applicationService.addTransaktionToGruppe(gruppenid, sponsor, beggarSet, betrag, grund);
 
     return "redirect:/gruppe";
   }
   @PostMapping("/gruppe/notwendigeTransaktionen")
   public String notwendigTransaktion(OAuth2AuthenticationToken auth,String gruppenid,RedirectAttributes attrs){
+
+    if(gruppenid == null){
+      return "redirect:/alleGruppen";
+    }
+    if(gruppenid.isEmpty() || gruppenid.isBlank()){
+      return "redirect:/alleGruppen";
+    }
+
     attrs.addFlashAttribute("gruppenid",gruppenid);
     return "redirect:/ausgleichsTransaktionen";
   }
