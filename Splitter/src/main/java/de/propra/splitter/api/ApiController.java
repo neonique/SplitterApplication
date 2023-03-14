@@ -4,10 +4,10 @@ import de.propra.splitter.api.records.AusgabenDataAPI;
 import de.propra.splitter.api.records.AusgleichDataAPI;
 import de.propra.splitter.api.records.GruppeBasicDataAPI;
 import de.propra.splitter.api.records.GruppenDataDetailedAPI;
-import de.propra.splitter.api.records.NutzerGruppenBasicDataAPI;
 import de.propra.splitter.domain.TransaktionDTO;
 import de.propra.splitter.service.ApplicationService;
 
+import io.swagger.v3.oas.models.links.Link;
 import java.util.*;
 import java.util.Map.Entry;
 
@@ -32,7 +32,7 @@ public class ApiController {
     this.applicationService = applicationService;
   }
 
-  //works
+
   @PostMapping("/gruppen")
   public ResponseEntity<String> addGruppe(@RequestBody GruppeBasicDataAPI neueGruppe){
 
@@ -54,9 +54,8 @@ public class ApiController {
     return new ResponseEntity<>(id, HttpStatus.CREATED);
   }
 
-  //works
   @GetMapping("/user/{nutzername}/gruppen")
-  public ResponseEntity<NutzerGruppenBasicDataAPI> getNutzerGruppen(@PathVariable String nutzername){
+  public ResponseEntity<LinkedList<GruppeBasicDataAPI>> getNutzerGruppen(@PathVariable String nutzername){
     if(nutzername == null){
       return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
     }
@@ -68,8 +67,8 @@ public class ApiController {
       GruppeBasicDataAPI data = new GruppeBasicDataAPI(gruppe.getKey(), gruppe.getValue(), teilnehmer);
       list.add(data);
     }
-    NutzerGruppenBasicDataAPI gruppenData =  new NutzerGruppenBasicDataAPI(list);
-    return new ResponseEntity<>(gruppenData, HttpStatus.OK);
+
+    return new ResponseEntity<>(list, HttpStatus.OK);
   }
 
   @GetMapping("/gruppen/{id}")
@@ -100,7 +99,7 @@ public class ApiController {
         ausgaben);
     return new ResponseEntity<>(gruppenData, HttpStatus.OK);
   }
-//works
+
   @PostMapping("/gruppen/{id}/schliessen")
   public ResponseEntity<String> closeGruppe(@PathVariable String id){
     if(id == null){
@@ -112,7 +111,7 @@ public class ApiController {
     applicationService.closeGruppe(id);
     return new ResponseEntity<>("Gruppe " + id + " geschlossen.", HttpStatus.OK);
   }
-//works
+
   @PostMapping("/gruppen/{id}/auslagen")
   public ResponseEntity<String> getTransaktionen(@PathVariable String id,
       @RequestBody AusgabenDataAPI neueAusgabe){
@@ -140,9 +139,9 @@ public class ApiController {
     return new ResponseEntity<>("Ausgabe zu Gruppe " + id + " hinzugefuegt.", HttpStatus.CREATED);
   }
 
-//works
+
   @GetMapping("/gruppen/{id}/ausgleich")
-  public ResponseEntity<LinkedList<AusgleichDataAPI>> notwendigeTransaktionen(@PathVariable String id){
+  public ResponseEntity<LinkedList<AusgleichDataAPI>> getNotwendigeTransaktionen(@PathVariable String id){
     if(id == null){
       return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
     }
