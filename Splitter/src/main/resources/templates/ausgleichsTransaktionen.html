@@ -17,7 +17,7 @@
       <ul>
         <li th:each="schuldner : ${schuldner.getValue()}">
           <span th:text="${schuldner.getKey()}">Schuldner</span>
-          <span th:text="${schuldner.getValue()}">Betrage</span>
+          <span th:text="${#numbers.formatCurrency(schuldner.getValue())}">Betrage</span>
         </li>
       </ul>
     </td>

@@ -110,7 +110,7 @@ public class Gruppe {
           .map(t -> new TransaktionDTO(t.sponsor().name(), t.bettler()
               .stream()
               .map(b -> b.name())
-              .collect(Collectors.toSet()), t.betrag().getNumber().doubleValueExact(), t.grund()))
+              .collect(Collectors.toSet()), t.betrag().getNumberStripped().doubleValue(), t.grund()))
           .collect(Collectors.toSet());
       return transaktionDTOS;
     }

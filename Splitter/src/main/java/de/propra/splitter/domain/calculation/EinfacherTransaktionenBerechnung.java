@@ -38,25 +38,28 @@ public class EinfacherTransaktionenBerechnung implements TransaktionenBerechnung
             if (balance.isPositive()) {
 
                 necessaryTransactions.putIfAbsent(beggar.nutzer().name(), necessaryTransaction);
-                necessaryTransactions.get(beggar.nutzer().name()).put(sponsor.nutzer().name(), beggar.saldo().negate().getNumber()
-                    .doubleValueExact());
+                double roudedBetrag = beggar.saldo().negate().getNumberStripped().doubleValue();
+                necessaryTransactions.get(beggar.nutzer().name()).put(sponsor.nutzer().name(),
+                    roudedBetrag);
 
                 sponsor.setSaldo(balance);
                 beggar = negativeBalance.poll();
 
             } else if (balance.isNegative()) {
 
-                necessaryTransactions.putIfAbsent(beggar.nutzer().name(), necessaryTransaction);;
-                necessaryTransactions.get(beggar.nutzer().name()).put(sponsor.nutzer().name(), sponsor.saldo().getNumber()
-                    .doubleValueExact());
+                necessaryTransactions.putIfAbsent(beggar.nutzer().name(), necessaryTransaction);
+                double roundedBetrag = sponsor.saldo().getNumberStripped().doubleValue();
+                necessaryTransactions.get(beggar.nutzer().name()).put(sponsor.nutzer().name(),
+                    roundedBetrag);
 
                 beggar.setSaldo(balance);
                 sponsor = positiveBalance.poll();
             } else {
 
-                necessaryTransactions.putIfAbsent(beggar.nutzer().name(), necessaryTransaction);;
-                necessaryTransactions.get(beggar.nutzer().name()).put(sponsor.nutzer().name(), beggar.saldo().negate().getNumber()
-                    .doubleValueExact());
+                necessaryTransactions.putIfAbsent(beggar.nutzer().name(), necessaryTransaction);
+                double roundedBetrag = beggar.saldo().negate().getNumberStripped().doubleValue();
+                necessaryTransactions.get(beggar.nutzer().name()).put(sponsor.nutzer().name(),
+                    roundedBetrag);
 
                 beggar = negativeBalance.poll();
                 sponsor = positiveBalance.poll();

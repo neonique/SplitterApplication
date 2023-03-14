@@ -38,12 +38,12 @@
     <th > Schuldner</th>
     <th > Grund</th>
   </tr>
-  <tr th:each="transaktion : ${gruppeTransaktionen}" >
-    <td th:text="${transaktion.sponsor}" >Sponsor</td>
-    <td th:text="${transaktion.betrag}">Betrag</td>
+  <tr th:each="transaktion : ${gruppeTransaktionen}"  >
+    <td th:text="${transaktion.sponsor}" th:style="${transaktion.sponsor() == nutzerName ? 'color: green' : 'color: black'}">Sponsor</td>
+    <td th:text="${#numbers.formatCurrency(transaktion.betrag)}">Betrag</td>
     <td>
-      <ul >
-        <li th:each="beggar : ${transaktion.bettler}">
+      <ul>
+        <li th:each="beggar : ${transaktion.bettler}" th:style="${beggar == nutzerName ? 'color: green' : 'color: black'}">
           <span th:text="${beggar}">Schuldner</span>
         </li>
       </ul>
