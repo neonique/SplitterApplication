@@ -1,5 +1,6 @@
 package de.propra.splitter.api;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.AdditionalMatchers.not;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -16,6 +17,7 @@ import io.swagger.v3.oas.models.links.Link;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
+import org.junit.Before;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
+//Alle Tests der vorgebenen run_test.jar laufen
 @ImportAutoConfiguration(classes = SecurityConfig.class)
 @WebMvcTest(ApiController.class)
 @Import(ApiController.class)
@@ -55,7 +58,6 @@ public class TestApiController {
         personen);
 
     String jsonGruppe = new ObjectMapper().writeValueAsString(gruppe);
-    System.out.println(jsonGruppe);
     String id = UUID.randomUUID().toString();
     when(applicationService.addGruppe(any(), any())).thenReturn(id);
 
@@ -162,7 +164,7 @@ public class TestApiController {
     MvcResult mvcResult = mvc.perform(get("/api/user/{nutzername}/gruppen", nutzername))
         .andExpect(status().isOk()).andReturn();
 
-    System.out.println(mvcResult.getResponse().getContentAsString());
+    assertThat(mvcResult.getResponse().getContentAsString()).isEqualTo("[]");
   }
 
 }
