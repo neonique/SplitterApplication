@@ -17,7 +17,7 @@
       <ul>
         <li th:each="schuldner : ${schuldner.getValue()}">
           <span th:text="${schuldner.getKey()}">Schuldner</span>
-          <span th:text="${#numbers.formatCurrency(schuldner.getValue())}">Betrage</span>
+          <span th:text="${(#numbers.formatDecimal(schuldner.getValue(), 1, 'POINT', 2, 'COMMA')) + '€'}">Betrage</span>
         </li>
       </ul>
     </td>

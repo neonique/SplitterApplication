@@ -40,7 +40,7 @@
   </tr>
   <tr th:each="transaktion : ${gruppeTransaktionen}"  >
     <td th:text="${transaktion.sponsor}" th:style="${transaktion.sponsor() == nutzerName ? 'color: green' : 'color: black'}">Sponsor</td>
-    <td th:text="${#numbers.formatCurrency(transaktion.betrag)}">Betrag</td>
+    <td th:text="${(#numbers.formatDecimal(transaktion.betrag, 1, 'POINT', 2, 'COMMA')) + '€'}">Betrag</td>
     <td>
       <ul>
         <li th:each="beggar : ${transaktion.bettler}" th:style="${beggar == nutzerName ? 'color: green' : 'color: black'}">
