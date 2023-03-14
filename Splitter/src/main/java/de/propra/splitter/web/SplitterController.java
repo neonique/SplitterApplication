@@ -63,8 +63,10 @@ public class SplitterController {
     Set<String> gruppeNutzer = applicationService.getGruppenNutzer(gruppenid);
     Set<TransaktionDTO> gruppeTransaktionen = applicationService.getGruppenTransaktionen(gruppenid);
     boolean hasTransaktionen = !gruppeTransaktionen.isEmpty();
+    boolean hasMultipleNutzer = gruppeNutzer.size() > 1;
     m.addAttribute("gruppeNutzer", gruppeNutzer);
     m.addAttribute("hasTransaktionen", hasTransaktionen);
+    m.addAttribute("hasMultipleNutzer", hasMultipleNutzer);
     m.addAttribute("gruppeTransaktionen",gruppeTransaktionen);
 
 

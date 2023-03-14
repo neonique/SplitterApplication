@@ -24,9 +24,9 @@
   </li>
 </ul>
 
-<h2>Transaktionen</h2>
+<h2 th:if="${hasMultipleNutzer}">Transaktionen</h2>
 
-<form method="get" th:action="@{/gruppe/addTransaktion}" th:if="${!geschlossen}">
+<form method="get" th:action="@{/gruppe/addTransaktion}" th:if="${!geschlossen && hasMultipleNutzer}">
   <input  type="hidden" th:value="${gruppenid}" th:name="gruppenid" >
   <button type="submit" class="listbutton">Transaktion hinzufügen</button>
 </form>
@@ -51,6 +51,7 @@
     <td th:text="${transaktion.grund}">Grund</td>
   </tr>
 </table>
+
 <form method="post" th:action="@{/gruppe/close}" th:if="${!geschlossen}">
   <input  type="hidden" th:value="${gruppenid}" th:name="gruppenid" >
   <button type="submit" class="listbutton">Gruppe schließen</button>
