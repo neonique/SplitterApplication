@@ -5,10 +5,7 @@ import de.propra.splitter.domain.TransaktionDTO;
 import de.propra.splitter.service.ApplicationService;
 
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
@@ -79,7 +76,7 @@ public class SplitterController {
     String gruppenName =applicationService.getName(gruppenid);
     boolean geschlossen=applicationService.isClosed(gruppenid);
     Set<String> gruppeNutzer = applicationService.getGruppenNutzer(gruppenid);
-    Set<TransaktionDTO> gruppeTransaktionen = applicationService.getGruppenTransaktionen(gruppenid);
+    List<TransaktionDTO> gruppeTransaktionen = applicationService.getGruppenTransaktionen(gruppenid);
     boolean hasTransaktionen = !gruppeTransaktionen.isEmpty();
     boolean hasMultipleNutzer = gruppeNutzer.size() > 1;
 

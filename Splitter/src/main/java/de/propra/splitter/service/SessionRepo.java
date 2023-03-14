@@ -5,6 +5,7 @@ import de.propra.splitter.domain.TransaktionDTO;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -38,7 +39,7 @@ public class SessionRepo implements GruppenRepo {
     }
 
     @Override
-    public Set<TransaktionDTO> gruppeTransaktionen(String id) {
+    public List<TransaktionDTO> gruppeTransaktionen(String id) {
         Gruppe gruppe = gruppen.stream().filter(a -> a.id().equals(id)).findFirst().orElse(null);
         if (gruppe == null){
             return null;

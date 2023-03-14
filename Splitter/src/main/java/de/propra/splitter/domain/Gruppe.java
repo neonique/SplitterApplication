@@ -6,13 +6,9 @@ import de.propra.splitter.domain.calculation.TransaktionenBerechnung;
 
 import de.propra.splitter.stereotypes.AggregateRoot;
 
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 import org.javamoney.moneta.Money;
-
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
 
 @AggregateRoot
 public class Gruppe {
@@ -23,7 +19,7 @@ public class Gruppe {
   private UUID id;
 
   private HashSet<Nutzer> teilnehmer = new HashSet<>();
-  private HashSet<Transaktion> transaktionen =new HashSet<>();
+  private List<Transaktion> transaktionen =new ArrayList<>();
 
   private final String name;
   public Gruppe(String name, String nutzerName) {
@@ -104,14 +100,14 @@ public class Gruppe {
         Collectors.toSet()), geld, grund));
   }
 
-  public Set<TransaktionDTO> getTransaktionenDetails() {
-      Set<TransaktionDTO> transaktionDTOS = transaktionen
+  public List<TransaktionDTO> getTransaktionenDetails() {
+      List<TransaktionDTO> transaktionDTOS = transaktionen
           .stream()
           .map(t -> new TransaktionDTO(t.sponsor().name(), t.bettler()
               .stream()
               .map(b -> b.name())
               .collect(Collectors.toSet()), t.betrag().getNumberStripped().doubleValue(), t.grund()))
-          .collect(Collectors.toSet());
+          .collect(Collectors.toList());
       return transaktionDTOS;
     }
   public Set<Transaktion> transaktionen() {

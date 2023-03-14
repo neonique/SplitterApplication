@@ -3,6 +3,7 @@ package de.propra.splitter.service;
 import de.propra.splitter.domain.Gruppe;
 import de.propra.splitter.domain.TransaktionDTO;
 
+import java.util.List;
 import java.util.Set;
 
 public interface GruppenRepo {
@@ -15,7 +16,7 @@ public interface GruppenRepo {
 
     public Set<String> gruppeNutzer(String id);
 
-    public Set<TransaktionDTO> gruppeTransaktionen(String id);
+    public List<TransaktionDTO> gruppeTransaktionen(String id);
 
     public boolean isClosed(String id);
 

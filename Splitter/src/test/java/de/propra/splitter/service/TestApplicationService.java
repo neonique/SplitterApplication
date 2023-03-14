@@ -2,11 +2,10 @@ package de.propra.splitter.service;
 
 import de.propra.splitter.domain.Gruppe;
 import de.propra.splitter.domain.TransaktionDTO;
-import java.util.HashMap;
-import java.util.Map;
+
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Set;
-import java.util.UUID;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -181,13 +180,13 @@ public class TestApplicationService {
     double betrag2 = 23;
     TransaktionDTO t1 = new TransaktionDTO(nutzername1, Set.of(nutzername2), betrag1, "");
     TransaktionDTO t2 = new TransaktionDTO(nutzername2, Set.of(nutzername1, nutzername2), betrag2, "");
-    Set<TransaktionDTO> transaktionDTOS = Set.of(t1, t2);
+    List<TransaktionDTO> transaktionDTOS = List.of(t1, t2);
 
 
     UUID id1 = UUID.randomUUID();
     when(gruppenRepo.gruppeTransaktionen(id1.toString())).thenReturn(transaktionDTOS);
 
-    Set<TransaktionDTO> transaktionen = applicationService.getGruppenTransaktionen(id1.toString());
+    List<TransaktionDTO> transaktionen = applicationService.getGruppenTransaktionen(id1.toString());
 
     assertThat(transaktionen).containsAll(transaktionDTOS);
   }

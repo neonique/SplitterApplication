@@ -4,6 +4,8 @@ import de.propra.splitter.domain.Gruppe;
 import java.util.HashMap;
 
 import de.propra.splitter.domain.TransaktionDTO;
+
+import java.util.List;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -76,7 +78,7 @@ public class ApplicationService {
     return gruppenRepo.gruppeNutzer(id);
   }
 
-  public Set<TransaktionDTO> getGruppenTransaktionen(String id) {
+  public List<TransaktionDTO> getGruppenTransaktionen(String id) {
     return gruppenRepo.gruppeTransaktionen(id);
   }
 
