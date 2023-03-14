@@ -3,6 +3,7 @@ package de.propra.splitter.api;
 import static org.mockito.AdditionalMatchers.not;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -25,6 +26,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 
 @ImportAutoConfiguration(classes = SecurityConfig.class)
 @WebMvcTest(ApiController.class)
@@ -151,6 +153,16 @@ public class TestApiController {
             .content(jsonGruppe))
         .andExpect(status().isBadRequest());
   }
+  @Test
+  @DisplayName("api/user/{nutzername}/gruppen mit unbekanntem Nutzer")
+  void test_8() throws Exception{
 
+    String nutzername = "Jeremy";
+
+    MvcResult mvcResult = mvc.perform(get("/api/user/{nutzername}/gruppen", nutzername))
+        .andExpect(status().isOk()).andReturn();
+
+    System.out.println(mvcResult.getResponse().getContentAsString());
+  }
 
 }
