@@ -18,7 +18,7 @@ public class SecurityConfig {
                 .anyRequest().authenticated()
         )
         .oauth2Login(Customizer.withDefaults())
-        .csrf().disable();
+        .csrf().ignoringAntMatchers("/api/**");
     return chainBuilder.build();
   }
 }
