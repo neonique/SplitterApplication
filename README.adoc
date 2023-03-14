@@ -44,26 +44,28 @@ Bei Fragen, die Sie selber persönlich betreffen (zum Beispiel bei Krankmeldunge
 
 Wir erwarten von Ihnen einen respektvollen Umgang miteinander. Es gilt grundsätzlich bei uns der https://berlincodeofconduct.org/de/[Berlin Code of Conduct]. Die Tutor:innen haben die Aufgabe, die Einhaltung der Regeln zu überwachen und können bei Verstößen gegen den Verhaltenskodex Personen aus dem Praktikum ausschließen. Ein Praktikumsausschluss hat zur Folge, dass Sie das Modul in diesem Semester nicht mehr abschließen können. 
 
+= Dokumentation
+:icons: font
+:icon-set: fa
+:source-highlighter: rouge
+:experimental:
 
+== A.Nutzungsanweisung
 
-A.Nutzungsanweisung
-
-Zuerst clonen Sie sich das Repo von GitHub. Dann erstellen Sie eine neue OAuth App über GitHub. Dazu folgen Sie folgende Schritte:
+Zuerst klonen Sie sich das Repository von GitHub. Dann erstellen Sie eine neue OAuth App über GitHub. Dazu folgen Sie folgende Schritte:
 Profil->Settings->Developer Settings->OAuth Apps->Registrieren der Application
 
-Als Application Name verwenden Sie Splitter und die Url und Callback Url lauten http://localhost:9000/
-Dann können Sie die Application registrieren. Nun müssen Sie die Client ID kopieren und ein Client Secret generieren und auch speichern.
-Nun können Sie die Anwendung in ihrem Terminal in Splitter starten über ./gradlew bootRun --args='--CLIENT_ID=[client_id]--CLIENT_SECRET=[client_secret]' (mit [client_id],[client_secret] ersetzt durch ihr Client ID/ Client SECRET
+Als Application Name verwenden Sie Splitter. Die Url, sowie Callback Url lauten http://localhost:9000/
+Dann können Sie die Application registrieren. Nun müssen Sie die Client ID kopieren, sowie ein Client Secret generieren als auch speichern.
+Nun können Sie die Anwendung in ihrem Terminal in Splitter starten über ./gradlew bootRun --args='--CLIENT_ID=[client_id]--CLIENT_SECRET=[client_secret]' (mit [client_id],[client_secret] ersetzt durch Ihre Client ID/ Client SECRET)
 
 
-B.Arc42 template
+== B.Arc42 template
 
-1.Einführung und Ziele
+=== 1.Einführung und Ziele
 
 Aufgabenstellung: „Bei Geld hört die Freundschaft auf” heißt es. Rund um das Geld entstehen oft Probleme zwischen Menschen.
-Wir wollen uns des Themas annehmen und für Gruppen von Personen, die gemeinsame Ausgaben tätigen (zum Beispiel Wohngemeinschaften und Reisegruppen), eine Software schreiben,
-mit deren Hilfe die Ausgaben transparent aufgeschlüsselt und die Konten möglichst einfach ausgeglichen werden können.
-
+Wir wollen uns des Themas annehmen und für Gruppen von Personen, die gemeinsame Ausgaben tätigen (zum Beispiel Wohngemeinschaften und Reisegruppen), eine Software schreiben, mit deren Hilfe die Ausgaben transparent aufgeschlüsselt und die Konten möglichst einfach ausgeglichen werden können.
 
 Wesentliche Features:
 
