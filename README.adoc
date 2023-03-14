@@ -53,7 +53,7 @@ Profil->Settings->Developer Settings->OAuth Apps->Registrieren der Application
 
 Als Application Name verwenden Sie Splitter und die Url und Callback Url lauten http://localhost:9000/
 Dann können Sie die Application registrieren. Nun müssen Sie die Client ID kopieren und ein Client Secret generieren und auch speichern.
-Nun können Sie die Anwendung in ihrem Terminal starten über ./gradlew bootRun --args='--CLIENT_ID=[client_id]--CLIENT_SECRET=[client_secret]' (mit [client_id],[client_secret] ersetzt durch ihr Client ID/ Client SECRET
+Nun können Sie die Anwendung in ihrem Terminal in Splitter starten über ./gradlew bootRun --args='--CLIENT_ID=[client_id]--CLIENT_SECRET=[client_secret]' (mit [client_id],[client_secret] ersetzt durch ihr Client ID/ Client SECRET
 
 
 B.Arc42 template
