@@ -28,6 +28,11 @@ public class TestArch {
       .resideInAPackage("..domain..").and()
       .areNotAnnotatedWith(AggregateRoot.class).and().areNotAnnotatedWith(DTO.class).should()
       .onlyBeAccessed().byClassesThat().resideInAPackage("..domain..");
+
+  @ArchTest
+  ArchRule apiRecordsAreonlyusedInTheApiPackage = classes().that()
+      .resideInAPackage("..api.records..").should()
+      .onlyBeAccessed().byClassesThat().resideInAPackage("..api..");
 /*
 
   @ArchTest
