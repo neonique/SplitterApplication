@@ -32,10 +32,6 @@ public class SplitterController {
   @GetMapping("/")
   public String authentifizierung(OAuth2AuthenticationToken auth, RedirectAttributes attrs){
 
-  String login = auth.getPrincipal().getAttribute("login");
-  attrs.addFlashAttribute("nutzername", login);
-
-
     return "redirect:/alleGruppen";
   }
 
