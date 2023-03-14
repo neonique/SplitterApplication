@@ -39,6 +39,9 @@ public class ApiController {
     if(!(neueGruppe.gruppe() == null) || (neueGruppe.name() == null) || (neueGruppe.personen() == null)) {
       return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
     }
+    if(neueGruppe.name().isBlank() || neueGruppe.name().isEmpty()) {
+      return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+    }
     if(neueGruppe.personen().isEmpty()) {
       return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
     }
