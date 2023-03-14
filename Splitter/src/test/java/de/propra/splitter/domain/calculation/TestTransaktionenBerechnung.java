@@ -11,42 +11,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class TestTransaktionenBerechnung {
-
-  TransaktionenBerechnung transaktionsService = new EinfacherTransaktionenBerechnung();
- /*
-  @DisplayName("Saldo wird korrekt berechnet, wenn Sponsor kein Bettler ist")
-  @Test
-  void test_01(){
-    Nutzer nutzer1 = new Nutzer("Josch");
-    Nutzer nutzer2 = new Nutzer("ellis");
-    Gruppe gruppe = new Gruppe("gruppenName", nutzer1);
-    gruppe.addNutzer(nutzer2);
-    Money m1 = "EUR 20");
-    gruppe.addTransaktion(nutzer1, Set.of(nutzer2), m1);
-
-    Money u1Saldo = transaktionsService.berechneNutzerSaldo(nutzer1, gruppe);
-    Money u2Saldo = transaktionsService.berechneNutzerSaldo(nutzer2, gruppe);
-
-    assertThat(u1Saldo).isEqualTo("EUR 20"));
-    assertThat(u2Saldo).isEqualTo("EUR -20"));
-  }
-  @DisplayName("Saldo wird korrekt berechnet, wenn Sponsor ein Bettler ist")
-  @Test
-  void test_02(){
-    Nutzer nutzer1 = new Nutzer("Josch");
-    Nutzer nutzer2 = new Nutzer("ellis");
-    gruppe = new Gruppe Gruppe("gruppenName", nutzer1);
-    gruppe.addNutzer(nutzer2);
-    Money m1 = "EUR 20");
-    gruppe.addTransaktion(nutzer1, Set.of(nutzer2, nutzer1), m1);
-
-    Money u1Saldo = transaktionsService.berechneNutzerSaldo(nutzer1, gruppe);
-    Money u2Saldo = transaktionsService.berechneNutzerSaldo(nutzer2, gruppe);
-
-    assertThat(u1Saldo).isEqualTo("EUR 10"));
-    assertThat(u2Saldo).isEqualTo("EUR -10"));
-  }
-*/
   @DisplayName("jens test 1")
   @Test
   void test_03(){

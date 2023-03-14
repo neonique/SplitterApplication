@@ -33,13 +33,5 @@ public class TestArch {
   ArchRule apiRecordsAreonlyusedInTheApiPackage = classes().that()
       .resideInAPackage("..api.records..").should()
       .onlyBeAccessed().byClassesThat().resideInAPackage("..api..");
-/*
 
-  @ArchTest
-  ArchRule DTOsCanBeAccessedFromAnywhere = classes().that()
-      .resideInAPackage("..domain.model..").and()
-      .areNotAnnotatedWith(AggregateRoot.class).should()
-      .onlyBeAccessed().byClassesThat().resideInAPackage("..domain.model..");
-
- */
 }

@@ -1,7 +1,11 @@
 package de.propra.splitter.web;
 
 
+import de.propra.splitter.domain.Nutzer;
 import de.propra.splitter.service.ApplicationService;
+import java.util.HashSet;
+import java.util.Set;
+import javax.servlet.http.HttpServletRequest;
 import org.junit.Before;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,8 +15,12 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyDouble;
+import static org.mockito.ArgumentMatchers.anySet;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.oauth2Login;
@@ -155,7 +163,7 @@ public class TestController {
   }
 
   @Test
-  @DisplayName("post auf /gruppe/addTransaktion redirected auf /alleGruppen bei leerer gruppenid")
+  @DisplayName("get auf /gruppe/addTransaktion redirected auf /alleGruppen bei leerer gruppenid")
   void test_15() throws Exception {
     mockMvc.perform(get("/gruppe/addTransaktion")
             .param("gruppenid","").with(oauth2Login()))
@@ -170,6 +178,42 @@ public class TestController {
             .flashAttr("gruppenid","id")
             .with(oauth2Login()))
         .andExpect(view().name("addTransaktion"));
+
+  }
+
+  @Test
+  @DisplayName("get auf /neueTransaktion redirected auf /alleGruppen bei leerer gruppenid")
+  void test_17() throws Exception {
+    mockMvc.perform(get("/neueTransaktion")
+            .flashAttr("gruppenid","")
+            .with(oauth2Login()))
+        .andExpect(redirectedUrl("/alleGruppen"));
+
+  }
+
+  //hinzufügen tests für /neueTransaktion ruft apllicationservice.addTransaktionzuGruppe auf
+  //aber nur wenn beggarset nicht empty ist
+  @Test
+  @DisplayName("post auf /neueTransaktion redirected zu /gruppe")
+  void test_18() throws Exception {
+    mockMvc.perform(post("/neueTransaktion")
+            .param("gruppenid","id")
+            .param("grund", "ich will geld")
+            .param("betrag", "5.5")
+            .param("sponsor", "noone")
+            .with(oauth2Login()).with(csrf()))
+        .andExpect(redirectedUrl("/gruppe"));
+
+  }
+
+  @Test
+  @DisplayName("post auf /gruppe/notwendigeTransaktionen redirected gruppenid zu /ausgleichstransaktionen")
+  void test_19() throws Exception {
+    mockMvc.perform(post("/gruppe/notwendigeTransaktionen")
+            .param("gruppenid","id")
+            .with(oauth2Login()).with(csrf()))
+        .andExpect(flash().attribute("gruppenid", "id"))
+        .andExpect(redirectedUrl("/ausgleichsTransaktionen"));
 
   }
 
