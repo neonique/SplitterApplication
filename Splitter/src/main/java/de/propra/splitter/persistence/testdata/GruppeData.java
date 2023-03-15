@@ -1,5 +1,5 @@
 package de.propra.splitter.persistence.testdata;
 
-public record GruppeData(int id, String gruppenName, boolean geschlossen) {
+public record GruppeData(String gruppenId, String gruppenname, boolean geschlossen) {
 
 }

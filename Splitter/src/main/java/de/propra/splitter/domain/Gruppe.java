@@ -18,6 +18,15 @@ public class Gruppe {
 
   private UUID id;
 
+  public Gruppe(boolean geschlossen, UUID id, HashSet<Nutzer> teilnehmer,
+      List<Transaktion> transaktionen, String name) {
+    this.geschlossen = geschlossen;
+    this.id = id;
+    this.teilnehmer = teilnehmer;
+    this.transaktionen = transaktionen;
+    this.name = name;
+  }
+
   private HashSet<Nutzer> teilnehmer = new HashSet<>();
   private List<Transaktion> transaktionen =new ArrayList<>();
 

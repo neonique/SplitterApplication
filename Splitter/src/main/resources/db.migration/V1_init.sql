@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS gruppe_data
 );
 CREATE TABLE IF NOT EXISTS transaktion_data
 (
-    transaktionid INT PRIMARY KEY,
+    transaktionid SERIAL PRIMARY KEY,
     betrag DOUBLE NOT NULL,
     sponsor VARCHAR(300),
     beschreibung VARCHAR(300),
@@ -15,14 +15,16 @@ CREATE TABLE IF NOT EXISTS transaktion_data
 );
 CREATE TABLE IF NOT EXISTS gruppe_nutzer_relation
 (
+    id SERIAL PRIMARY KEY
     gruppenid VARCHAR(36)
     nutzername VARCHAR(300),
     FOREIGN KEY (gruppenid) REFERENCES gruppe_data(gruppenid)
 );
-CREATE TABLE IF NOT EXISTS gruppe_transaktion_realtion
+CREATE TABLE IF NOT EXISTS nutzer_transaktion_relation
 (
+    id SERIAL PRIMARY KEY
     nutzername VARCHAR(300)
-    id INT
-    FOREIGN KEY (id) REFERENCES transaktion_data(transaktionid)
+    transaktionid SERIAL
+    FOREIGN KEY (transaktionid) REFERENCES transaktion_data(transaktionid)
 );
 
