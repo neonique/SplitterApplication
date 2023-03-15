@@ -5,11 +5,16 @@ logging:
         security: info
 
 spring:
+  datasource:
+    password: password
+    username: user
+    url: jdbc:postgresql://localhost:5432/SplitterDb
+
   security:
-    oauth2:
-      client:
-        registration:
-          github:
-            client-id: ${CLIENT_ID}
-            client-secret: ${CLIENT_SECRET}
-            scope: read:public_repo
+      oauth2:
+        client:
+          registration:
+            github:
+              client-id: ${CLIENT_ID}
+              client-secret: ${CLIENT_SECRET}
+              scope: read:public_repo
