@@ -39,6 +39,7 @@ dependencies {
     // JDBC API + Treiber für MariaDB
     implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
     runtimeOnly 'org.postgresql:postgresql'
+    runtimeOnly 'com.h2database:h2'
 
     // DB Migration
     implementation 'org.flywaydb:flyway-core'
