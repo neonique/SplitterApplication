@@ -4,8 +4,10 @@ import de.propra.splitter.domain.Gruppe;
 import de.propra.splitter.domain.TransaktionDTO;
 import de.propra.splitter.persistence.testdata.GruppeData;
 import de.propra.splitter.service.GruppenRepo;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -14,16 +16,13 @@ public class GruppenRepoImpl implements GruppenRepo {
   private final GruppeDataRepo gruppeDataRepo;
   private final GruppeNutzerDataRepo gruppeNutzerDataRepo;
 
-  private final TransaktionDataRepo transaktionDataRepo;
-
-  private final TransaktionNutzerDataRepo transaktionNutzerDataRepo;
+  private final TransaktionsRepoImpl transaktionsRepoImpl;
 
   public GruppenRepoImpl(GruppeDataRepo gruppeDataRepo, GruppeNutzerDataRepo gruppeNutzerDataRepo,
-      TransaktionDataRepo transaktionDataRepo, TransaktionNutzerDataRepo transaktionNutzerDataRepo) {
+      TransaktionsRepoImpl transaktionsRepoImpl) {
     this.gruppeDataRepo = gruppeDataRepo;
     this.gruppeNutzerDataRepo = gruppeNutzerDataRepo;
-    this.transaktionDataRepo = transaktionDataRepo;
-    this.transaktionNutzerDataRepo = transaktionNutzerDataRepo;
+    this.transaktionsRepoImpl = transaktionsRepoImpl;
   }
 
   @Override
@@ -35,8 +34,10 @@ public class GruppenRepoImpl implements GruppenRepo {
   @Override
   public Gruppe load(String id) {
     GruppeData gruppeData = gruppeDataRepo.findByGruppenId(id);
-    Set<String> nutzernamen = gruppeNutzerDataRepo.findGruppeNutzerDataBy_gruppeId(id);
-    Gruppe gruppe = new Gruppe()
+    HashSet<String> teilnehmer = gruppeNutzerDataRepo.findGruppeNutzerDataBy_gruppeId(id);
+    List<TransaktionDTO> transaktionDTOS = transaktionsRepoImpl.getTransaktionen(id);
+    UUID idAsUUID = UUID.fromString(gruppeData.gruppenId());
+    Gruppe gruppe = new Gruppe(gruppeData.geschlossen(), idAsUUID, teilnehmer, transaktionDTOS, gruppeData.gruppenname());
     return gruppe;
   }
 

@@ -6,8 +6,8 @@ logging:
 
 spring:
   datasource:
-    password: password
-    username: user
+    password: ${DB_PASSWORD}
+    username: ${DB_USER}
     url: jdbc:postgresql://localhost:5432/SplitterDb
 
   security:

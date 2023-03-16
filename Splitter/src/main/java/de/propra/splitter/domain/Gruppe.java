@@ -18,13 +18,45 @@ public class Gruppe {
 
   private UUID id;
 
-  public Gruppe(boolean geschlossen, UUID id, HashSet<Nutzer> teilnehmer,
-      List<Transaktion> transaktionen, String name) {
+  public Gruppe(boolean geschlossen, UUID id, HashSet<String> teilnehmerNamen,
+      List<TransaktionDTO> transaktionenDtos, String name) {
+
+    HashSet<Nutzer> teilnehmer = getNutzers(teilnehmerNamen);
+
+    List<Transaktion> transaktionen = getTransaktions(
+        transaktionenDtos);
+
     this.geschlossen = geschlossen;
     this.id = id;
     this.teilnehmer = teilnehmer;
     this.transaktionen = transaktionen;
     this.name = name;
+  }
+
+  private List<Transaktion> getTransaktions(List<TransaktionDTO> transaktionenDtos) {
+    List<Transaktion> transaktionen = new ArrayList<>();
+
+    for (TransaktionDTO dto: transaktionenDtos
+    ) {
+      Nutzer nutzer = new Nutzer(dto.sponsor());
+      Set<Nutzer> bettler = new HashSet<>();
+      for (String b: dto.bettler()
+      ) {
+        bettler.add(new Nutzer(b));
+      }
+      transaktionen.add(new Transaktion(nutzer, bettler, Money.of(dto.betrag(), "EUR"), dto.grund()));
+    }
+    return transaktionen;
+  }
+
+  private HashSet<Nutzer> getNutzers(HashSet<String> teilnehmerNamen) {
+    HashSet<Nutzer> teilnehmer = new HashSet<>();
+
+    for (String t: teilnehmerNamen
+    ) {
+      teilnehmer.add(new Nutzer(t));
+    }
+    return teilnehmer;
   }
 
   private HashSet<Nutzer> teilnehmer = new HashSet<>();
