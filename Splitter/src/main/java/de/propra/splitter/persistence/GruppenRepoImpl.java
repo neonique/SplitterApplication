@@ -35,17 +35,17 @@ public class GruppenRepoImpl implements GruppenRepo {
 
   @Override
   public Gruppe load(String id) {
-    GruppeData gruppeData = gruppeDataRepo.findByGruppenId(id);
-    HashSet<String> teilnehmer = gruppeNutzerDataRepo.findGruppeNutzerDataBy_gruppeId(id);
+    GruppeData gruppeData = gruppeDataRepo.findByGruppenid(id);
+    HashSet<String> teilnehmer = gruppeNutzerDataRepo.findGruppeNutzerDataByGruppenid(id);
     List<TransaktionDTO> transaktionDTOS = transaktionsRepoImpl.getTransaktionen(id);
-    UUID idAsUUID = UUID.fromString(gruppeData.gruppenId());
+    UUID idAsUUID = UUID.fromString(gruppeData.gruppenid());
     Gruppe gruppe = new Gruppe(gruppeData.geschlossen(), idAsUUID, teilnehmer, transaktionDTOS, gruppeData.gruppenname());
     return gruppe;
   }
 
   @Override
   public Set<Gruppe> nutzerGruppen(String nutzername) {
-    HashSet<String> gruppenIds = gruppeNutzerDataRepo.findGruppeNutzerDataBy_nutzername(nutzername);
+    HashSet<String> gruppenIds = gruppeNutzerDataRepo.findGruppeNutzerDataByNutzername(nutzername);
     Set<Gruppe> gruppen = new HashSet<>();
     for (String g:gruppenIds
     ) {
@@ -56,7 +56,7 @@ public class GruppenRepoImpl implements GruppenRepo {
 
   @Override
   public Set<String> gruppeNutzer(String id) {
-    HashSet<String> teilnehmer = gruppeNutzerDataRepo.findGruppeNutzerDataBy_gruppeId(id);
+    HashSet<String> teilnehmer = gruppeNutzerDataRepo.findGruppeNutzerDataByGruppenid(id);
 
     return teilnehmer;
   }
@@ -70,21 +70,21 @@ public class GruppenRepoImpl implements GruppenRepo {
 
   @Override
   public boolean isClosed(String id) {
-    GruppeData gruppeData = gruppeDataRepo.findByGruppenId(id);
+    GruppeData gruppeData = gruppeDataRepo.findByGruppenid(id);
 
     return gruppeData.geschlossen();
   }
 
   @Override
   public String getName(String id) {
-    GruppeData gruppeData = gruppeDataRepo.findByGruppenId(id);
+    GruppeData gruppeData = gruppeDataRepo.findByGruppenid(id);
 
     return gruppeData.gruppenname();
   }
 
   @Override
   public boolean exists(String id) {
-    GruppeData gruppeData = gruppeDataRepo.findByGruppenId(id);
+    GruppeData gruppeData = gruppeDataRepo.findByGruppenid(id);
     if(gruppeData!=null){
       return true;
 

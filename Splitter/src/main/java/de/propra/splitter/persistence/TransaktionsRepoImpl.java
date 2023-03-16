@@ -23,10 +23,10 @@ public class TransaktionsRepoImpl {
   }
 
   public List<TransaktionDTO> getTransaktionen(String id) {
-    List<TransaktionData> transaktionData = transaktionDataRepo.findAllBy_gruppeId(id);
+    List<TransaktionData> transaktionData = transaktionDataRepo.findAllByGruppenid(id);
     List<TransaktionDTO> transaktionDTOS = new ArrayList<>();
     for (TransaktionData transaktion:transaktionData) {
-      Set<String> bettler = transaktionNutzerDataRepo.findAllBettlerBy_transaktionid(transaktion.id());
+      Set<String> bettler = transaktionNutzerDataRepo.findAllBettlerByTransaktionid(transaktion.transaktionid());
       TransaktionDTO transaktionDTO = new TransaktionDTO(transaktion.sponsor(), bettler,
           transaktion.betrag(), transaktion.beschreibung());
       transaktionDTOS.add(transaktionDTO);

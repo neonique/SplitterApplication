@@ -6,6 +6,6 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface TransaktionDataRepo extends CrudRepository<TransaktionData, Integer> {
 
-  List<TransaktionData> findAllBy_gruppeId(String id);
+  List<TransaktionData> findAllByGruppenid(String id);
 
 }

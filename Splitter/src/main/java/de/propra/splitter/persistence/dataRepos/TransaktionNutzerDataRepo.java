@@ -6,6 +6,6 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface TransaktionNutzerDataRepo extends CrudRepository<TransaktionNutzerData, Integer> {
 
-  Set<String> findAllBettlerBy_transaktionid(int id);
+  Set<String> findAllBettlerByTransaktionid(int id);
 
 }

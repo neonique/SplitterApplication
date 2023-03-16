@@ -1,5 +1,5 @@
 package de.propra.splitter.persistence.data;
 
-public record TransaktionNutzerData(int _transaktionId, String nutzerName) {
+public record TransaktionNutzerData(int transaktionid, String nutzername) {
 
 }

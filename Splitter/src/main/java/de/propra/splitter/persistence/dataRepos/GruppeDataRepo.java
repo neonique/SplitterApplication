@@ -4,6 +4,6 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface GruppeDataRepo extends CrudRepository<GruppeData, String>{
 
-  public GruppeData findByGruppenId(String gruppenId);
+  public GruppeData findByGruppenid(String gruppenId);
 
 }
