@@ -26,7 +26,7 @@ public class TransaktionsRepoImpl {
     List<TransaktionData> transaktionData = transaktionDataRepo.findAllBy_gruppeId(id);
     List<TransaktionDTO> transaktionDTOS = new ArrayList<>();
     for (TransaktionData transaktion:transaktionData) {
-      Set<String> bettler = transaktionNutzerDataRepo.findAllTransaktionsBettler(transaktion.id());
+      Set<String> bettler = transaktionNutzerDataRepo.findAllBettlerBy_transaktionid(transaktion.id());
       TransaktionDTO transaktionDTO = new TransaktionDTO(transaktion.sponsor(), bettler,
           transaktion.betrag(), transaktion.beschreibung());
       transaktionDTOS.add(transaktionDTO);
