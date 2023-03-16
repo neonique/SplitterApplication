@@ -1,7 +1,9 @@
 package de.propra.splitter.persistence;
 
 import de.propra.splitter.domain.TransaktionDTO;
-import de.propra.splitter.persistence.testdata.TransaktionData;
+import de.propra.splitter.persistence.data.TransaktionData;
+import de.propra.splitter.persistence.dataRepos.TransaktionDataRepo;
+import de.propra.splitter.persistence.dataRepos.TransaktionNutzerDataRepo;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;

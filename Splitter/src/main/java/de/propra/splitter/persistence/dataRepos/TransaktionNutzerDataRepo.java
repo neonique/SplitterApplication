@@ -1,7 +1,6 @@
-package de.propra.splitter.persistence;
+package de.propra.splitter.persistence.dataRepos;
 
-import de.propra.splitter.persistence.testdata.GruppeData;
-import de.propra.splitter.persistence.testdata.TransaktionNutzerData;
+import de.propra.splitter.persistence.data.TransaktionNutzerData;
 import java.util.Set;
 import org.springframework.data.repository.CrudRepository;
 

@@ -2,7 +2,9 @@ package de.propra.splitter.persistence;
 
 import de.propra.splitter.domain.Gruppe;
 import de.propra.splitter.domain.TransaktionDTO;
-import de.propra.splitter.persistence.testdata.GruppeData;
+import de.propra.splitter.persistence.data.GruppeData;
+import de.propra.splitter.persistence.dataRepos.GruppeDataRepo;
+import de.propra.splitter.persistence.dataRepos.GruppeNutzerDataRepo;
 import de.propra.splitter.service.GruppenRepo;
 import java.util.HashSet;
 import java.util.List;
@@ -40,7 +42,6 @@ public class GruppenRepoImpl implements GruppenRepo {
     Gruppe gruppe = new Gruppe(gruppeData.geschlossen(), idAsUUID, teilnehmer, transaktionDTOS, gruppeData.gruppenname());
     return gruppe;
   }
-
   @Override
   public Set<Gruppe> nutzerGruppen(String nutzername) {
     return null;
