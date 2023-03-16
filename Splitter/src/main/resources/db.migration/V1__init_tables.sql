@@ -15,16 +15,16 @@ CREATE TABLE IF NOT EXISTS transaktion_data
 );
 CREATE TABLE IF NOT EXISTS gruppe_nutzer_relation
 (
-    id SERIAL PRIMARY KEY
-    gruppenid VARCHAR(36)
+    id SERIAL PRIMARY KEY,
+    gruppenid VARCHAR(36),
     nutzername VARCHAR(300),
     FOREIGN KEY (gruppenid) REFERENCES gruppe_data(gruppenid)
 );
 CREATE TABLE IF NOT EXISTS nutzer_transaktion_relation
 (
-    id SERIAL PRIMARY KEY
-    nutzername VARCHAR(300)
-    transaktionid SERIAL
+    id SERIAL PRIMARY KEY,
+    nutzername VARCHAR(300),
+    transaktionid SERIAL,
     FOREIGN KEY (transaktionid) REFERENCES transaktion_data(transaktionid)
 );
 

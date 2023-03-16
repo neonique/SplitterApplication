@@ -44,31 +44,50 @@ public class GruppenRepoImpl implements GruppenRepo {
   }
   @Override
   public Set<Gruppe> nutzerGruppen(String nutzername) {
-    return null;
+    HashSet<String> gruppenIds = gruppeNutzerDataRepo.findGruppeNutzerDataBy_nutzername(nutzername);
+    Set<Gruppe> gruppen = new HashSet<>();
+    for (String g:gruppenIds
+    ) {
+      gruppen.add(load(g));
+    }
+    return gruppen;
   }
 
   @Override
   public Set<String> gruppeNutzer(String id) {
-    return null;
+    HashSet<String> teilnehmer = gruppeNutzerDataRepo.findGruppeNutzerDataBy_gruppeId(id);
+
+    return teilnehmer;
   }
 
   @Override
   public List<TransaktionDTO> gruppeTransaktionen(String id) {
-    return null;
+    List<TransaktionDTO> transaktionDTOS = transaktionsRepoImpl.getTransaktionen(id);
+
+    return transaktionDTOS;
   }
 
   @Override
   public boolean isClosed(String id) {
-    return false;
+    GruppeData gruppeData = gruppeDataRepo.findByGruppenId(id);
+
+    return gruppeData.geschlossen();
   }
 
   @Override
   public String getName(String id) {
-    return null;
+    GruppeData gruppeData = gruppeDataRepo.findByGruppenId(id);
+
+    return gruppeData.gruppenname();
   }
 
   @Override
   public boolean exists(String id) {
+    GruppeData gruppeData = gruppeDataRepo.findByGruppenId(id);
+    if(gruppeData!=null){
+      return true;
+
+    }
     return false;
   }
 }
