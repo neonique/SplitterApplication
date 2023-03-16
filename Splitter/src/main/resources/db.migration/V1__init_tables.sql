@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS transaktion_data
 CREATE TABLE IF NOT EXISTS gruppe_nutzer_relation
 (
     id SERIAL PRIMARY KEY
-    gruppenid VARCHAR(36)
+    gruppenid VARCHAR(36),
     nutzername VARCHAR(300),
     FOREIGN KEY (gruppenid) REFERENCES gruppe_data(gruppenid)
 );

@@ -42,6 +42,7 @@ public class GruppenRepoImpl implements GruppenRepo {
     Gruppe gruppe = new Gruppe(gruppeData.geschlossen(), idAsUUID, teilnehmer, transaktionDTOS, gruppeData.gruppenname());
     return gruppe;
   }
+
   @Override
   public Set<Gruppe> nutzerGruppen(String nutzername) {
     return null;
