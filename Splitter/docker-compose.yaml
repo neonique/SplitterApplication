@@ -10,3 +10,20 @@ services:
       - "POSTGRES_DB=SplitterDb"
       - "POSTGRES_USER=user"
       - "POSTGRES_PASSWORD=password"
+    networks:
+      - "splitter"
+  splitter:
+    image: splitter
+    ports:
+      - "9000:9000"
+    environment:
+      - "POSTGRES_DB=SplitterDb"
+      - "DB_USER=user"
+      - "DB_PASSWORD=password"
+      - "CLIENT_ID="
+      - "CLIENT_SECRET="
+    networks:
+      - "splitter"
+networks:
+  splitter:
+    external: true

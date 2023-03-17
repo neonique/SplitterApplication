@@ -8,7 +8,7 @@ spring:
   datasource:
     password: ${DB_PASSWORD}
     username: ${DB_USER}
-    url: jdbc:postgresql://localhost:5432/SplitterDb
+    url: jdbc:postgresql://database:5432/SplitterDb
 
   security:
       oauth2:
