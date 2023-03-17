@@ -25,7 +25,6 @@ public class SplitterController {
 
   private final ApplicationService applicationService;
 
-  @Autowired
   public SplitterController(ApplicationService applicationService) {
     this.applicationService = applicationService;
   }

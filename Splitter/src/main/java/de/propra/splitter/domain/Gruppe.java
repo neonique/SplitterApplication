@@ -33,32 +33,6 @@ public class Gruppe {
     this.name = name;
   }
 
-  private List<Transaktion> getTransaktions(List<TransaktionDTO> transaktionenDtos) {
-    List<Transaktion> transaktionen = new ArrayList<>();
-
-    for (TransaktionDTO dto: transaktionenDtos
-    ) {
-      Nutzer nutzer = new Nutzer(dto.sponsor());
-      Set<Nutzer> bettler = new HashSet<>();
-      for (String b: dto.bettler()
-      ) {
-        bettler.add(new Nutzer(b));
-      }
-      transaktionen.add(new Transaktion(nutzer, bettler, Money.of(dto.betrag(), "EUR"), dto.grund()));
-    }
-    return transaktionen;
-  }
-
-  private HashSet<Nutzer> getNutzers(HashSet<String> teilnehmerNamen) {
-    HashSet<Nutzer> teilnehmer = new HashSet<>();
-
-    for (String t: teilnehmerNamen
-    ) {
-      teilnehmer.add(new Nutzer(t));
-    }
-    return teilnehmer;
-  }
-
   private HashSet<Nutzer> teilnehmer = new HashSet<>();
   private List<Transaktion> transaktionen =new ArrayList<>();
 
@@ -186,6 +160,33 @@ public class Gruppe {
 
     return true;
   }
+
+  private List<Transaktion> getTransaktions(List<TransaktionDTO> transaktionenDtos) {
+    List<Transaktion> transaktionen = new ArrayList<>();
+
+    for (TransaktionDTO dto: transaktionenDtos
+    ) {
+      Nutzer nutzer = new Nutzer(dto.sponsor());
+      Set<Nutzer> bettler = new HashSet<>();
+      for (String b: dto.bettler()
+      ) {
+        bettler.add(new Nutzer(b));
+      }
+      transaktionen.add(new Transaktion(nutzer, bettler, Money.of(dto.betrag(), "EUR"), dto.grund()));
+    }
+    return transaktionen;
+  }
+
+  private HashSet<Nutzer> getNutzers(HashSet<String> teilnehmerNamen) {
+    HashSet<Nutzer> teilnehmer = new HashSet<>();
+
+    for (String t: teilnehmerNamen
+    ) {
+      teilnehmer.add(new Nutzer(t));
+    }
+    return teilnehmer;
+  }
+
 }
 
 

@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Repository("session")
 public class SessionRepo implements GruppenRepo {
     private Set<Gruppe> gruppen= new HashSet<>();
 

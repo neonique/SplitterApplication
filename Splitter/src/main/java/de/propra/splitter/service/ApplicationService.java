@@ -8,6 +8,7 @@ import de.propra.splitter.domain.TransaktionDTO;
 import java.util.List;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,8 +16,8 @@ public class ApplicationService {
 
 
   private GruppenRepo gruppenRepo;
-  @Autowired
-  public ApplicationService(GruppenRepo gruppenRepo){
+
+  public ApplicationService(@Qualifier("session") GruppenRepo gruppenRepo){
     this.gruppenRepo = gruppenRepo;
   }
   public String addGruppe(String gruppenName, String nutzerName){
