@@ -1,5 +1,7 @@
 package de.propra.splitter.persistence.data;
 
-public record TransaktionData (int transaktionid, int gruppenid, double betrag, String sponsor, String beschreibung){
+import org.springframework.data.annotation.Id;
+
+public record TransaktionData (@Id Integer transaktionid, Integer gruppenid, Double betrag, String sponsor, String beschreibung){
 
 }

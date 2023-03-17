@@ -1,5 +1,7 @@
 package de.propra.splitter.persistence.data;
 
-public record GruppeNutzerData(int gruppenid, String nutzername) {
+import org.springframework.data.annotation.Id;
+
+public record GruppeNutzerData(@Id Integer id, Integer gruppenIntId, String nutzername) {
 
 }

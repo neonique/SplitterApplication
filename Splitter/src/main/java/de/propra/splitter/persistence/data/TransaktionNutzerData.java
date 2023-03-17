@@ -1,5 +1,7 @@
 package de.propra.splitter.persistence.data;
 
-public record TransaktionNutzerData(int transaktionid, String nutzername) {
+import org.springframework.data.annotation.Id;
+
+public record TransaktionNutzerData(@Id Integer transaktionid, String nutzername) {
 
 }
