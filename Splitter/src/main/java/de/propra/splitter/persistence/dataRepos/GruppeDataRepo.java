@@ -5,5 +5,5 @@ import org.springframework.data.repository.CrudRepository;
 public interface GruppeDataRepo extends CrudRepository<GruppeData, Integer>{
 
 
-
+  GruppeData findByGruppenid(String gruppenid);
 }

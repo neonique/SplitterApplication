@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS gruppe_data
 (
     gruppenid VARCHAR(36),
-    gruppenIntId SERIAL PRIMARY KEY,
+    gruppenintid SERIAL PRIMARY KEY,
     gruppenname VARCHAR(300),
     geschlossen BOOLEAN
     );
@@ -11,15 +11,15 @@ CREATE TABLE IF NOT EXISTS transaktion_data
     betrag NUMERIC(8,2) NOT NULL,
     sponsor VARCHAR(300),
     beschreibung VARCHAR(300),
-    gruppenIntId INTEGER,
-    FOREIGN KEY (gruppenIntId) REFERENCES gruppe_data(gruppenIntId)
+    gruppenintid INTEGER,
+    FOREIGN KEY (gruppenintid) REFERENCES gruppe_data(gruppenintid)
     );
 CREATE TABLE IF NOT EXISTS gruppe_nutzer_relation
 (
     id SERIAL PRIMARY KEY,
-    gruppenIntId INTEGER,
+    gruppenintid INTEGER,
     nutzername VARCHAR(300),
-    FOREIGN KEY (gruppenIntId) REFERENCES gruppe_data(gruppenIntId)
+    FOREIGN KEY (gruppenintid) REFERENCES gruppe_data(gruppenintid)
     );
 CREATE TABLE IF NOT EXISTS nutzer_transaktion_relation
 (
