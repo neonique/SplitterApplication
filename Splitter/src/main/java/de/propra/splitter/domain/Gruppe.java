@@ -187,6 +187,22 @@ public class Gruppe {
     return teilnehmer;
   }
 
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Gruppe gruppe = (Gruppe) o;
+    return Objects.equals(id, gruppe.id);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id);
+  }
 }
 
 

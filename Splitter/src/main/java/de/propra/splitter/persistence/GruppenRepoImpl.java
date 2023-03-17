@@ -16,6 +16,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class GruppenRepoImpl implements GruppenRepo {
 
@@ -59,18 +60,21 @@ public class GruppenRepoImpl implements GruppenRepo {
             transaktionNutzerDataRepo.save(transaktionNutzerData);
       }
     }
-
   }
 
   @Override
   public Gruppe load(String id) {
+
     GruppeData gruppeData = gruppeDataRepo.findByGruppenid(id);
-    HashSet<String> teilnehmer = gruppeNutzerDataRepo.findAllByGruppenintid(gruppeData.gruppenintid());
+    HashSet<GruppeNutzerData> teilnehmer = gruppeNutzerDataRepo.findAllByGruppenintid(gruppeData.gruppenintid());
+    Set<String> teilnehmerNamen = teilnehmer.stream().map(t -> t.nutzername()).collect(
+        Collectors.toSet());
+
 
     List<TransaktionDTO> transaktionDTOS = this.getTransaktionen(gruppeData.gruppenintid());
 
     UUID idAsUUID = UUID.fromString(gruppeData.gruppenid());
-    Gruppe gruppe = new Gruppe(gruppeData.geschlossen(), idAsUUID, teilnehmer, transaktionDTOS, gruppeData.gruppenname());
+    Gruppe gruppe = new Gruppe(gruppeData.geschlossen(), idAsUUID, new HashSet<>(teilnehmerNamen), transaktionDTOS, gruppeData.gruppenname());
     return gruppe;
   }
   private List<TransaktionDTO> getTransaktionen(Integer id) {
@@ -88,8 +92,17 @@ public class GruppenRepoImpl implements GruppenRepo {
   @Override
   public Set<Gruppe> nutzerGruppen(String nutzername) {
     return null;
-  }
+    /*
+    HashSet<String> gruppenIds = gruppeNutzerDataRepo.findGruppeNutzerDataBy_nutzername(nutzername);
+    Set<Gruppe> gruppen = new HashSet<>();
+    for (String g : gruppenIds
+    ) {
+      gruppen.add(load(g));
+    }
+    return gruppen;
 
+     */
+  }
   @Override
   public Set<String> gruppeNutzer(String id) {
     return null;
