@@ -29,7 +29,7 @@ public class GruppenRepoImpl implements GruppenRepo {
 
   @Override
   public void save(Gruppe gruppe) {
-    GruppeData data = new GruppeData(gruppe.id(), gruppe.name(), gruppe.isclosed());
+    GruppeData data = new GruppeData(null,gruppe.id(), gruppe.name(), gruppe.isclosed());
     gruppeDataRepo.save(data);
   }
 

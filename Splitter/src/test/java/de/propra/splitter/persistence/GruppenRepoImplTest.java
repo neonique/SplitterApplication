@@ -9,6 +9,7 @@ import de.propra.splitter.service.GruppenRepo;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ import org.springframework.test.context.jdbc.Sql;
 @Sql("/createTable.sql")
 public class GruppenRepoImplTest {
 
-  @MockBean
+  @Autowired
   ApplicationService service;
 
   @Autowired
