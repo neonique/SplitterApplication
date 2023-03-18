@@ -14,14 +14,14 @@ CREATE TABLE IF NOT EXISTS transaktion_data
     gruppenintid INTEGER,
     FOREIGN KEY (gruppenintid) REFERENCES gruppe_data(gruppenintid)
     );
-CREATE TABLE IF NOT EXISTS gruppe_nutzer_relation
+CREATE TABLE IF NOT EXISTS gruppe_nutzer_data
 (
     id SERIAL PRIMARY KEY,
     gruppenintid INTEGER,
     nutzername VARCHAR(300),
     FOREIGN KEY (gruppenintid) REFERENCES gruppe_data(gruppenintid)
     );
-CREATE TABLE IF NOT EXISTS nutzer_transaktion_relation
+CREATE TABLE IF NOT EXISTS transaktion_nutzer_data
 (
     id SERIAL PRIMARY KEY,
     nutzername VARCHAR(300),

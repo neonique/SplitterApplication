@@ -17,7 +17,7 @@ public class ApplicationService {
 
   private GruppenRepo gruppenRepo;
 
-  public ApplicationService(@Qualifier("session") GruppenRepo gruppenRepo){
+  public ApplicationService(@Qualifier("postgresql") GruppenRepo gruppenRepo){
     this.gruppenRepo = gruppenRepo;
   }
   public String addGruppe(String gruppenName, String nutzerName){
