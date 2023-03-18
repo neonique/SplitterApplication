@@ -2,17 +2,17 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title th:text="${gruppenName}"> Gruppe</title>
+  <title th:text="${gruppenName}">Gruppe</title>
 </head>
 <body>
 
-<h1 th:text="${gruppenName}"> Gruppe</h1>
+<h1 th:text="${gruppenName}">Gruppe</h1>
 
 
 
 <h2>Teilnehmer</h2>
 <form method="post" th:action="@{/gruppe/neuerNutzer}" th:if="${ !hasTransaktionen && !geschlossen}">
-  <label for="textid">Neuen Nutzer hinzufuegen:</label>
+  <label for="textid">Neuen Nutzer hinzufügen:</label>
   <input id="textid" type="text" th:name="neuerNutzer">
   <input  type="hidden" th:value="${gruppenid}" th:name="gruppenid" >
   <button type="submit" class="listbutton">Hinzufügen</button>
@@ -62,7 +62,7 @@
 </form>
 
 
-<a href="/alleGruppen" th:href="@{/alleGruppen}">zurück zur Gruppenubersicht</a>
+<a href="/alleGruppen" th:href="@{/alleGruppen}">Zurück zur Gruppenübersicht</a>
 
 </body>
 </html>

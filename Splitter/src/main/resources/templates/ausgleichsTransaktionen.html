@@ -9,19 +9,25 @@
 <table>
   <tr>
     <th>Schuldner</th>
-    <th>notige Transaktionen</th>
+    <th>Notwendige Transaktion zum Ausgleich</th>
   </tr>
   <tr th:each="schuldner : ${notwendigeTransaktionen}" >
-    <td th:text="${schuldner.getKey()}" >schuldner</td>
+    <td th:text="${schuldner.getKey()}" >Schuldner</td>
     <td >
       <ul>
         <li th:each="schuldner : ${schuldner.getValue()}">
           <span th:text="${schuldner.getKey()}">Schuldner</span>
-          <span th:text="${(#numbers.formatDecimal(schuldner.getValue(), 1, 'POINT', 2, 'COMMA')) + '€'}">Betrage</span>
+          <span th:text="${(#numbers.formatDecimal(schuldner.getValue(), 1, 'POINT', 2, 'COMMA')) + '€'}">Beträge</span>
         </li>
       </ul>
     </td>
   </tr>
 </table>
+
+<form method="get" th:action="@{/gruppe/auswahl}">
+  <input  type="hidden" th:value="${gruppenid}" th:name="gruppenid" >
+  <button type="submit" class="listbutton">Zurück zur Gruppe</button>
+</form>
+
 </body>
 </html>

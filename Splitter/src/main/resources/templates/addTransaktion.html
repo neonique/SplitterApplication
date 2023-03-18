@@ -38,7 +38,12 @@
   </br>
 
   <button type="submit">Transaktion hinzufügen</button>
-
 </form>
+
+<form method="get" th:action="@{/gruppe/auswahl}">
+  <input  type="hidden" th:value="${gruppenid}" th:name="gruppenid" >
+  <button type="submit" class="listbutton">Zurück zur Gruppe</button>
+</form>
+
 </body>
 </html>
