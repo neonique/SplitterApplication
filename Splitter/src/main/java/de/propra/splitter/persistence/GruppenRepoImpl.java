@@ -38,9 +38,15 @@ public class GruppenRepoImpl implements GruppenRepo {
 
   @Override
   public void save(Gruppe gruppe) {
+    //gruppeintid aus datenbank ziehen, falls sie existiert
+    GruppeData gruppeData = gruppeDataRepo.findByGruppenid(gruppe.id());
+    Integer id = null;
+
+    if(gruppeData != null) {
+      id = gruppeData.gruppenintid();
+    }
     //Speichert Grundlegende Gruppendaten
-    GruppeData gruppeData = new GruppeData(null,
-        gruppe.id(), gruppe.name(), gruppe.isclosed());
+    gruppeData = new GruppeData(id, gruppe.id(), gruppe.name(), gruppe.isclosed());
     gruppeData = gruppeDataRepo.save(gruppeData);
 
     //Speichere Nutzer mit DatenbankId

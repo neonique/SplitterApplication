@@ -30,6 +30,8 @@ public class TestGruppenRepoImpl {
 
 
   @Autowired
+  ApplicationService service;
+  @Autowired
   GruppeDataRepo gruppeDataRepo;
   @Autowired
   GruppeNutzerDataRepo gruppeNutzerDataRepo;
@@ -84,7 +86,7 @@ public class TestGruppenRepoImpl {
     assertThat(nutzerGruppen).contains(gruppe1, gruppe2);
 
   }
-/*
+
   @Test
   @DisplayName("gruppeNutzer gibt alle teilnehmer der Gruppe zurück")
   public void test_04() {
@@ -129,7 +131,7 @@ public class TestGruppenRepoImpl {
     assertThat(gruppenRepo.isClosed(id)).isTrue();
 
   }
-*/
+
   @Test
   @DisplayName("getName übergibt korrekt den gruppennamen")
   public void test_07() {
