@@ -21,9 +21,9 @@ public class Gruppe {
   public Gruppe(boolean geschlossen, UUID id, HashSet<String> teilnehmerNamen,
       List<TransaktionDTO> transaktionenDtos, String name) {
 
-    HashSet<Nutzer> teilnehmer = getNutzers(teilnehmerNamen);
+    HashSet<Nutzer> teilnehmer = getNutzer(teilnehmerNamen);
 
-    List<Transaktion> transaktionen = getTransaktions(
+    List<Transaktion> transaktionen = getTransaktionen(
         transaktionenDtos);
 
     this.geschlossen = geschlossen;
@@ -118,7 +118,7 @@ public class Gruppe {
   public List<TransaktionDTO> getTransaktionenDetails() {
       List<TransaktionDTO> transaktionDTOS = transaktionen
           .stream()
-          .map(t -> new TransaktionDTO(t.sponsor().name(), t.bettler()
+          .map(t -> new TransaktionDTO(t.id(), t.sponsor().name(), t.bettler()
               .stream()
               .map(b -> b.name())
               .collect(Collectors.toSet()), t.betrag().getNumberStripped().doubleValue(), t.grund()))
@@ -161,23 +161,22 @@ public class Gruppe {
     return true;
   }
 
-  private List<Transaktion> getTransaktions(List<TransaktionDTO> transaktionenDtos) {
+  private List<Transaktion> getTransaktionen(List<TransaktionDTO> transaktionenDtos) {
     List<Transaktion> transaktionen = new ArrayList<>();
 
-    for (TransaktionDTO dto: transaktionenDtos
-    ) {
+    for (TransaktionDTO dto: transaktionenDtos) {
       Nutzer nutzer = new Nutzer(dto.sponsor());
       Set<Nutzer> bettler = new HashSet<>();
       for (String b: dto.bettler()
       ) {
         bettler.add(new Nutzer(b));
       }
-      transaktionen.add(new Transaktion(nutzer, bettler, Money.of(dto.betrag(), "EUR"), dto.grund()));
+      transaktionen.add(new Transaktion(dto.id(), nutzer, bettler, Money.of(dto.betrag(), "EUR"), dto.grund()));
     }
     return transaktionen;
   }
 
-  private HashSet<Nutzer> getNutzers(HashSet<String> teilnehmerNamen) {
+  private HashSet<Nutzer> getNutzer(HashSet<String> teilnehmerNamen) {
     HashSet<Nutzer> teilnehmer = new HashSet<>();
 
     for (String t: teilnehmerNamen
