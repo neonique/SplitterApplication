@@ -6,9 +6,9 @@
 
 == Organisatorisches
 
-Die finden die URL für das Webex System auf http://propra.de/ws2223/ab899545cb7e0df[dieser Seite]. Wir hoffen, dass die Webex-URL über das ganze Praktikum über gleich bleibt, können aber nicht ausschließen, dass es Änderungen geben muss. 
+Die finden die URL für das Webex System auf http://propra.de/ws2223/ab899545cb7e0df[dieser Seite]. Wir hoffen, dass die Webex-URL über das ganze Praktikum über gleich bleibt, können aber nicht ausschließen, dass es Änderungen geben muss.
 
-Wenn es wichtige Ankündigungen zum Praktikum gibt, werden wir diese sowohl im Diskussionsforum als auch auf der URL Seite online stellen. 
+Wenn es wichtige Ankündigungen zum Praktikum gibt, werden wir diese sowohl im Diskussionsforum als auch auf der URL Seite online stellen.
 
 IMPORTANT: Verwenden Sie in Webex als Display-Name Ihren Namen und in Klammern dahinter das GitHub-Login. Beispiel: `William Bruce Rose (axl62)`.
 
@@ -20,13 +20,13 @@ Die Beschreibung der Aufgabe finden Sie in link:aufgabe.adoc[diesem Dokument].
 
 === Ergänzungen zur Aufgabenstellung
 
-Es gibt zwei geplante Ergänzungen zur Aufgabenstellung. Sie erhalten die erste Ergänzung (Beschreibung von Testszenarien) am 02.03.2023 vor Beginn der Praktikumszeit. Die zweite Ergänzung (Einbau einer neuen Funktionalität) erhalten Sie am 08.03.2023 vor Beginn der Praktikumszeit. 
+Es gibt zwei geplante Ergänzungen zur Aufgabenstellung. Sie erhalten die erste Ergänzung (Beschreibung von Testszenarien) am 02.03.2023 vor Beginn der Praktikumszeit. Die zweite Ergänzung (Einbau einer neuen Funktionalität) erhalten Sie am 08.03.2023 vor Beginn der Praktikumszeit.
 
-Die Ergänzungsaufgaben werden wir auf der http://propra.de/ws2223/ab899545cb7e0df[URL Seite] verlinken. 
+Die Ergänzungsaufgaben werden wir auf der http://propra.de/ws2223/ab899545cb7e0df[URL Seite] verlinken.
 
-=== Deadlines 
+=== Deadlines
 
-Wir beginnen mit einer Teilbegutachtung der Anwendung am 14.03.2023 ab 13:00 Uhr. Zu diesem Zeitpunkt muss die Anwendung bis auf die Persistenz fertig sein. Die komplette Anwendung muss am 17.03.2023 um 13:00 Uhr fertiggestellt sein. 
+Wir beginnen mit einer Teilbegutachtung der Anwendung am 14.03.2023 ab 13:00 Uhr. Zu diesem Zeitpunkt muss die Anwendung bis auf die Persistenz fertig sein. Die komplette Anwendung muss am 17.03.2023 um 13:00 Uhr fertiggestellt sein.
 
 == Fragen und Hilfestellungen
 
@@ -36,13 +36,13 @@ Für Fragen gibt es zum einen die Diskussionsforen, die Sie unbedingt bei Fragen
 * Für Fragen zur Aufgabenstellung haben wir ein neues Forum https://github.com/hhu-propra2-ws22/Organisation/discussions/categories/fragen-zur-aufgabestellung[Fragen zur Aufgabenstellung] erstellt.
 * Wenn Sie Fragen zum Stoff der Vorlesung haben, stellen Sie diese bitte weiterhin im Forum https://github.com/hhu-propra2-ws22/Organisation/discussions/categories/fachliche-fragen[Fachliche Fragen]
 
-Außerdem werden Sie von unseren Tutor:innen regelmäßig besucht und haben dort ebenfalls die Gelegenheit, Fragen zu stellen. Kristin, Leonie und Jens kommen Sie auch gelegentlich besuchen oder helfen aus, wenn besonders schwierige Fragen auftreten sollten. 
+Außerdem werden Sie von unseren Tutor:innen regelmäßig besucht und haben dort ebenfalls die Gelegenheit, Fragen zu stellen. Kristin, Leonie und Jens kommen Sie auch gelegentlich besuchen oder helfen aus, wenn besonders schwierige Fragen auftreten sollten.
 
-Bei Fragen, die Sie selber persönlich betreffen (zum Beispiel bei Krankmeldungen), wenden Sie sich bitte per Mail an mailto:propra@cs.hhu.de[propra@cs.hhu.de]. Stellen Sie dort bitte keine Fragen, die auch in den Foren geklärt werden könnten. 
+Bei Fragen, die Sie selber persönlich betreffen (zum Beispiel bei Krankmeldungen), wenden Sie sich bitte per Mail an mailto:propra@cs.hhu.de[propra@cs.hhu.de]. Stellen Sie dort bitte keine Fragen, die auch in den Foren geklärt werden könnten.
 
 == Verhaltensregeln
 
-Wir erwarten von Ihnen einen respektvollen Umgang miteinander. Es gilt grundsätzlich bei uns der https://berlincodeofconduct.org/de/[Berlin Code of Conduct]. Die Tutor:innen haben die Aufgabe, die Einhaltung der Regeln zu überwachen und können bei Verstößen gegen den Verhaltenskodex Personen aus dem Praktikum ausschließen. Ein Praktikumsausschluss hat zur Folge, dass Sie das Modul in diesem Semester nicht mehr abschließen können. 
+Wir erwarten von Ihnen einen respektvollen Umgang miteinander. Es gilt grundsätzlich bei uns der https://berlincodeofconduct.org/de/[Berlin Code of Conduct]. Die Tutor:innen haben die Aufgabe, die Einhaltung der Regeln zu überwachen und können bei Verstößen gegen den Verhaltenskodex Personen aus dem Praktikum ausschließen. Ein Praktikumsausschluss hat zur Folge, dass Sie das Modul in diesem Semester nicht mehr abschließen können.
 
 = Dokumentation
 :icons: font
@@ -52,12 +52,22 @@ Wir erwarten von Ihnen einen respektvollen Umgang miteinander. Es gilt grundsät
 
 == A.Nutzungsanweisung
 
-Zuerst klonen Sie sich das Repository von GitHub. Dann erstellen Sie eine neue OAuth App über GitHub. Dazu folgen Sie folgende Schritte:
-Profil->Settings->Developer Settings->OAuth Apps->Registrieren der Application
+Zuerst klonen Sie sich das Repository von GitHub. Dann erstellen Sie eine neue OAuth-App über GitHub. Dazu folgen Sie folgenden Schritten:
+Profil -> Settings -> Developer Settings -> OAuth Apps -> New Oauth App
 
-Als Application Name verwenden Sie Splitter. Die Url, sowie Callback Url lauten http://localhost:9000/
-Dann können Sie die Application registrieren. Nun müssen Sie die Client ID kopieren, sowie ein Client Secret generieren als auch speichern.
-Nun können Sie die Anwendung in ihrem Terminal in Splitter starten über ./gradlew bootRun --args='--CLIENT_ID=[client_id]--CLIENT_SECRET=[client_secret]' (mit [client_id],[client_secret] ersetzt durch Ihre Client ID/ Client SECRET)
+Als Application Name verwenden Sie "Splitter". Die Url, sowie Callback URL lauten "http://localhost:9000/"
+Dann können Sie die Application registrieren. Nun müssen Sie die Client-ID kopieren, sowie ein Client-Secret generieren als auch speichern.
+
+Navigieren Sie in den Ordner "projekt_gruppe39/Splitter" und öffnen sie die Datei "docker-compose.yaml" mit einem Editor Ihrer Wahl. 
+Tragen Sie Ihre vorher generierten Client-ID und Client-Secret in die Umgebungsvariablen "CLIENT_ID", sowie "CLIENT SECRET" ein und speichern Sie die Datei.
+Öffnen Sie ein Terminal im gleichen Ordner und führen Sie folgende Befehle in gleicher Reihenfolge aus (Docker sollte bereits gestartet sein):
+
+* "docker network create splitter"
+* "docker build -t splitter ."
+* "docker-compose up"
+
+Wenn Sie alles richtig gemacht haben, sollten sowohl Anwendung, als auch Datenbank in einem virtuellen Netzwerk gestartet worden sein.
+Die Anwendung ist im Browser unter der URL "http://localhost:9000/" erreichbar.
 
 == B:Arch42
 
