@@ -63,7 +63,7 @@ public class GruppenRepoImpl implements GruppenRepo {
           transaktionData = transaktionDataRepo.save(transaktionData);
 
       for (String bettler : transaktionenDetail.bettler()) {
-        TransaktionNutzerData transaktionNutzerData = new TransaktionNutzerData(
+        TransaktionNutzerData transaktionNutzerData = new TransaktionNutzerData(null,
             transaktionData.transaktionid(), bettler);
             transaktionNutzerDataRepo.save(transaktionNutzerData);
       }
@@ -121,7 +121,11 @@ public class GruppenRepoImpl implements GruppenRepo {
     List<TransaktionData> transaktionData = transaktionDataRepo.findAllByGruppenintid(intId);
     List<TransaktionDTO> transaktionDTOS = new ArrayList<>();
     for (TransaktionData transaktion:transaktionData) {
-      Set<String> bettler = transaktionNutzerDataRepo.findAllBettlerByTransaktionid(transaktion.transaktionid());
+      Set<String> bettler = transaktionNutzerDataRepo
+          .findAllByTransaktionid(transaktion.transaktionid())
+          .stream()
+          .map(t -> t.nutzername())
+          .collect(Collectors.toSet());
       TransaktionDTO transaktionDTO = new TransaktionDTO(transaktion.sponsor(), bettler,
           transaktion.betrag(), transaktion.beschreibung());
       transaktionDTOS.add(transaktionDTO);
