@@ -55,7 +55,8 @@ public final class TransaktionDTO {
     if (obj == null || obj.getClass() != this.getClass())
       return false;
     var that = (TransaktionDTO) obj;
-    return Objects.equals(this.sponsor, that.sponsor) &&
+    return Objects.equals(this.betrag, that.betrag) &&
+        Objects.equals(this.sponsor, that.sponsor) &&
         Objects.equals(this.bettler, that.bettler) &&
         Double.doubleToLongBits(this.betrag) == Double.doubleToLongBits(that.betrag) &&
         Objects.equals(this.grund, that.grund);

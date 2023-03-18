@@ -82,7 +82,8 @@ public final class Transaktion {
     if (obj == null || obj.getClass() != this.getClass())
       return false;
     var that = (Transaktion) obj;
-    return Objects.equals(this.sponsor, that.sponsor) &&
+    return Objects.equals(this.id, that.id) &&
+        Objects.equals(this.sponsor, that.sponsor) &&
         Objects.equals(this.bettler, that.bettler) &&
         Objects.equals(this.betrag, that.betrag) &&
         Objects.equals(this.grund, that.grund);
