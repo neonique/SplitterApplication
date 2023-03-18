@@ -91,17 +91,20 @@ public class GruppenRepoImpl implements GruppenRepo {
   }
   @Override
   public Set<Gruppe> nutzerGruppen(String nutzername) {
-    return null;
-    /*
-    HashSet<String> gruppenIds = gruppeNutzerDataRepo.findGruppeNutzerDataBy_nutzername(nutzername);
-    Set<Gruppe> gruppen = new HashSet<>();
-    for (String g : gruppenIds
-    ) {
-      gruppen.add(load(g));
-    }
+
+    HashSet<GruppeNutzerData> gruppenIntIds = gruppeNutzerDataRepo.findAllByNutzername(nutzername);
+    Set<String > gruppenIds = gruppenIntIds
+        .stream()
+        .map(i -> gruppeDataRepo.findByGruppenintid(i.gruppenintid()).gruppenid())
+        .collect(Collectors.toSet());
+
+    Set<Gruppe> gruppen = gruppenIds
+        .stream()
+        .map(i -> this.load(i))
+        .collect(Collectors.toSet());
+
     return gruppen;
 
-     */
   }
   @Override
   public Set<String> gruppeNutzer(String id) {
