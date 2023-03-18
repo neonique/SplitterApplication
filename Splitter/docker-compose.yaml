@@ -24,6 +24,8 @@ services:
       - "CLIENT_SECRET="
     networks:
       - "splitter"
+    depends_on:
+      - "database"
 networks:
   splitter:
     external: true

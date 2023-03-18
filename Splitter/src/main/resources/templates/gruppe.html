@@ -13,7 +13,7 @@
 <h2>Teilnehmer</h2>
 <form method="post" th:action="@{/gruppe/neuerNutzer}" th:if="${ !hasTransaktionen && !geschlossen}">
   <label for="textid">Neuen Nutzer hinzufügen:</label>
-  <input id="textid" type="text" th:name="neuerNutzer">
+  <input id="textid" type="text" th:name="neuerNutzer" maxlength="100">
   <input  type="hidden" th:value="${gruppenid}" th:name="gruppenid" >
   <button type="submit" class="listbutton">Hinzufügen</button>
 </form>
