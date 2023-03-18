@@ -163,7 +163,7 @@ public class SplitterController {
     return "redirect:/neueTransaktion";
   }
   @GetMapping("/neueTransaktion")
-  public String addTransaktion(Model m,OAuth2AuthenticationToken auth){
+  public String addTransaktion(Model m,OAuth2AuthenticationToken auth, RedirectAttributes attrs){
     String gruppenid = (String) m.getAttribute("gruppenid");
 
     if(gruppenid == null){
