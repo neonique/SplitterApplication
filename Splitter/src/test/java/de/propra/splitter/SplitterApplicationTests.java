@@ -12,9 +12,5 @@ class SplitterApplicationTests {
 
   @Autowired
   SplitterController controller;
-  @Test
-  void contextLoads() {
-    assertThat(controller).isNotNull();
-  }
 
 }

@@ -75,7 +75,6 @@ public class TestApiController {
         personen);
 
     String jsonGruppe = new ObjectMapper().writeValueAsString(gruppe);
-    System.out.println(jsonGruppe);
     String id = UUID.randomUUID().toString();
     when(applicationService.addGruppe(any(), any())).thenReturn(id);
 
@@ -93,7 +92,6 @@ public class TestApiController {
         personen);
 
     String jsonGruppe = new ObjectMapper().writeValueAsString(gruppe);
-    System.out.println(jsonGruppe);
     String id = UUID.randomUUID().toString();
     when(applicationService.addGruppe(any(), any())).thenReturn(id);
 
@@ -111,7 +109,6 @@ public class TestApiController {
         personen);
 
     String jsonGruppe = new ObjectMapper().writeValueAsString(gruppe);
-    System.out.println(jsonGruppe);
     String id = UUID.randomUUID().toString();
     when(applicationService.addGruppe(any(), any())).thenReturn(id);
 
@@ -129,7 +126,6 @@ public class TestApiController {
         personen);
 
     String jsonGruppe = new ObjectMapper().writeValueAsString(gruppe);
-    System.out.println(jsonGruppe);
     String id = UUID.randomUUID().toString();
     when(applicationService.addGruppe(any(), any())).thenReturn(id);
 
@@ -146,7 +142,6 @@ public class TestApiController {
         null);
 
     String jsonGruppe = new ObjectMapper().writeValueAsString(gruppe);
-    System.out.println(jsonGruppe);
     String id = UUID.randomUUID().toString();
     when(applicationService.addGruppe(any(), any())).thenReturn(id);
 

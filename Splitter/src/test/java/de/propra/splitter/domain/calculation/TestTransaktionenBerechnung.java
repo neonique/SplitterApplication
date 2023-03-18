@@ -179,8 +179,6 @@ public class TestTransaktionenBerechnung {
 
     HashMap<String, HashMap<String, String>> balance = group.notwendigeTransaktionen();
 
-    balance.forEach((u,b) -> System.out.println(u + "pays: " + b.toString()));
-
     //Assert for Minimal
     Entry<String, String> entry1 = Map.entry(user1, "EUR 40");
     Entry<String, String> entry2 = Map.entry(user1, "EUR 40");
