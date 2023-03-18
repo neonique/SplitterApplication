@@ -58,8 +58,13 @@ Profil -> Settings -> Developer Settings -> OAuth Apps -> New Oauth App
 Als Application Name verwenden Sie "Splitter". Die Url, sowie Callback URL lauten "http://localhost:9000/"
 Dann können Sie die Application registrieren. Nun müssen Sie die Client-ID kopieren, sowie ein Client-Secret generieren als auch speichern.
 
-Navigieren Sie in den Ordner "projekt_gruppe39/Splitter" und öffnen sie die Datei "docker-compose.yaml" mit einem Editor Ihrer Wahl. 
+Navigieren Sie in den Ordner "projekt_gruppe39/Splitter" und öffnen sie die Datei "docker-compose.yaml" mit einem Editor Ihrer Wahl.
 Tragen Sie Ihre vorher generierten Client-ID und Client-Secret in die Umgebungsvariablen "CLIENT_ID", sowie "CLIENT SECRET" ein und speichern Sie die Datei.
+
+*Optional*: Falls Sie Nutzername und Passwort für die Datenbank verändern wollen (für Demobetrieb nicht notwendig) geht das auch in der "docker-compose.yaml".
+Dazu die Umgebungsvariablen "POSTGRES_USER" und "DB_USER" zu ihrem Custom-Nutzernamen, sowie "POSTGRES_PASSWORD" und "DB_PASSWORD" zu ihrem Custom-Passwort.
+Falls Sie zu einem späteren Zeitpunkt Nutzername oder Passwort ändern wollen, müssen Sie dies auf eine andere Weise erledigen oder das Image löschen und neu erzeugen lassen.
+
 Öffnen Sie ein Terminal im gleichen Ordner und führen Sie folgende Befehle in gleicher Reihenfolge aus (Docker sollte bereits gestartet sein):
 
 * "docker network create splitter"
