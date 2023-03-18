@@ -118,12 +118,12 @@ public class GruppenRepoImpl implements GruppenRepo {
 
   @Override
   public boolean isClosed(String id) {
-    return false;
+    return gruppeDataRepo.findByGruppenid(id).geschlossen();
   }
 
   @Override
   public String getName(String id) {
-    return null;
+    return gruppeDataRepo.findByGruppenid(id).gruppenname();
   }
 
   @Override

@@ -137,7 +137,7 @@ public class TestGruppenRepoImpl {
     gruppenRepo.save(gruppe1);
     String id = gruppe1.id();
 
-    assertThat(gruppenRepo.getName(id)).isEqualTo("jeder");
+    assertThat(gruppenRepo.getName(id)).isEqualTo("überfordert");
 
   }
 
