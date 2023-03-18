@@ -71,24 +71,13 @@ public class GruppenRepoImpl implements GruppenRepo {
         Collectors.toSet());
 
 
-    List<TransaktionDTO> transaktionDTOS = this.getTransaktionen(gruppeData.gruppenintid());
+    List<TransaktionDTO> transaktionDTOS = this.gruppeTransaktionen(id);
 
     UUID idAsUUID = UUID.fromString(gruppeData.gruppenid());
     Gruppe gruppe = new Gruppe(gruppeData.geschlossen(), idAsUUID, new HashSet<>(teilnehmerNamen), transaktionDTOS, gruppeData.gruppenname());
     return gruppe;
   }
-  private List<TransaktionDTO> getTransaktionen(Integer id) {
 
-    List<TransaktionData> transaktionData = transaktionDataRepo.findAllByGruppenintid(id);
-    List<TransaktionDTO> transaktionDTOS = new ArrayList<>();
-    for (TransaktionData transaktion:transaktionData) {
-      Set<String> bettler = transaktionNutzerDataRepo.findAllBettlerByTransaktionid(transaktion.transaktionid());
-      TransaktionDTO transaktionDTO = new TransaktionDTO(transaktion.sponsor(), bettler,
-          transaktion.betrag(), transaktion.beschreibung());
-      transaktionDTOS.add(transaktionDTO);
-    }
-    return transaktionDTOS;
-  }
   @Override
   public Set<Gruppe> nutzerGruppen(String nutzername) {
 
@@ -108,12 +97,28 @@ public class GruppenRepoImpl implements GruppenRepo {
   }
   @Override
   public Set<String> gruppeNutzer(String id) {
-    return null;
+    GruppeData gruppeData = gruppeDataRepo.findByGruppenid(id);
+    HashSet<GruppeNutzerData> teilnehmer = gruppeNutzerDataRepo.findAllByGruppenintid(gruppeData.gruppenintid());
+    Set<String> teilnehmerNamen = teilnehmer.stream().map(t -> t.nutzername()).collect(
+        Collectors.toSet());
+    return teilnehmerNamen;
   }
 
   @Override
   public List<TransaktionDTO> gruppeTransaktionen(String id) {
-    return null;
+
+    GruppeData gruppeData = gruppeDataRepo.findByGruppenid(id);
+    Integer intId = gruppeData.gruppenintid();
+
+    List<TransaktionData> transaktionData = transaktionDataRepo.findAllByGruppenintid(intId);
+    List<TransaktionDTO> transaktionDTOS = new ArrayList<>();
+    for (TransaktionData transaktion:transaktionData) {
+      Set<String> bettler = transaktionNutzerDataRepo.findAllBettlerByTransaktionid(transaktion.transaktionid());
+      TransaktionDTO transaktionDTO = new TransaktionDTO(transaktion.sponsor(), bettler,
+          transaktion.betrag(), transaktion.beschreibung());
+      transaktionDTOS.add(transaktionDTO);
+    }
+    return transaktionDTOS;
   }
 
   @Override
