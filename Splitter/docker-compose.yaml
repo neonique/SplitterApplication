@@ -17,7 +17,6 @@ services:
     ports:
       - "9000:9000"
     environment:
-      - "POSTGRES_DB=SplitterDb"
       - "DB_USER=user"
       - "DB_PASSWORD=password"
       - "CLIENT_ID="
