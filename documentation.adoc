@@ -51,7 +51,7 @@ Eine genaue Beschreibung der Aufgabe finden Sie in link:aufgabe.adoc[diesem Doku
 * Das Team entwickel, solange zeitlich gegeben, im Mob
 
 == Kontextabgrenzung
-Die Kontextabgrenzung ist in einem Diagramm festgehalten. 
+Die Kontextabgrenzung ist in einem Diagramm festgehalten.
 
 image::Kontextdiagramm.png[]
 
@@ -70,7 +70,7 @@ Folgende Entscheidungen wurden getroffen um die geforderten Qualitätsziele zu e
 * *Zeitplan:*
 - *Erste Woche:* Entwicklung der Domänenlogik
 - *Zweite Woche:* Weitestgehend vollständiger Funktionsumfang und Nutzer-Schnittstelle
-- *Dritte Woche:* Entwicklung der REST-API, Implementation des Persistance-Layers 
+- *Dritte Woche:* Entwicklung der REST-API, Implementation des Persistance-Layers
 
 
 
@@ -84,8 +84,8 @@ Folgende Entscheidungen wurden getroffen um die geforderten Qualitätsziele zu e
 
 ==== Architektur
 * Die Architektur wurde als Onion-Architektur vorgegeben.
-* Wir haben uns für eine AggregateRoot entschieden, die als Schnittstelle zwischen Domain- und Servicelayer fungiert. 
-* Es gibt keine Domain-Services. 
+* Wir haben uns für eine AggregateRoot entschieden, die als Schnittstelle zwischen Domain- und Servicelayer fungiert.
+* Es gibt keine Domain-Services.
 * Zur Sicherstellung der Architektur haben wir einene Stereotype eingeführt.
 
 
@@ -112,17 +112,3 @@ Folgende Entscheidungen wurden getroffen um die geforderten Qualitätsziele zu e
 * *GRUPPE* - Eine Menge an NUTZERN und dazugehörigen TRANSAKTIONEN
 
 * *NOTWENDIGE TRANSAKTIONEN* - Menge an Einzelüberweisungen, die getätigt werden müssen um alle Auslagen in einer GRUPPE auszugleichen
-
-
-
-
-
-
-
-
-
-
-
-
-
-
