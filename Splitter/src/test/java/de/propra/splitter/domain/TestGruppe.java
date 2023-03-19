@@ -1,7 +1,11 @@
 package de.propra.splitter.domain;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.UUID;
+import org.javamoney.moneta.Money;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,8 +19,6 @@ public class TestGruppe {
   private void nutzerZuruecksetzen(){
     nutzer = "Moaz";
   }
-
-
 
   @Test()
   @DisplayName("erstelle Gruppe und fuege teilnehmer hinzu")
@@ -226,6 +228,58 @@ public class TestGruppe {
     });
 
     assertThat("Transaktionen muessen Bettler haben").isEqualTo(thrown.getMessage());
+  }
+
+  @Test()
+  @DisplayName("Gruppe lässt sich über ein datenset aus der datenbank erstellen")
+  void test_14(){
+    HashSet<String> teilnehmer = new HashSet<>();
+    teilnehmer.addAll(Set.of("me", "you", "notyou"));
+    Set<String> bettler = Set.of("me", "you");
+    TransaktionDTO dto = new TransaktionDTO("me", bettler, 2.5, "because");
+    List<TransaktionDTO> transaktionDTOS = new ArrayList<>();
+    transaktionDTOS.add(dto);
+    UUID id = UUID.randomUUID();
+
+    Gruppe gruppe = new Gruppe(false, id, teilnehmer, transaktionDTOS, "gruppe");
+
+    assertThat(gruppe.isclosed()).isFalse();
+    assertThat(gruppe.id()).isEqualTo(id.toString());
+    assertThat(gruppe.name()).isEqualTo("gruppe");
+    assertThat(gruppe.teilnehmer())
+        .containsExactlyInAnyOrder(new Nutzer("me"), new Nutzer("you"), new Nutzer("notyou"));
+    assertThat(gruppe.getTransaktionenDetails()).containsExactly(dto);
+
+  }
+
+  @Test()
+  @DisplayName("transaktionen werden richtig gespeichert und zurück gegeben")
+  void test_15(){
+    HashSet<String> teilnehmer = new HashSet<>();
+    teilnehmer.addAll(Set.of("me", "you", "notyou"));
+    Set<String> bettler = Set.of("me", "you");
+    TransaktionDTO dto = new TransaktionDTO("me", bettler, 2.5, "because");
+    List<TransaktionDTO> transaktionDTOS = new ArrayList<>();
+    transaktionDTOS.add(dto);
+    UUID id = UUID.randomUUID();
+
+    Gruppe gruppe = new Gruppe(false, id, teilnehmer, transaktionDTOS, "gruppe");
+    Transaktion transaktion = new Transaktion(new Nutzer("me"), Set.of(new Nutzer("me"), new Nutzer("you")),
+        Money.of(2.5, "EUR"), "because");
+
+    assertThat(gruppe.transaktionen()).containsExactly(transaktion);
+
+  }
+
+  @Test()
+  @DisplayName("containsNutzer funktioniert")
+  void test_16(){
+    Gruppe gruppe = new Gruppe(Set.of("me", "you", "notyou"));
+
+    assertThat(gruppe.containsNutzer("me"));
+    assertThat(gruppe.containsNutzer("you"));
+    assertThat(gruppe.containsNutzer("notyou"));
+
   }
 
 
