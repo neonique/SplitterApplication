@@ -38,26 +38,32 @@ public class GruppenRepoImpl implements GruppenRepo {
 
   @Override
   public void save(Gruppe gruppe) {
-    //gruppeintid aus datenbank ziehen, falls sie existiert
+
     GruppeData gruppeData = gruppeDataRepo.findByGruppenid(gruppe.id());
     Integer id = null;
 
     if(gruppeData != null) {
       id = gruppeData.gruppenintid();
     }
-    //Speichert Grundlegende Gruppendaten
+
     gruppeData = new GruppeData(id, gruppe.id(), gruppe.name(), gruppe.isclosed());
     gruppeData = gruppeDataRepo.save(gruppeData);
 
-    //Speichere Nutzer mit DatenbankId
+    saveGruppeNutzerData(gruppe, gruppeData);
+
+    saveTransaktionenNutzerData(gruppe, gruppeData);
+  }
+
+  private void saveGruppeNutzerData(Gruppe gruppe, GruppeData gruppeData) {
     for (String teilnehmerName : gruppe.getTeilnehmerNamen()) {
       GruppeNutzerData gruppeNutzerData = new GruppeNutzerData(null, gruppeData.gruppenintid(),
           teilnehmerName);
       gruppeNutzerDataRepo.save(gruppeNutzerData);
     }
+  }
 
+  private void saveTransaktionenNutzerData(Gruppe gruppe, GruppeData gruppeData) {
     for (TransaktionDTO transaktionenDetail : gruppe.getTransaktionenDetails()) {
-      //Transaktionendaten speichern
       TransaktionData transaktionData = new TransaktionData(transaktionenDetail.id(),
           gruppeData.gruppenintid(), transaktionenDetail.betrag(), transaktionenDetail.sponsor(),
           transaktionenDetail.grund());
@@ -78,7 +84,6 @@ public class GruppenRepoImpl implements GruppenRepo {
     HashSet<GruppeNutzerData> teilnehmer = gruppeNutzerDataRepo.findAllByGruppenintid(gruppeData.gruppenintid());
     Set<String> teilnehmerNamen = teilnehmer.stream().map(t -> t.nutzername()).collect(
         Collectors.toSet());
-
 
     List<TransaktionDTO> transaktionDTOS = this.gruppeTransaktionen(id);
 
@@ -120,8 +125,12 @@ public class GruppenRepoImpl implements GruppenRepo {
     Integer intId = gruppeData.gruppenintid();
 
     List<TransaktionData> transaktionData = transaktionDataRepo.findAllByGruppenintid(intId);
+    return getTransaktionDTOSFromData(transaktionData);
+  }
+
+  private List<TransaktionDTO> getTransaktionDTOSFromData(List<TransaktionData> transaktionData) {
     List<TransaktionDTO> transaktionDTOS = new ArrayList<>();
-    for (TransaktionData transaktion:transaktionData) {
+    for (TransaktionData transaktion: transaktionData) {
       Set<String> bettler = transaktionNutzerDataRepo
           .findAllByTransaktionid(transaktion.transaktionid())
           .stream()
