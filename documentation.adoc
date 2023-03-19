@@ -5,14 +5,14 @@ Dokumentation ProPra2
 == Einführung und Ziele
 
 === Aufgabenstellung
-Aufgabenstellung: „Bei Geld hört die Freundschaft auf” heißt es. Rund um das Geld entstehen oft Probleme zwischen Menschen. Wir wollen uns des Themas annehmen und für Gruppen von Personen, die gemeinsame Ausgaben tätigen (zum Beispiel Wohngemeinschaften und Reisegruppen), eine Software schreiben, mit deren Hilfe die Ausgaben transparent aufgeschlüsselt und die Konten möglichst einfach ausgeglichen werden können.
+Aufgabenstellung: „Bei Geld hört die Freundschaft auf” heißt es. Rund um Geld entstehen oft Probleme zwischen Menschen. Wir wollen uns des Themas annehmen und für Gruppen von Personen, die gemeinsame Ausgaben tätigen (zum Beispiel Wohngemeinschaften und Reisegruppen), eine Software schreiben, mit deren Hilfe die Ausgaben transparent aufgeschlüsselt und die Konten möglichst einfach ausgeglichen werden können.
 
 Eine genaue Beschreibung der Aufgabe finden Sie in link:aufgabe.adoc[diesem Dokument].
 
 === Wesentliche Features
 * Anmeldung über OAuth (mit GitHub-Account)
-* Neue Gruppen erstellen und beteiligte über Nutzername hinzufügen
-* Anlegen neuer Transaktionen und anzeigen der Details (Sponsor, Schuldner, Betrag, Grund)
+* Neue Gruppen erstellen und Beteiligte über Nutzername hinzufügen
+* Anlegen neuer Transaktionen und Anzeigen der Details (Sponsor, Schuldner, Betrag, Grund)
 * Berechnung und Anzeige der notwendigen Transaktionen, die zum Ausgleich der Ausgaben zu tätigen sind
 1. Eine Person darf nie gleichzeitig Geld erhalten und verschicken müssen um die Ausgaben auszugleichen
 2. Zwischen zwei Personen gibt es maximal eine Transaktion und es wird niemals Geld an sich selbst überwiesen
@@ -72,11 +72,8 @@ Folgende Entscheidungen wurden getroffen um die geforderten Qualitätsziele zu e
 - *Zweite Woche:* Weitestgehend vollständiger Funktionsumfang und Nutzer-Schnittstelle
 - *Dritte Woche:* Entwicklung der REST-API, Implementation des Persistance-Layers
 
-
-
-
 === Verteilung
-* Geplant ist, dass für die Ausführung lediglich eine Docker-compose-fähige Umgebung benötigt wird. Nah befüllen einer .env Datei mit benötigten Umgebungsvariablen, soll das System inklusive Datenbank mit "docker-compose up --build" gestartet werden können.
+* Für das Ausführen der Anwendung wird lediglich eine Docker-compose-fähige Umgebung benötigt. Nach befüllen der docker-compose.yaml mit Umgebungsvariablen, soll das System inklusive Datenbank mit wenigen Docker-Commands ausgeführt werden. Eine genaue Beschreibung ist in der README.adoc zu finden
 
 === Entwurfsentscheidungen
 ==== Design der Website und Security
@@ -86,17 +83,44 @@ Folgende Entscheidungen wurden getroffen um die geforderten Qualitätsziele zu e
 * Die Architektur wurde als Onion-Architektur vorgegeben.
 * Wir haben uns für eine AggregateRoot entschieden, die als Schnittstelle zwischen Domain- und Servicelayer fungiert.
 * Es gibt keine Domain-Services.
-* Zur Sicherstellung der Architektur haben wir einene Stereotype eingeführt.
+* Zur Sicherstellung der Architektur haben wir eigene Stereotype eingeführt.
 
+==== Datenbank
+* Es war vorgegeben, dass eine PostgreSQL-Datenbank verwendet wird
+* Wir haben uns dazu entschieden vier Relationen anzulegen
+- *Gruppe* (Integer intID, String stringID, String gruppenname, boolean geschlossen)
+- *GruppeNutzerRelation* (Integer ID, Integer Gruppe.intID, String nutzername)
+- *Transaktion* (Integer ID, Double betrag, String nutzername, String beschreibung, Integer Gruppe.intID)
+- *TransaktionNutzerRealtion* (Integer ID, Integer Transaktion.ID, String nutzername)
+* String nutzername in Transaktion beschreibt den SPONSOR
+* String nutzername in TransaaktionNutzerRelation beschreibt einen BETTLER
+* Attribute (int)ID werden über Datenbank als SERIAL vergeben
+* Gruppe hat zwei IDs, da JDBC keine Strings als IDs, wie ursprünglich geplant, akzeptiert. Das restliche Programm, benötigt jedoch die stringID (UUID). Aus diesem grund, haben wir uns um ein weitreichendes Refactor zu umgehen für diese Variante entschieden.
+* Geldbeträge für eine Auslage sind bis maximal 999.999,99€ gestattet, dies wird auch in der UI überprüft.
+
+=== Laufzeitansicht
+
+image::Laufzeitansicht.png[]
+
+==== Typischer Ablauf 
+Greift ein Nutzer über die UI auf die Anwendung zu, muss dieser sich zuerst über GitHub authentifizieren.
+Möchte der Nutzer nun eine Aktion ausführen, wird seine Anfrage (z.B. Gruppe erstellen, Transaktion hinzufügen) vom Controller bearbeitet. Dieser überprüft, ob die gegebenden Parameter gültig sind. Falls ja wird auf den Aplication Service verwiesen.
+
+Alternativ kann eine Anfrage über die RestAPI bearbeitet werden. Diese überprüft RequestBody und URL-Parameter. Falls diese ungültig sind, wird mit einem korrespondierender Fehlercode geantwortet. Bei einer gültigen Anfrage, wird auch hier auf den Aplication Service verwiesen.
+
+Der ApplicationService stellt eine Anfrage an die Datenbank um ein Objekt behandelten Gruppe zu erhalten. Falls diese existiert, wird eine Instanz dieser von der Persistenz erstellt und an den ApplicationService weitergegeben. Dieser führt dann die vom Nutzer geforderte Anfrage aus. 
+Bei einem Post wird anschließend das Objekt wieder an die Persistenz gegeben, damit es gespeichert wird. 
+Bei einem Get werden die geladenen Daten an die API oder den WebController zurückgegeben, wo sie angezeigt werden.
 
 == Risiken und technische Schuld
 [cols="1,3" options="header"]
 |===
 |Name | Beschreibung
-| _Konfiguration und Verwaltung des Projekts_ | _Das Entwicklerteam hat keine Erfahrung in der Entwicklung einer Anwendung gegebener Größe._
+| _Konfiguration und Verwaltung des Projekts_ | _Das Entwicklerteam hat keine Erfahrung in der Entwicklung und Wartung einer Anwendung gegebener Größe._
 |_Multiuser-Erfahrung_|_Da wir während der Tests nie mehr als eine Nutzer gleichzeitig aktiv war, fehlt Erfahrung in diesem Bereich. Dadurch kann es zu unvorhergesehenden Fehlern kommen._
-|_Ungesicherte API_|_Die Nutzung er API benötigt keine weitere Autorisierung. Auch wenn dies in der Aufgabenstellung explizit ausgenommen war, birgt es doch ein enormes Sicherheitsrisiko._
-|_Kompromitierung von Nutzerdaten_|_Da der Github-Nutzername zur Identifikation verwendet wird, kann eine Namensänderung schwerwiegende Folgen haben. Es kann zu einem komletten Datenverlust für den Nutzer führen, bzw. könnten unbeteiligte dritte, durch Verwendung des alten GitHub-Nutzernamens des eigentlichen Nutzers, auf dessen Daten zugreifen._
+|_Ungesicherte API_|_Die Nutzung der API benötigt keine weitere Autorisierung. Auch wenn dies in der Aufgabenstellung explizit ausgenommen war, birgt es doch ein enormes Sicherheitsrisiko. Besser wäre hier die Authentifizierung mit Tokens_
+|_Kompromitierung von Nutzerdaten_|_Da der Github-Nutzername zur Identifikation verwendet wird, kann eine Namensänderung schwerwiegende Folgen haben. Es kann zu einem komletten Datenverlust für den Nutzer führen, bzw. könnten unbeteiligte dritte, durch Verwendung des alten GitHub-Nutzernamens des eigentlichen Nutzers, auf dessen Daten zugreifen. Am besten sollte man die GitHub-ID verwenden_
+|_Rundungsfehler bei Geldbeträgen_|_Teilweise kann es bei der Berechnungung der Ausgleichstransaktionen zu Rundungsfehlern kommen. Bei einer Transaktion ab einem halben Cent geht dieser auf Kosten des Schuldners, bei weniger auf Kosten des Geldgebers. Da es sich dabei allerdings um so geringe Beträge handelt, haben wir un als Entwickerteam dazu entschieden diesen Fehler ersteinmal zu akzeptieren._
 |===
 
 == Glossar
