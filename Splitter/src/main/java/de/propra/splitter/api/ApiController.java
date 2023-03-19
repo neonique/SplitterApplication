@@ -28,26 +28,27 @@ public class ApiController {
   ApplicationService applicationService;
 
   @Autowired
-  public ApiController(ApplicationService applicationService){
+  public ApiController(ApplicationService applicationService) {
     this.applicationService = applicationService;
   }
 
 
   @PostMapping("/gruppen")
-  public ResponseEntity<String> addGruppe(@RequestBody GruppeBasicDataAPI neueGruppe){
+  public ResponseEntity<String> addGruppe(@RequestBody GruppeBasicDataAPI neueGruppe) {
 
-    if(!(neueGruppe.gruppe() == null) || (neueGruppe.name() == null) || (neueGruppe.personen() == null)) {
+    if (!(neueGruppe.gruppe() == null) || (neueGruppe.name() == null) || (neueGruppe.personen()
+        == null)) {
       return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
     }
-    if(neueGruppe.name().isBlank() || neueGruppe.name().isEmpty()) {
+    if (neueGruppe.name().isBlank() || neueGruppe.name().isEmpty()) {
       return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
     }
-    if(neueGruppe.personen().isEmpty()) {
+    if (neueGruppe.personen().isEmpty()) {
       return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
     }
 
     String id = applicationService.addGruppe(neueGruppe.name(), neueGruppe.personen().poll());
-    for (String nutzer: neueGruppe.personen()) {
+    for (String nutzer : neueGruppe.personen()) {
       applicationService.addNutzerToGruppe(id, nutzer);
     }
 
@@ -55,16 +56,19 @@ public class ApiController {
   }
 
   @GetMapping("/user/{nutzername}/gruppen")
-  public ResponseEntity<LinkedList<GruppeBasicDataAPI>> getNutzerGruppen(@PathVariable String nutzername){
-    if(nutzername == null){
+  public ResponseEntity<LinkedList<GruppeBasicDataAPI>> getNutzerGruppen(
+      @PathVariable String nutzername) {
+    if (nutzername == null) {
       return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
     }
     LinkedList<GruppeBasicDataAPI> list = new LinkedList<>();
 
     HashMap<String, String> gruppen = applicationService.nutzerGruppen(nutzername);
-    for(Map.Entry<String, String> gruppe : gruppen.entrySet()) {
-      LinkedList<String> teilnehmer = new LinkedList<>(applicationService.getGruppenNutzer(gruppe.getKey()));
-      GruppeBasicDataAPI data = new GruppeBasicDataAPI(gruppe.getKey(), gruppe.getValue(), teilnehmer);
+    for (Map.Entry<String, String> gruppe : gruppen.entrySet()) {
+      LinkedList<String> teilnehmer = new LinkedList<>(
+          applicationService.getGruppenNutzer(gruppe.getKey()));
+      GruppeBasicDataAPI data = new GruppeBasicDataAPI(gruppe.getKey(), gruppe.getValue(),
+          teilnehmer);
       list.add(data);
     }
 
@@ -72,11 +76,11 @@ public class ApiController {
   }
 
   @GetMapping("/gruppen/{id}")
-  public ResponseEntity<GruppenDataDetailedAPI> getGruppenInfo(@PathVariable String id){
-    if(id == null){
+  public ResponseEntity<GruppenDataDetailedAPI> getGruppenInfo(@PathVariable String id) {
+    if (id == null) {
       return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
     }
-    if(!applicationService.exists(id)){
+    if (!applicationService.exists(id)) {
 
       return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
@@ -86,7 +90,7 @@ public class ApiController {
     for (TransaktionDTO transaktion : gruppenTransaktionen) {
       String grund = transaktion.grund();
       String glaeubiger = transaktion.sponsor();
-      int cent = (int)(transaktion.betrag() * 100);
+      int cent = (int) (transaktion.betrag() * 100);
       LinkedList<String> schuldner = new LinkedList<>(transaktion.bettler());
 
       AusgabenDataAPI ausgabe = new AusgabenDataAPI(grund, glaeubiger, cent, schuldner);
@@ -94,18 +98,19 @@ public class ApiController {
       ausgaben.add(ausgabe);
     }
 
-    GruppenDataDetailedAPI gruppenData = new GruppenDataDetailedAPI(id, applicationService.getName(id),
+    GruppenDataDetailedAPI gruppenData = new GruppenDataDetailedAPI(id,
+        applicationService.getName(id),
         new LinkedList<>(applicationService.getGruppenNutzer(id)), applicationService.isClosed(id),
         ausgaben);
     return new ResponseEntity<>(gruppenData, HttpStatus.OK);
   }
 
   @PostMapping("/gruppen/{id}/schliessen")
-  public ResponseEntity<String> closeGruppe(@PathVariable String id){
-    if(id == null){
+  public ResponseEntity<String> closeGruppe(@PathVariable String id) {
+    if (id == null) {
       return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
     }
-    if(!applicationService.exists(id)){
+    if (!applicationService.exists(id)) {
       return new ResponseEntity<>("Gruppe " + id + " nicht gefunden.", HttpStatus.NOT_FOUND);
     }
     applicationService.closeGruppe(id);
@@ -114,38 +119,42 @@ public class ApiController {
 
   @PostMapping("/gruppen/{id}/auslagen")
   public ResponseEntity<String> getTransaktionen(@PathVariable String id,
-      @RequestBody AusgabenDataAPI neueAusgabe){
+      @RequestBody AusgabenDataAPI neueAusgabe) {
 
-    if(neueAusgabe.grund() == null || neueAusgabe.glaeubiger() == null ||
-        neueAusgabe.cent() == 0 || neueAusgabe.schuldner() == null){
+    if (neueAusgabe.grund() == null || neueAusgabe.glaeubiger() == null ||
+        neueAusgabe.cent() == 0 || neueAusgabe.schuldner() == null) {
       return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
     }
-    if(neueAusgabe.schuldner().isEmpty()){
+    if (neueAusgabe.schuldner().isEmpty()) {
       return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
     }
 
-    if(!applicationService.exists(id)){
+    if (!applicationService.exists(id)) {
       return new ResponseEntity<>("Gruppe " + id + " nicht gefunden.", HttpStatus.NOT_FOUND);
     }
-    if(applicationService.isClosed(id)){
+    if (applicationService.isClosed(id)) {
       return new ResponseEntity<>("Gruppe " + id + " ist geschlossen.", HttpStatus.CONFLICT);
     }
 
     Set<String> bettler = new HashSet<>(neueAusgabe.schuldner());
-    double betrag = (double)(neueAusgabe.cent()/100);
-    applicationService.addTransaktionToGruppe(id, neueAusgabe.glaeubiger(), bettler, betrag,
-        neueAusgabe.grund());
-
+    double betrag = ((double) (neueAusgabe.cent()) / 100);
+    try {
+      applicationService.addTransaktionToGruppe(id, neueAusgabe.glaeubiger(), bettler, betrag,
+          neueAusgabe.grund());
+    } catch (IllegalArgumentException e) {
+      return new ResponseEntity<>("Invalider nutzer in Transaktion", HttpStatus.BAD_REQUEST);
+    }
     return new ResponseEntity<>("Ausgabe zu Gruppe " + id + " hinzugefuegt.", HttpStatus.CREATED);
   }
 
 
   @GetMapping("/gruppen/{id}/ausgleich")
-  public ResponseEntity<LinkedList<AusgleichDataAPI>> getNotwendigeTransaktionen(@PathVariable String id){
-    if(id == null){
+  public ResponseEntity<LinkedList<AusgleichDataAPI>> getNotwendigeTransaktionen(
+      @PathVariable String id) {
+    if (id == null) {
       return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
     }
-    if(!applicationService.exists(id)){
+    if (!applicationService.exists(id)) {
       return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 
@@ -158,7 +167,7 @@ public class ApiController {
       for (Entry<String, Double> transaktion : nutzerTransaktionen.getValue().entrySet()) {
         String an = transaktion.getKey();
 
-        int cent = (int)(transaktion.getValue() * 100);
+        int cent = (int) (transaktion.getValue() * 100);
         AusgleichDataAPI ausgleich = new AusgleichDataAPI(von, an, cent);
         ausgleichsTransaktionen.add(ausgleich);
       }
