@@ -22,7 +22,9 @@ import org.springframework.boot.test.autoconfigure.data.jdbc.DataJdbcTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
 import org.springframework.test.context.ActiveProfiles;
+
 import static org.assertj.core.api.Assertions.assertThat;
+
 import org.springframework.test.context.jdbc.Sql;
 
 @DataJdbcTest
@@ -47,7 +49,7 @@ public class TestGruppenRepoImpl {
   GruppenRepoImpl gruppenRepo;
 
   @BeforeEach
-  void init(){
+  void init() {
     gruppenRepo = new GruppenRepoImpl(gruppeDataRepo, gruppeNutzerDataRepo,
         transaktionNutzerDataRepo, transaktionDataRepo);
   }

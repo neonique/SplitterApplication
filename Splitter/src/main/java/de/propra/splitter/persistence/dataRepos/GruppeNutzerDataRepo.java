@@ -7,5 +7,6 @@ import org.springframework.data.repository.CrudRepository;
 public interface GruppeNutzerDataRepo extends CrudRepository<GruppeNutzerData, Integer> {
 
   HashSet<GruppeNutzerData> findAllByGruppenintid(Integer id);
+
   HashSet<GruppeNutzerData> findAllByNutzername(String nutzername);
 }

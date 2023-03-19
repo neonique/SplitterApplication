@@ -11,4 +11,5 @@ import java.lang.annotation.Target;
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 public @interface AggregateRoot {
+
 }

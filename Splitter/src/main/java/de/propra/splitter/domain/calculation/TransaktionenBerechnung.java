@@ -8,6 +8,7 @@ import org.javamoney.moneta.Money;
 public interface TransaktionenBerechnung {
 
   HashMap<String, HashMap<String, Double>> berechneNotwendigeTransaktionen(Gruppe gruppe);
+
   Money berechneNutzerSaldo(Nutzer nutzer, Gruppe gruppe);
 }
 

@@ -17,32 +17,33 @@ public class ApplicationService {
 
   private GruppenRepo gruppenRepo;
 
-  public ApplicationService(@Qualifier("postgresql") GruppenRepo gruppenRepo){
+  public ApplicationService(@Qualifier("postgresql") GruppenRepo gruppenRepo) {
     this.gruppenRepo = gruppenRepo;
   }
-  public String addGruppe(String gruppenName, String nutzerName){
+
+  public String addGruppe(String gruppenName, String nutzerName) {
     Gruppe gruppe = new Gruppe(gruppenName, nutzerName);
     gruppenRepo.save(gruppe);
     return gruppe.id();
   }
 
 
-  public HashMap<String, String> nutzerGruppen(String nutzerName){
-   Set<Gruppe> gruppen = gruppenRepo.nutzerGruppen(nutzerName);
-   HashMap<String, String> nutzerGruppen = new HashMap<>();
-   gruppen.stream().forEach(a -> nutzerGruppen.put(a.id(), a.name()));
-   return nutzerGruppen;
+  public HashMap<String, String> nutzerGruppen(String nutzerName) {
+    Set<Gruppe> gruppen = gruppenRepo.nutzerGruppen(nutzerName);
+    HashMap<String, String> nutzerGruppen = new HashMap<>();
+    gruppen.stream().forEach(a -> nutzerGruppen.put(a.id(), a.name()));
+    return nutzerGruppen;
   }
 
 
-  public HashMap<String, String> offeneNutzerGruppen(String nutzerName){
+  public HashMap<String, String> offeneNutzerGruppen(String nutzerName) {
     Set<Gruppe> gruppen = gruppenRepo.nutzerGruppen(nutzerName);
     HashMap<String, String> nutzerGruppen = new HashMap<>();
     gruppen.stream().filter(a -> !a.isclosed()).forEach(a -> nutzerGruppen.put(a.id(), a.name()));
     return nutzerGruppen;
   }
 
-  public HashMap<String, String> geschlosseneNutzerGruppen(String nutzerName){
+  public HashMap<String, String> geschlosseneNutzerGruppen(String nutzerName) {
     Set<Gruppe> gruppen = gruppenRepo.nutzerGruppen(nutzerName);
     HashMap<String, String> nutzerGruppen = new HashMap<>();
     gruppen.stream().filter(a -> a.isclosed()).forEach(a -> nutzerGruppen.put(a.id(), a.name()));
@@ -56,7 +57,7 @@ public class ApplicationService {
     gruppenRepo.save(gruppe);
   }
 
-  public HashMap<String, HashMap<String, Double>> notwendigeTransaktionen(String id){
+  public HashMap<String, HashMap<String, Double>> notwendigeTransaktionen(String id) {
     Gruppe gruppe = gruppenRepo.load(id);
 
     return gruppe.notwendigeTransaktionen();
@@ -69,7 +70,8 @@ public class ApplicationService {
 
   }
 
-  public void addTransaktionToGruppe(String id, String sponsor, Set<String> bettler, double betrag, String grund ) {
+  public void addTransaktionToGruppe(String id, String sponsor, Set<String> bettler, double betrag,
+      String grund) {
     Gruppe gruppe = gruppenRepo.load(id);
     gruppe.addTransaktion(sponsor, bettler, betrag, grund);
     gruppenRepo.save(gruppe);
@@ -83,14 +85,15 @@ public class ApplicationService {
     return gruppenRepo.gruppeTransaktionen(id);
   }
 
-  public boolean isClosed(String id){
+  public boolean isClosed(String id) {
     return gruppenRepo.isClosed(id);
   }
 
   public String getName(String id) {
     return gruppenRepo.getName(id);
   }
-  public boolean exists(String id){
+
+  public boolean exists(String id) {
     return gruppenRepo.exists(id);
   }
 }

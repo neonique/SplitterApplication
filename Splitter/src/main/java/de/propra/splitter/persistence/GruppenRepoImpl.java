@@ -42,7 +42,7 @@ public class GruppenRepoImpl implements GruppenRepo {
     GruppeData gruppeData = gruppeDataRepo.findByGruppenid(gruppe.id());
     Integer id = null;
 
-    if(gruppeData != null) {
+    if (gruppeData != null) {
       id = gruppeData.gruppenintid();
     }
 
@@ -67,12 +67,12 @@ public class GruppenRepoImpl implements GruppenRepo {
       TransaktionData transaktionData = new TransaktionData(transaktionenDetail.id(),
           gruppeData.gruppenintid(), transaktionenDetail.betrag(), transaktionenDetail.sponsor(),
           transaktionenDetail.grund());
-          transaktionData = transaktionDataRepo.save(transaktionData);
+      transaktionData = transaktionDataRepo.save(transaktionData);
 
       for (String bettler : transaktionenDetail.bettler()) {
         TransaktionNutzerData transaktionNutzerData = new TransaktionNutzerData(null,
             transaktionData.transaktionid(), bettler);
-            transaktionNutzerDataRepo.save(transaktionNutzerData);
+        transaktionNutzerDataRepo.save(transaktionNutzerData);
       }
     }
   }
@@ -81,14 +81,16 @@ public class GruppenRepoImpl implements GruppenRepo {
   public Gruppe load(String id) {
 
     GruppeData gruppeData = gruppeDataRepo.findByGruppenid(id);
-    HashSet<GruppeNutzerData> teilnehmer = gruppeNutzerDataRepo.findAllByGruppenintid(gruppeData.gruppenintid());
+    HashSet<GruppeNutzerData> teilnehmer = gruppeNutzerDataRepo.findAllByGruppenintid(
+        gruppeData.gruppenintid());
     Set<String> teilnehmerNamen = teilnehmer.stream().map(t -> t.nutzername()).collect(
         Collectors.toSet());
 
     List<TransaktionDTO> transaktionDTOS = this.gruppeTransaktionen(id);
 
     UUID idAsUUID = UUID.fromString(gruppeData.gruppenid());
-    Gruppe gruppe = new Gruppe(gruppeData.geschlossen(), idAsUUID, new HashSet<>(teilnehmerNamen), transaktionDTOS, gruppeData.gruppenname());
+    Gruppe gruppe = new Gruppe(gruppeData.geschlossen(), idAsUUID, new HashSet<>(teilnehmerNamen),
+        transaktionDTOS, gruppeData.gruppenname());
     return gruppe;
   }
 
@@ -96,7 +98,7 @@ public class GruppenRepoImpl implements GruppenRepo {
   public Set<Gruppe> nutzerGruppen(String nutzername) {
 
     HashSet<GruppeNutzerData> gruppenIntIds = gruppeNutzerDataRepo.findAllByNutzername(nutzername);
-    Set<String > gruppenIds = gruppenIntIds
+    Set<String> gruppenIds = gruppenIntIds
         .stream()
         .map(i -> gruppeDataRepo.findByGruppenintid(i.gruppenintid()).gruppenid())
         .collect(Collectors.toSet());
@@ -109,10 +111,12 @@ public class GruppenRepoImpl implements GruppenRepo {
     return gruppen;
 
   }
+
   @Override
   public Set<String> gruppeNutzer(String id) {
     GruppeData gruppeData = gruppeDataRepo.findByGruppenid(id);
-    HashSet<GruppeNutzerData> teilnehmer = gruppeNutzerDataRepo.findAllByGruppenintid(gruppeData.gruppenintid());
+    HashSet<GruppeNutzerData> teilnehmer = gruppeNutzerDataRepo.findAllByGruppenintid(
+        gruppeData.gruppenintid());
     Set<String> teilnehmerNamen = teilnehmer.stream().map(t -> t.nutzername()).collect(
         Collectors.toSet());
     return teilnehmerNamen;
@@ -130,7 +134,7 @@ public class GruppenRepoImpl implements GruppenRepo {
 
   private List<TransaktionDTO> getTransaktionDTOSFromData(List<TransaktionData> transaktionData) {
     List<TransaktionDTO> transaktionDTOS = new ArrayList<>();
-    for (TransaktionData transaktion: transaktionData) {
+    for (TransaktionData transaktion : transaktionData) {
       Set<String> bettler = transaktionNutzerDataRepo
           .findAllByTransaktionid(transaktion.transaktionid())
           .stream()
@@ -156,7 +160,7 @@ public class GruppenRepoImpl implements GruppenRepo {
   @Override
   public boolean exists(String id) {
     GruppeData gruppeData = gruppeDataRepo.findByGruppenid(id);
-    if(gruppeData == null){
+    if (gruppeData == null) {
       return false;
     }
     return true;

@@ -461,22 +461,20 @@ public class TestApiController {
     AusgleichDataAPI a2 = new AusgleichDataAPI("Jeremy", "Fabian", 2000);
     AusgleichDataAPI a3 = new AusgleichDataAPI("Luis", "Fabian", 1500);
 
-
     when(applicationService.exists(id)).thenReturn(true);
 
     HashMap<String, HashMap<String, Double>> transaktionen = new HashMap<>();
 
-    HashMap<String,Double> a1Transaktionen = new HashMap<>();
-    a1Transaktionen.put(a1.an(), ((double)(a1.cents())/100));
-    a1Transaktionen.put(a2.an(), ((double)(a2.cents())/100));
+    HashMap<String, Double> a1Transaktionen = new HashMap<>();
+    a1Transaktionen.put(a1.an(), ((double) (a1.cents()) / 100));
+    a1Transaktionen.put(a2.an(), ((double) (a2.cents()) / 100));
     transaktionen.put(a1.von(), a1Transaktionen);
 
-    HashMap<String,Double> a3Transaktionen = new HashMap<>();
-    a3Transaktionen.put(a3.an(), ((double)(a3.cents())/100));
+    HashMap<String, Double> a3Transaktionen = new HashMap<>();
+    a3Transaktionen.put(a3.an(), ((double) (a3.cents()) / 100));
     transaktionen.put(a3.von(), a3Transaktionen);
 
     when(applicationService.notwendigeTransaktionen(id)).thenReturn(transaktionen);
-
 
     LinkedList<AusgleichDataAPI> ausgleichData = new LinkedList<>();
     ausgleichData.addAll(List.of(a1, a2, a3));

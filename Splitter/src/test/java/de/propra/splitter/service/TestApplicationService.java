@@ -8,6 +8,7 @@ import java.util.Map.Entry;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
@@ -19,7 +20,7 @@ public class TestApplicationService {
 
   @Test
   @DisplayName("Gruppe erstellen und speichern")
-  void test_01(){
+  void test_01() {
     GruppenRepo gruppenRepo = mock(GruppenRepo.class);
     ApplicationService applicationService = new ApplicationService(gruppenRepo);
 
@@ -31,7 +32,7 @@ public class TestApplicationService {
 
   @Test
   @DisplayName("Nutzergruppen IDs und Namen erhalten")
-  void test_02(){
+  void test_02() {
     GruppenRepo gruppenRepo = mock(GruppenRepo.class);
     ApplicationService applicationService = new ApplicationService(gruppenRepo);
     String nutzername = "moaz";
@@ -44,16 +45,16 @@ public class TestApplicationService {
     Set<Gruppe> gruppen = Set.of(g1, g2);
     when(gruppenRepo.nutzerGruppen(nutzername)).thenReturn(gruppen);
 
-    HashMap<String,String> nutzerGruppen = applicationService.nutzerGruppen(nutzername);
+    HashMap<String, String> nutzerGruppen = applicationService.nutzerGruppen(nutzername);
 
-    Entry<String,String> e1 = Map.entry(id1.toString(), name1);
-    Entry<String,String> e2 = Map.entry(id2.toString(), name2);
-    assertThat(nutzerGruppen).containsOnly(e1,e2);
+    Entry<String, String> e1 = Map.entry(id1.toString(), name1);
+    Entry<String, String> e2 = Map.entry(id2.toString(), name2);
+    assertThat(nutzerGruppen).containsOnly(e1, e2);
   }
 
   @Test
   @DisplayName("Offene Nutzergruppen IDs und Namen erhalten")
-  void test_03(){
+  void test_03() {
     GruppenRepo gruppenRepo = mock(GruppenRepo.class);
     ApplicationService applicationService = new ApplicationService(gruppenRepo);
     String nutzername = "moaz";
@@ -67,16 +68,16 @@ public class TestApplicationService {
     Set<Gruppe> gruppen = Set.of(g1, g2);
     when(gruppenRepo.nutzerGruppen(nutzername)).thenReturn(gruppen);
 
-    HashMap<String,String> nutzerGruppen = applicationService.offeneNutzerGruppen(nutzername);
+    HashMap<String, String> nutzerGruppen = applicationService.offeneNutzerGruppen(nutzername);
 
-    Entry<String,String> e1 = Map.entry(id1.toString(), name1);
+    Entry<String, String> e1 = Map.entry(id1.toString(), name1);
     assertThat(nutzerGruppen).containsOnly(e1);
   }
 
 
   @Test
   @DisplayName("Geschlossene Nutzergruppen IDs und Namen erhalten")
-  void test_04(){
+  void test_04() {
     GruppenRepo gruppenRepo = mock(GruppenRepo.class);
     ApplicationService applicationService = new ApplicationService(gruppenRepo);
     String nutzername = "moaz";
@@ -90,15 +91,16 @@ public class TestApplicationService {
     Set<Gruppe> gruppen = Set.of(g1, g2);
     when(gruppenRepo.nutzerGruppen(nutzername)).thenReturn(gruppen);
 
-    HashMap<String,String> nutzerGruppen = applicationService.geschlosseneNutzerGruppen(nutzername);
+    HashMap<String, String> nutzerGruppen = applicationService.geschlosseneNutzerGruppen(
+        nutzername);
 
-    Entry<String,String> e2 = Map.entry(id2.toString(), name2);
+    Entry<String, String> e2 = Map.entry(id2.toString(), name2);
     assertThat(nutzerGruppen).containsOnly(e2);
   }
 
   @Test
   @DisplayName("Gruppe schließen und speichern")
-  void test_05(){
+  void test_05() {
     GruppenRepo gruppenRepo = mock(GruppenRepo.class);
     ApplicationService applicationService = new ApplicationService(gruppenRepo);
     String name1 = "g1";
@@ -115,7 +117,7 @@ public class TestApplicationService {
 
   @Test
   @DisplayName("Nutzer zu Gruppe hinzufuegen und speichern")
-  void test_06(){
+  void test_06() {
     GruppenRepo gruppenRepo = mock(GruppenRepo.class);
     ApplicationService applicationService = new ApplicationService(gruppenRepo);
     String name1 = "g1";
@@ -133,7 +135,7 @@ public class TestApplicationService {
 
   @Test
   @DisplayName("Transaktionen zu Gruppe hinzufuegen und speichern")
-  void test_07(){
+  void test_07() {
     GruppenRepo gruppenRepo = mock(GruppenRepo.class);
     ApplicationService applicationService = new ApplicationService(gruppenRepo);
     String name1 = "g1";
@@ -154,7 +156,7 @@ public class TestApplicationService {
 
   @Test
   @DisplayName("Nutzer einer Gruppe ausgeben")
-  void test_08(){
+  void test_08() {
     GruppenRepo gruppenRepo = mock(GruppenRepo.class);
     ApplicationService applicationService = new ApplicationService(gruppenRepo);
     String name1 = "g1";
@@ -170,7 +172,7 @@ public class TestApplicationService {
 
   @Test
   @DisplayName("Transaktionen einer Gruppe ausgeben")
-  void test_09(){
+  void test_09() {
     GruppenRepo gruppenRepo = mock(GruppenRepo.class);
     ApplicationService applicationService = new ApplicationService(gruppenRepo);
     String name1 = "g1";
@@ -179,9 +181,9 @@ public class TestApplicationService {
     double betrag1 = 22;
     double betrag2 = 23;
     TransaktionDTO t1 = new TransaktionDTO(nutzername1, Set.of(nutzername2), betrag1, "");
-    TransaktionDTO t2 = new TransaktionDTO(nutzername2, Set.of(nutzername1, nutzername2), betrag2, "");
+    TransaktionDTO t2 = new TransaktionDTO(nutzername2, Set.of(nutzername1, nutzername2), betrag2,
+        "");
     List<TransaktionDTO> transaktionDTOS = List.of(t1, t2);
-
 
     UUID id1 = UUID.randomUUID();
     when(gruppenRepo.gruppeTransaktionen(id1.toString())).thenReturn(transaktionDTOS);
@@ -194,7 +196,7 @@ public class TestApplicationService {
 
   @Test
   @DisplayName("Notwendige transaktionen ausgeben")
-  void test_10(){
+  void test_10() {
     GruppenRepo gruppenRepo = mock(GruppenRepo.class);
     ApplicationService applicationService = new ApplicationService(gruppenRepo);
     Gruppe gruppe = mock(Gruppe.class);

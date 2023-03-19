@@ -14,7 +14,7 @@ public class SecurityConfig {
   public SecurityFilterChain configure(HttpSecurity chainBuilder) throws Exception {
     chainBuilder.authorizeHttpRequests(
             configurer -> configurer
-                .antMatchers("/css/*", "/api/**","/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                .antMatchers("/css/*", "/api/**", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
                 .anyRequest().authenticated()
         )
         .oauth2Login(Customizer.withDefaults())

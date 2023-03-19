@@ -27,7 +27,8 @@ public final class Transaktion {
     this.id = null;
   }
 
-  public Transaktion(Integer id, @NonNull Nutzer sponsor, @NonNull Set<Nutzer> bettler, @NonNull Money betrag,
+  public Transaktion(Integer id, @NonNull Nutzer sponsor, @NonNull Set<Nutzer> bettler,
+      @NonNull Money betrag,
       @NonNull String grund) {
     this.sponsor = sponsor;
     this.bettler = bettler;
@@ -60,6 +61,7 @@ public final class Transaktion {
   public Integer id() {
     return id;
   }
+
   @NonNull
   public Set<Nutzer> bettler() {
     return bettler;
@@ -77,10 +79,12 @@ public final class Transaktion {
 
   @Override
   public boolean equals(Object obj) {
-    if (obj == this)
+    if (obj == this) {
       return true;
-    if (obj == null || obj.getClass() != this.getClass())
+    }
+    if (obj == null || obj.getClass() != this.getClass()) {
       return false;
+    }
     var that = (Transaktion) obj;
     return Objects.equals(this.id, that.id) &&
         Objects.equals(this.sponsor, that.sponsor) &&

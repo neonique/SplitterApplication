@@ -21,13 +21,16 @@ public final class TransaktionDTO {
     this.grund = grund;
     this.id = null;
   }
-  public TransaktionDTO(Integer id, String sponsor, Set<String> bettler, double betrag, String grund) {
+
+  public TransaktionDTO(Integer id, String sponsor, Set<String> bettler, double betrag,
+      String grund) {
     this.sponsor = sponsor;
     this.bettler = bettler;
     this.betrag = betrag;
     this.grund = grund;
     this.id = id;
   }
+
   public String sponsor() {
     return sponsor;
   }
@@ -50,10 +53,12 @@ public final class TransaktionDTO {
 
   @Override
   public boolean equals(Object obj) {
-    if (obj == this)
+    if (obj == this) {
       return true;
-    if (obj == null || obj.getClass() != this.getClass())
+    }
+    if (obj == null || obj.getClass() != this.getClass()) {
       return false;
+    }
     var that = (TransaktionDTO) obj;
     return Objects.equals(this.betrag, that.betrag) &&
         Objects.equals(this.sponsor, that.sponsor) &&

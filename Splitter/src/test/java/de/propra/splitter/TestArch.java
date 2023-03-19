@@ -10,7 +10,8 @@ import com.tngtech.archunit.lang.ArchRule;
 import de.propra.splitter.stereotypes.AggregateRoot;
 import de.propra.splitter.stereotypes.DTO;
 
-@AnalyzeClasses(packagesOf = SplitterApplication.class, importOptions = {ImportOption.DoNotIncludeTests.class})
+@AnalyzeClasses(packagesOf = SplitterApplication.class, importOptions = {
+    ImportOption.DoNotIncludeTests.class})
 public class TestArch {
 
   @ArchTest
@@ -18,7 +19,7 @@ public class TestArch {
       .domainModels("..domain..")
       .domainServices("..service..")
       .applicationServices("..service..")
-      .adapter("web","..web..")
+      .adapter("web", "..web..")
       .adapter("db", "..persistence..")
       .adapter("api", "..api..")
       .adapter("config", "..config..");
