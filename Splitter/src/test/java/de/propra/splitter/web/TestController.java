@@ -16,6 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyDouble;
+import static org.mockito.ArgumentMatchers.anyMap;
 import static org.mockito.ArgumentMatchers.anySet;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
@@ -46,9 +47,11 @@ public class TestController {
   }
 
   @Test
-  @DisplayName("get auf /alleGruppen holt sich die nutzergruppen")
+  @DisplayName("get auf /alleGruppen holt sich die nutzergruppen und fuegt sie zum Model hinzu")
   void test_2() throws Exception {
-    mockMvc.perform(get("/alleGruppen").with(oauth2Login()));
+    mockMvc.perform(get("/alleGruppen").with(oauth2Login()))
+        .andExpect(model().attributeExists("offeneNutzerGruppen"))
+        .andExpect(model().attributeExists("geschlosseneNutzerGruppen"));
     verify(service).offeneNutzerGruppen(any());
     verify(service).geschlosseneNutzerGruppen(any());
   }
@@ -64,7 +67,7 @@ public class TestController {
 
   @Test
   @DisplayName("post auf /alleGruppen leitet auf /alleGruppen zurück")
-  void test_4() throws Exception {
+  void test_4a() throws Exception {
     mockMvc.perform(post("/alleGruppen")
         .param("neueGruppe","").with(oauth2Login()).with(csrf()))
         .andExpect(redirectedUrl("/alleGruppen"));
@@ -72,11 +75,22 @@ public class TestController {
   }
 
   @Test
-  @DisplayName("get auf /gruppe holt sich Transaktionen")
+  @DisplayName("post auf /alleGruppen added Gruppe")
+  void test_4b() throws Exception {
+    mockMvc.perform(post("/alleGruppen")
+            .param("neueGruppe","gruppe").with(oauth2Login()).with(csrf()));
+    verify(service).addGruppe(anyString(), any());
+  }
+
+  @Test
+  @DisplayName("get auf /gruppe holt sich Gruppentransaktionen und Nutzer und fuegt sie dem model hinzu")
   void test_5() throws Exception {
     mockMvc.perform(get("/gruppe").with(oauth2Login())
-            .flashAttr("gruppenid", "boo"));
+            .flashAttr("gruppenid", "boo"))
+        .andExpect(model().attributeExists("gruppeNutzer"))
+        .andExpect(model().attributeExists("gruppeTransaktionen"));
     verify(service).getGruppenTransaktionen(any());
+    verify(service).getGruppenNutzer("boo");
   }
 
   @Test
@@ -116,11 +130,12 @@ public class TestController {
   }
 
   @Test
-  @DisplayName("post auf /gruppe/close redirected auf gruppe")
+  @DisplayName("post auf /gruppe/close redirected auf gruppe, mit gruppenid als flashattribut")
   void test_10() throws Exception {
     mockMvc.perform(post("/gruppe/close")
         .param("gruppenid","boo").with(oauth2Login()).with(csrf()))
-        .andExpect(redirectedUrl("/gruppe"));
+        .andExpect(redirectedUrl("/gruppe"))
+        .andExpect(flash().attribute("gruppenid","boo"));
 
   }
 
@@ -173,11 +188,22 @@ public class TestController {
 
   @Test
   @DisplayName("get auf /neueTransaktion returned die entsprechende html")
-  void test_16() throws Exception {
+  void test_16a() throws Exception {
     mockMvc.perform(get("/neueTransaktion")
             .flashAttr("gruppenid","id")
             .with(oauth2Login()))
         .andExpect(view().name("addTransaktion"));
+
+  }
+
+  @Test
+  @DisplayName("get auf /neueTransaktion ruft die Gruppennutzer auf")
+  void test_16b() throws Exception {
+    mockMvc.perform(get("/neueTransaktion")
+            .flashAttr("gruppenid","id")
+            .with(oauth2Login()))
+        .andExpect(model().attributeExists("gruppeNutzer"));
+    verify(service).getGruppenNutzer("id");
 
   }
 
@@ -191,8 +217,6 @@ public class TestController {
 
   }
 
-  //hinzufügen tests für /neueTransaktion ruft apllicationservice.addTransaktionzuGruppe auf
-  //aber nur wenn beggarset nicht empty ist
   @Test
   @DisplayName("post auf /neueTransaktion redirected zu /gruppe")
   void test_18() throws Exception {
@@ -214,6 +238,26 @@ public class TestController {
             .with(oauth2Login()).with(csrf()))
         .andExpect(flash().attribute("gruppenid", "id"))
         .andExpect(redirectedUrl("/ausgleichsTransaktionen"));
+
+  }
+  @Test
+  @DisplayName("get auf /ausgleichsTransaktionen redirected auf /alleGruppen bei leerer gruppenid")
+  void test_20() throws Exception {
+    mockMvc.perform(get("/ausgleichsTransaktionen")
+            .flashAttr("gruppenid","")
+            .with(oauth2Login()))
+        .andExpect(redirectedUrl("/alleGruppen"));
+
+  }
+  @Test
+  @DisplayName("get auf /ausgleichsTransaktionen holt sich vom service die noetigen Transaktionen und"
+      + "fuegt sie zum Model hinzu")
+  void test_21() throws Exception {
+    mockMvc.perform(get("/ausgleichsTransaktionen")
+            .flashAttr("gruppenid","boo")
+            .with(oauth2Login()))
+        .andExpect(model().attributeExists("notwendigeTransaktionen"));
+    verify(service).notwendigeTransaktionen("boo");
 
   }
 
