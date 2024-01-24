@@ -5,7 +5,7 @@
 :experimental:
 
 == Vorwort
-Das hier gezeigte Projekt wurde im Rahmen eines Universitätspraktikum erstellt. Die Co-Autoren sind link:https://github.com/Josch2[Josch2], link:https://github.com/elli0404[elli0404] und Moaz-hal
+Das hier gezeigte Projekt wurde im Rahmen eines Universitätspraktikums erstellt. Die Co-Autoren sind link:https://github.com/Josch2[Josch2], link:https://github.com/elli0404[elli0404] und Moaz-hal
 
 = Dokumentation
 :icons: font
