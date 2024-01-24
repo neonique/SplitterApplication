@@ -1,4 +1,4 @@
-Dokumentation ProPra2
+Dokumentation
 
 = Dokumentation des Projekts "Splitter" mit Arc42
 
@@ -32,7 +32,7 @@ Eine genaue Beschreibung der Aufgabe finden Sie in link:aufgabe.adoc[diesem Doku
 |===
 |Name | Rolle | Funktion/Motivation
 | _Jens Bendisposto_ | _Kunde_ | _Erwartet die Einhaltung aller Qualitätsziele, entscheidet über den Erfolg der Anwendung_
-| _Projektgruppe 39 (MarcoFans)_| _Entwicklerteam_ | _Implementiert die Anwendung, sind auf Erfolg dessen angewiesen_
+| _Projektgruppe_| _Entwicklerteam_ | _Implementiert die Anwendung, sind auf Erfolg dessen angewiesen_
 |===
 
 === Technische Randbedingungen
@@ -44,11 +44,6 @@ Eine genaue Beschreibung der Aufgabe finden Sie in link:aufgabe.adoc[diesem Doku
 * Als Architekturmuster ist die Onion-Architektur vorgegeben. In der Domänenschicht müssen die taktischen DDD-Muster verwendet werden.
 * Zur automatischen Überprüfung von Architekturregeln, die wir explizit selbst wählen, oder implizit aus den Vorgaben folgen, wird ArchUnit verwendet.
 * Der Produktivcode wird nach den Regeln des link:https://google.github.io/styleguide/javaguide.html[Google-Styleguides] geschrieben
-
-=== Organisatorische Randbedingungen
-* 3 Wochen Zeit für die Umsetzung
-* 4 Stunden täglich, Mo - Fr sind vorgesehen
-* Das Team entwickel, solange zeitlich gegeben, im Mob
 
 == Kontextabgrenzung
 Die Kontextabgrenzung ist in einem Diagramm festgehalten.
@@ -67,10 +62,6 @@ Folgende Entscheidungen wurden getroffen um die geforderten Qualitätsziele zu e
 === Organisatorische Entscheidungen
 * Aus Zeitgründen kann die Minimierung der notwendigen Ausgleichstransaktionen nicht mehr umgesetzt werden, Konzentration auf funktionsfähige Implementierung der Applikation
 * Test-Driven-Development
-* *Zeitplan:*
-- *Erste Woche:* Entwicklung der Domänenlogik
-- *Zweite Woche:* Weitestgehend vollständiger Funktionsumfang und Nutzer-Schnittstelle
-- *Dritte Woche:* Entwicklung der REST-API, Implementation des Persistance-Layers
 
 === Verteilung
 * Für das Ausführen der Anwendung wird lediglich eine Docker-compose-fähige Umgebung benötigt. Nach befüllen der docker-compose.yaml mit Umgebungsvariablen, soll das System inklusive Datenbank mit wenigen Docker-Commands ausgeführt werden. Eine genaue Beschreibung ist in der README.adoc zu finden
@@ -95,7 +86,7 @@ Folgende Entscheidungen wurden getroffen um die geforderten Qualitätsziele zu e
 * String nutzername in Transaktion beschreibt den SPONSOR
 * String nutzername in TransaaktionNutzerRelation beschreibt einen BETTLER
 * Attribute (int)ID werden über Datenbank als SERIAL vergeben
-* Gruppe hat zwei IDs, da JDBC keine Strings als IDs, wie ursprünglich geplant, akzeptiert. Das restliche Programm, benötigt jedoch die stringID (UUID). Aus diesem grund, haben wir uns um ein weitreichendes Refactor zu umgehen für diese Variante entschieden.
+* Gruppe hat zwei IDs, da JDBC keine Strings als IDs, wie ursprünglich geplant, akzeptiert. Das restliche Programm, benötigt jedoch die stringID (UUID). Aus diesem grund, haben wir uns um ein weitreichendes Refactoring zu umgehen für diese Variante entschieden.
 * Geldbeträge für eine Auslage sind bis maximal 999.999,99€ gestattet, dies wird auch in der UI überprüft.
 
 === Laufzeitansicht
